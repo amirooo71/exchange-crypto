@@ -5,7 +5,7 @@
                 <table class="table">
                     <thead>
                     <tr class="v-bg-dark">
-                        <th></th>
+                        <!--<th></th>-->
                         <th>نام</th>
                         <th>قیمت</th>
                         <th>۲۴ ساعت گذشته</th>
@@ -13,12 +13,60 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>
-                            img
-                        </td>
-                        <td>ETC</td>
-                        <td>۱۰۸۷۶</td>
-                        <td>۱۱.۵ ٪</td>
+                        <!--<td>-->
+                        <!--img-->
+                        <!--</td>-->
+                        <td>{{tickers.symbol}}</td>
+                        <td>{{tickers.closeQuantity}}</td>
+                        <td>{{tickers.priceChangePercent}}</td>
+                    </tr>
+                    <tr>
+                        <!--<td>-->
+                        <!--img-->
+                        <!--</td>-->
+                        <td>{{tickers.symbol}}</td>
+                        <td>{{tickers.high}}</td>
+                        <td>{{tickers.priceChangePercent}}</td>
+                    </tr>
+                    <tr>
+                        <!--<td>-->
+                        <!--img-->
+                        <!--</td>-->
+                        <td>{{tickers.symbol}}</td>
+                        <td>{{tickers.closeQuantity}}</td>
+                        <td>{{tickers.priceChangePercent}}</td>
+                    </tr>
+                    <tr>
+                        <!--<td>-->
+                        <!--img-->
+                        <!--</td>-->
+                        <td>{{tickers.symbol}}</td>
+                        <td>{{tickers.high}}</td>
+                        <td>{{tickers.priceChangePercent}}</td>
+                    </tr>
+                    <tr>
+                        <!--<td>-->
+                        <!--img-->
+                        <!--</td>-->
+                        <td>{{tickers.symbol}}</td>
+                        <td>{{tickers.closeQuantity}}</td>
+                        <td>{{tickers.priceChangePercent}}</td>
+                    </tr>
+                    <tr>
+                        <!--<td>-->
+                        <!--img-->
+                        <!--</td>-->
+                        <td>{{tickers.symbol}}</td>
+                        <td>{{tickers.high}}</td>
+                        <td>{{tickers.priceChangePercent}}</td>
+                    </tr>
+                    <tr>
+                        <!--<td>-->
+                        <!--img-->
+                        <!--</td>-->
+                        <td>{{tickers.symbol}}</td>
+                        <td>{{tickers.closeQuantity}}</td>
+                        <td>{{tickers.priceChangePercent}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -28,11 +76,34 @@
 </template>
 
 <script>
+
+    import VueSocketIo from 'vue-socket.io';
+
+    Vue.use(VueSocketIo, 'http://localhost:3000');
+
     export default {
-        name: "tickers"
+        name: "tickers",
+        data() {
+            return {
+                tickers: '',
+            }
+        },
+        sockets: {
+            connect: function () {
+                console.log('socket connected')
+            },
+
+            tickerBNBBTC: function (data) {
+                this.tickers = data;
+            }
+        },
     }
 </script>
 
 <style scoped>
+
+    .v-danger {
+        color: red;
+    }
 
 </style>

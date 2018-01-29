@@ -3,110 +3,33 @@
 @section('body')
     <!-- User Wallet & Trade History -->
     <div class="col-md-3">
-        <panel title="نرخ ارز">
+        <panel title="کیف پول">
             <div slot="body">
-                <div class="table-responsive pre-scrollable">
+                <div class="table-responsive">
                     <table class="table">
                         <thead>
-                        <tr class="v-bg-dark">
-                            <th></th>
-                            <th>نام</th>
-                            <th>قیمت</th>
-                            <th>۲۴ ساعت گذشته</th>
-                        </tr>
+                        <th>واحد</th>
+                        <th>مقدار</th>
                         </thead>
                         <tbody>
                         <tr>
-                            <td>
-                                <img class="ng-tiny-svg" src="./images/logo/bitcoin-logo.svg"
-                                     alt="">
-                            </td>
-                            <td>BIT</td>
-                            <td>۱۰۸۷۶</td>
-                            <td>۱۱.۵ ٪</td>
+                            <td>تومان</td>
+                            <td>۰</td>
                         </tr>
                         <tr>
-                            <td>
-                                <img class="ng-tiny-svg" src="./images/logo/ethereum-logo.svg"
-                                     alt="">
-                            </td>
-                            <td>ETH</td>
-                            <td>۱۰۸۷۶</td>
-                            <td>۱۱.۵ ٪</td>
+                            <td>دلار</td>
+                            <td>۰</td>
                         </tr>
                         <tr>
-                            <td>
-                                <img class="ng-tiny-svg" src="./images/logo/ripple-logo.svg"
-                                     alt="">
-                            </td>
-                            <td>XRP</td>
-                            <td>۱۰۸۷۶</td>
-                            <td>۱۱.۵ ٪</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img class="ng-tiny-svg" src="./images/logo/eos-logo.svg" alt="">
-                            </td>
-                            <td>EOS</td>
-                            <td>۱۰۸۷۶</td>
-                            <td>۱۱.۵ ٪</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img class="ng-tiny-svg" src="./images/logo/bh-logo.svg" alt="">
-                            </td>
-                            <td>BCH</td>
-                            <td>۱۰۸۷۶</td>
-                            <td>۱۱.۵ ٪</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img class="ng-tiny-svg" src="./images/logo/neo-logo.svg" alt="">
-                            </td>
-                            <td>NEO</td>
-                            <td>۱۰۸۷۶</td>
-                            <td>۱۱.۵ ٪</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img class="ng-tiny-svg" src="./images/logo/iota-logo.svg"
-                                     alt="">
-                            </td>
-                            <td>IOTA</td>
-                            <td>۱۰۸۷۶</td>
-                            <td>۱۱.۵ ٪</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img class="ng-tiny-svg" src="./images/logo/dash-logo.svg"
-                                     alt="">
-                            </td>
-                            <td>DSH</td>
-                            <td>۱۰۸۷۶</td>
-                            <td>۱۱.۵ ٪</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img class="ng-tiny-svg" src="./images/logo/etc-logo.svg" alt="">
-                            </td>
-                            <td>ETC</td>
-                            <td>۱۰۸۷۶</td>
-                            <td>۱۱.۵ ٪</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img class="ng-tiny-svg" src="./images/logo/xmr-logo.svg" alt="">
-                            </td>
-                            <td>XMR</td>
-                            <td>۱۰۸۷۶</td>
-                            <td>۱۱.۵ ٪</td>
+                            <td>بیتکوین</td>
+                            <td>۰</td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </panel>
-        <panel title="نرخ ارز">
+        <panel title="تاریخچه معاملات">
             <div slot="body">
                 <div class="table-responsive pre-scrollable">
                     <table class="table">
@@ -215,7 +138,7 @@
     <!-- Tickers & Trades History -->
     <div class="col-md-3">
         <tickers></tickers>
-        <panel title="نرخ ارز">
+        <panel title="معاملات در حال انجام">
             <div slot="body">
                 <div class="table-responsive pre-scrollable">
                     <table class="table">
