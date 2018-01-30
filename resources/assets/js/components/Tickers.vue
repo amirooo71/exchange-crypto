@@ -5,68 +5,20 @@
                 <table class="table">
                     <thead>
                     <tr class="v-bg-dark">
-                        <!--<th></th>-->
+                        <th>نماد</th>
                         <th>نام</th>
                         <th>قیمت</th>
-                        <th>۲۴ ساعت گذشته</th>
+                        <th>تغییرات (۱ ساعت)</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <!--<td>-->
-                        <!--img-->
-                        <!--</td>-->
-                        <td>{{tickers.symbol}}</td>
-                        <td>{{tickers.closeQuantity}}</td>
-                        <td>{{tickers.priceChangePercent}}</td>
-                    </tr>
-                    <tr>
-                        <!--<td>-->
-                        <!--img-->
-                        <!--</td>-->
-                        <td>{{tickers.symbol}}</td>
-                        <td>{{tickers.high}}</td>
-                        <td>{{tickers.priceChangePercent}}</td>
-                    </tr>
-                    <tr>
-                        <!--<td>-->
-                        <!--img-->
-                        <!--</td>-->
-                        <td>{{tickers.symbol}}</td>
-                        <td>{{tickers.closeQuantity}}</td>
-                        <td>{{tickers.priceChangePercent}}</td>
-                    </tr>
-                    <tr>
-                        <!--<td>-->
-                        <!--img-->
-                        <!--</td>-->
-                        <td>{{tickers.symbol}}</td>
-                        <td>{{tickers.high}}</td>
-                        <td>{{tickers.priceChangePercent}}</td>
-                    </tr>
-                    <tr>
-                        <!--<td>-->
-                        <!--img-->
-                        <!--</td>-->
-                        <td>{{tickers.symbol}}</td>
-                        <td>{{tickers.closeQuantity}}</td>
-                        <td>{{tickers.priceChangePercent}}</td>
-                    </tr>
-                    <tr>
-                        <!--<td>-->
-                        <!--img-->
-                        <!--</td>-->
-                        <td>{{tickers.symbol}}</td>
-                        <td>{{tickers.high}}</td>
-                        <td>{{tickers.priceChangePercent}}</td>
-                    </tr>
-                    <tr>
-                        <!--<td>-->
-                        <!--img-->
-                        <!--</td>-->
-                        <td>{{tickers.symbol}}</td>
-                        <td>{{tickers.closeQuantity}}</td>
-                        <td>{{tickers.priceChangePercent}}</td>
+                    <tr v-for="ticker in tickers">
+                        <td><img src="./../../../../public/images/logo/BTC.svg" alt="بیتکوین"
+                                 class="v-tiny-svg">
+                        </td>
+                        <td>{{ticker.symbol}}</td>
+                        <td>{{ticker.price_usd}}</td>
+                        <td>{{ticker.percent_change_1h}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -77,33 +29,28 @@
 
 <script>
 
-    import VueSocketIo from 'vue-socket.io';
-
-    Vue.use(VueSocketIo, 'http://localhost:3000');
-
     export default {
         name: "tickers",
         data() {
             return {
-                tickers: '',
+                tickers: {}
             }
         },
-        sockets: {
-            connect: function () {
-                console.log('socket connected')
-            },
 
-            tickerBNBBTC: function (data) {
-                this.tickers = data;
-            }
+        mounted() {
+
+            axios.get('/api/v1/tickers')
+                .then((response) => {
+                    this.tickers = response.data;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+
         },
     }
 </script>
 
 <style scoped>
-
-    .v-danger {
-        color: red;
-    }
 
 </style>

@@ -16,6 +16,7 @@ window.Vue = require('vue');
 
 Vue.component('example', require('./components/Example.vue'));
 Vue.component('tickers', require('./components/Tickers'));
+Vue.component('balance', require('./components/Balance.vue'));
 
 Vue.component('panel', require('./components/widget/Panel.vue'));
 Vue.component('graph', require('./components/graph/Graph.vue'));
