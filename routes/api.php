@@ -21,12 +21,14 @@ Route::prefix('v1')->group(function () {
      *********************************
      */
     Route::get('/user/balance', 'Api\V1\UserController@getBalance')->middleware('auth:api');
+    Route::get('/user/order', 'Api\V1\UserController@getTradesHistory')->middleware('auth:api');
+    Route::post('/exchange/order', 'Api\V1\ExchangeController@order')->middleware('auth:api');
 
     /**
      *********************************
      *       Public Routes
      *********************************
      */
-    Route::get('/tickers', 'Api\V1\TradeController@getTickersInfo');
+    Route::get('/trade/tickers', 'Api\V1\TradeController@getTickersInfo');
 
 });
