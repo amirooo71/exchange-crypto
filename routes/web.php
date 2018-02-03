@@ -10,23 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Auth::routes();
 
-/**
- *********************************
- *       Public Routes
- *********************************
- */
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-/**
- *********************************
- *       Middleware Routes
- *********************************
- */
-
-Route::get('/trade', 'PagesController@trade')->middleware('auth');
+Route::get('/trade', 'PagesController@trade');

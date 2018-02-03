@@ -1,21 +1,14 @@
 @extends('layouts.base')
 
 @section('body')
-    <!-- User Wallet & Trade History -->
     <div class="col-md-3">
         <balance></balance>
-        <user-trade></user-trade>
+        <user-order></user-order>
     </div>
-    <!-- /User Wallet & Trade History -->
-
-    <!-- Tickers & Trades History -->
     <div class="col-md-3">
         <tickers></tickers>
-        <panel title="معاملات در حال انجام"></panel>
+        <order-book></order-book>
     </div>
-    <!-- /Tickers & Trades History -->
-
-    <!-- Chart & Exchange -->
     <div class="col-md-6">
         <panel title="نمودار">
             <div slot="body">
@@ -24,5 +17,4 @@
         </panel>
         <exchange></exchange>
     </div>
-    <!-- /Chart & Exchange -->
 @endsection

@@ -14,7 +14,7 @@
                     <tr>
                         <td></td>
                         <td>تومان</td>
-                        <td>{{bitAmount * 4600 * 12300}}</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td><img src="./../../../../public/images/logo/dollar-logo.svg" alt="دلار"
@@ -26,7 +26,7 @@
                         <td><img src="./../../../../public/images/logo/BTC.svg" alt="بیتکوین"
                                  class="v-tiny-svg"></td>
                         <td>بیتکوین</td>
-                        <td>{{bitAmount}}</td>
+                        <td></td>
                     </tr>
                     </tbody>
                 </table>
@@ -38,24 +38,6 @@
 <script>
     export default {
         name: "balance",
-
-        data() {
-            return {
-                tomanAmount: '',
-                usdAmount: '',
-                bitAmount: '',
-            }
-        },
-
-        mounted() {
-            axios.get('/api/v1/user/balance')
-                .then((response) => {
-                    this.bitAmount = response.data.amount;
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        }
     }
 </script>
 

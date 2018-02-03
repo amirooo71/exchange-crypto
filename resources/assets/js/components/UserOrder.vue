@@ -7,12 +7,16 @@
                     <tr class="v-bg-dark">
                         <th>میزان</th>
                         <th>قیمت</th>
+                        <th>نوع</th>
+                        <th>ارز</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="trade in trades">
-                        <td>{{trade.amount}}</td>
-                        <td>{{trade.price}}</td>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     </tbody>
                 </table>
@@ -23,21 +27,12 @@
 
 <script>
     export default {
-        name: "user-trade",
-        data() {
-            return {
-                trades: [],
-            }
-        },
+        name: "user-order",
 
         mounted() {
-            axios.get('api/v1/user/order')
-                .then((response) => {
-                    this.trades = response.data;
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            Event.$on('orderApplied', function () {
+                alert('Yehhhhhhhhhhhhhhhhh');
+            });
         }
     }
 </script>
