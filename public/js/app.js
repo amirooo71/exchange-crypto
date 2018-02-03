@@ -63829,7 +63829,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -63903,7 +63903,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "tickers"
@@ -65171,7 +65170,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -65213,10 +65212,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "user-order",
 
+    props: ['user'],
+
+    data: function data() {
+        return {
+            orders: {}
+        };
+    },
     mounted: function mounted() {
+
         Event.$on('orderApplied', function () {
-            alert('Yehhhhhhhhhhhhhhhhh');
+            var _this = this;
+
+            axios.get('/api/v1/orders/21/history').then(function (response) {
+                _this.orders = response.data;
+            }).catch(function (error) {
+                console.log(error.response.data);
+            });
         });
+
+        this.getUserOrders();
+    },
+
+
+    methods: {
+        getUserOrders: function getUserOrders() {
+            var _this2 = this;
+
+            // console.log(this.user);
+            axios.get('/api/v1/orders/21/history').then(function (response) {
+                _this2.orders = response.data;
+            }).catch(function (error) {
+                console.log(error.response.data);
+            });
+        }
     }
 });
 
@@ -65238,23 +65267,26 @@ var render = function() {
               _vm._v(" "),
               _c("th", [_vm._v("قیمت")]),
               _vm._v(" "),
-              _c("th", [_vm._v("نوع")]),
+              _c("th", [_vm._v("ساعت")]),
               _vm._v(" "),
               _c("th", [_vm._v("ارز")])
             ])
           ]),
           _vm._v(" "),
-          _c("tbody", [
-            _c("tr", [
-              _c("td"),
-              _vm._v(" "),
-              _c("td"),
-              _vm._v(" "),
-              _c("td"),
-              _vm._v(" "),
-              _c("td")
-            ])
-          ])
+          _c(
+            "tbody",
+            _vm._l(_vm.orders, function(order) {
+              return _c("tr", [
+                _c("td", [_vm._v(_vm._s(order.amount))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(order.price))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(order.created_at))]),
+                _vm._v(" "),
+                _c("td", [_vm._v("BTC")])
+              ])
+            })
+          )
         ])
       ])
     ])

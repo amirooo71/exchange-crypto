@@ -12,7 +12,7 @@ class OrderTest extends TestCase
     /**
      * @test
      */
-    function order_buy_it_has_currency()
+    function order_buy_has_currency()
     {
         $orderBuy = factory('App\OrderBuy')->create();
         $this->assertInstanceOf('App\Currency', $orderBuy->currency);
@@ -21,7 +21,7 @@ class OrderTest extends TestCase
     /**
      * @test
      */
-    function order_sell_it_has_currency()
+    function order_sell_has_currency()
     {
         $orderBuy = factory('App\OrderSell')->create();
         $this->assertInstanceOf('App\Currency', $orderBuy->currency);

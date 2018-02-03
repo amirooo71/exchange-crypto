@@ -17,5 +17,6 @@ Route::prefix('v1')->group(function () {
 
     Route::post('/trade/orderbuy', 'Api\V1\OrderBuyController@store');
     Route::post('/trade/ordersell', 'Api\V1\OrderSellController@store');
+    Route::get('/orders/{user}/history', 'Api\V1\UserController@orderHistory');
 
 });

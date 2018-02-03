@@ -3,7 +3,7 @@
 @section('body')
     <div class="col-md-3">
         <balance></balance>
-        <user-order></user-order>
+        <user-order user="{{auth()->user()}}"></user-order>
     </div>
     <div class="col-md-3">
         <tickers></tickers>
