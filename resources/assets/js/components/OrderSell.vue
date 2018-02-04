@@ -93,11 +93,11 @@
                 ;
             },
 
-            onSuccess() {
+            onSuccess(response) {
                 this.notify();
                 this.price = '';
                 this.amount = '';
-                Event.$emit('orderApplied')
+                Event.$emit('orderApplied', response.data)
             },
 
             notify() {

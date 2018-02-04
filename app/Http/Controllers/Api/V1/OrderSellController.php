@@ -16,6 +16,10 @@ class OrderSellController extends Controller
         $this->middleware('auth:api');
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -24,15 +28,14 @@ class OrderSellController extends Controller
             'amount' => 'required|numeric',
         ]);
 
-        OrderSell::create([
+        $order = OrderSell::create([
             'user_id' => auth()->id(),
             'currency_id' => \request('currency_id'),
             'price' => \request('price'),
             'amount' => \request('amount'),
         ]);
 
-        return response()->json(['success' => true], 200);
-
+        return response()->json($order, 200);
     }
 
 }

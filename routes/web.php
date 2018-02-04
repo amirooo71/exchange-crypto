@@ -20,3 +20,10 @@ Route::get('/', function () {
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/trade', 'PagesController@trade');
+
+
+
+Route::get('test',function (){
+    $orders = auth()->user();
+    dd($orders);
+});

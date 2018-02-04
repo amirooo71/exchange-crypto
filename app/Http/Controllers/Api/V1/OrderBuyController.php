@@ -28,13 +28,13 @@ class OrderBuyController extends Controller
             'amount' => 'required|numeric',
         ]);
 
-        OrderBuy::create([
+        $order = OrderBuy::create([
             'user_id' => auth()->id(),
             'currency_id' => \request('currency_id'),
             'price' => \request('price'),
             'amount' => \request('amount'),
         ]);
 
-        return response()->json(['success' => true], 200);
+        return response()->json($order, 200);
     }
 }

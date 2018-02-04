@@ -18644,7 +18644,6 @@ var app = new Vue({
 /***/ (function(module, exports, __webpack_require__) {
 
 window._ = __webpack_require__(142);
-
 window.Noty = __webpack_require__(143);
 
 /**
@@ -64395,11 +64394,11 @@ var Errors = function () {
                 return _this.errors.record(error.response.data);
             });
         },
-        onSuccess: function onSuccess() {
+        onSuccess: function onSuccess(response) {
             this.notify();
             this.price = '';
             this.amount = '';
-            Event.$emit('orderApplied');
+            Event.$emit('orderApplied', response.data);
         },
         notify: function notify() {
             new Noty({
@@ -64771,11 +64770,11 @@ var Errors = function () {
                 return _this.errors.record(error.response.data);
             });
         },
-        onSuccess: function onSuccess() {
+        onSuccess: function onSuccess(response) {
             this.notify();
             this.price = '';
             this.amount = '';
-            Event.$emit('orderApplied');
+            Event.$emit('orderApplied', response.data);
         },
         notify: function notify() {
             new Noty({
@@ -65170,7 +65169,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -65209,42 +65208,66 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+window.Global_Orders = [];
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+
     name: "user-order",
 
     props: ['user'],
 
     data: function data() {
         return {
-            orders: {}
+            orders: []
         };
     },
-    mounted: function mounted() {
+    created: function created() {
+        var _this = this;
 
-        Event.$on('orderApplied', function () {
-            var _this = this;
-
-            axios.get('/api/v1/orders/21/history').then(function (response) {
-                _this.orders = response.data;
-            }).catch(function (error) {
-                console.log(error.response.data);
-            });
+        Event.$on('orderApplied', function (data) {
+            data['color'] = "#78909C";
+            _this.orders.push(data);
+            console.log(data);
         });
-
+    },
+    mounted: function mounted() {
         this.getUserOrders();
     },
 
+
+    filters: {
+        round: function round(num) {
+            return Math.round(num);
+        }
+    },
 
     methods: {
         getUserOrders: function getUserOrders() {
             var _this2 = this;
 
-            // console.log(this.user);
-            axios.get('/api/v1/orders/21/history').then(function (response) {
+            var user = JSON.parse(this.user);
+            axios.get('/api/v1/orders/' + user.id + '/history').then(function (response) {
                 _this2.orders = response.data;
             }).catch(function (error) {
                 console.log(error.response.data);
             });
+        },
+        changeBgColorForPreiodOfTime: function changeBgColorForPreiodOfTime() {
+            var $el = $(".new-item"),
+                x = 2000,
+                originalColor = $el.css("background");
+
+            $el.css("background", "#78909C");
+            setTimeout(function () {
+                $el.css("background", originalColor);
+            }, x);
+        }
+    },
+
+    computed: {
+        sortedOrders: function sortedOrders() {
+            return _.orderBy(this.orders, ['id'], ['desc']);
         }
     }
 });
@@ -65263,11 +65286,11 @@ var render = function() {
         _c("table", { staticClass: "table" }, [
           _c("thead", [
             _c("tr", { staticClass: "v-bg-dark" }, [
-              _c("th", [_vm._v("میزان")]),
+              _c("th", [_vm._v("ساعت")]),
               _vm._v(" "),
               _c("th", [_vm._v("قیمت")]),
               _vm._v(" "),
-              _c("th", [_vm._v("ساعت")]),
+              _c("th", [_vm._v("میزان")]),
               _vm._v(" "),
               _c("th", [_vm._v("ارز")])
             ])
@@ -65275,13 +65298,13 @@ var render = function() {
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(_vm.orders, function(order) {
-              return _c("tr", [
-                _c("td", [_vm._v(_vm._s(order.amount))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(order.price))]),
-                _vm._v(" "),
+            _vm._l(_vm.sortedOrders, function(order) {
+              return _c("tr", { style: { background: order.color } }, [
                 _c("td", [_vm._v(_vm._s(order.created_at))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(_vm._f("currency")(order.price)))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(_vm._f("round")(order.amount)))]),
                 _vm._v(" "),
                 _c("td", [_vm._v("BTC")])
               ])

@@ -68,5 +68,7 @@
 <!-- Theme JS files -->
 <script type="text/javascript" src="{{asset('assets/js/core/app.js')}}"></script>
 <!-- /theme JS files -->
+
+<script src="https://cdn.jsdelivr.net/npm/vue2-filters/dist/vue2-filters.min.js"></script>
 </body>
 </html>

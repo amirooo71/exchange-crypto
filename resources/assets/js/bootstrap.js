@@ -1,5 +1,4 @@
 window._ = require('lodash');
-
 window.Noty = require('noty');
 
 /**
