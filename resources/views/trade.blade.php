@@ -2,19 +2,17 @@
 
 @section('body')
     <div class="col-md-3">
-        <balance></balance>
-        <user-order user="{{auth()->user()}}"></user-order>
-    </div>
-    <div class="col-md-3">
         <tickers></tickers>
-        <order-book></order-book>
+        <exchange></exchange>
+        <balance></balance>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-9">
         <panel title="نمودار">
             <div slot="body">
                 <graph></graph>
             </div>
         </panel>
-        <exchange></exchange>
+        <user-order user="{{auth()->user()}}"></user-order>
+        <order-book></order-book>
     </div>
 @endsection

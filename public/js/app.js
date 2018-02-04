@@ -65719,7 +65719,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -65754,8 +65754,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
                 datasets: [{
                     label: '# of Votes',
-                    data: [11, 36, 3, 5, 2, 3],
+                    data: [11, 36, 3, 5, 2, 8],
                     backgroundColor: '#455A64'
+                }, {
+                    label: '# of Votes',
+                    data: [7, 26, 3, 15, 2, 15],
+                    backgroundColor: '#546E7A'
                 }]
             },
             options: {
@@ -78803,7 +78807,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("canvas", { attrs: { height: "117" } })
+  return _c("canvas")
 }
 var staticRenderFns = []
 render._withStripped = true

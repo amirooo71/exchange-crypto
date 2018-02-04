@@ -1,5 +1,5 @@
 <template>
-    <canvas height="117"></canvas>
+    <canvas></canvas>
 </template>
 
 <script>
@@ -22,8 +22,13 @@
                     datasets: [
                         {
                             label: '# of Votes',
-                            data: [11, 36, 3, 5, 2, 3],
+                            data: [11, 36, 3, 5, 2, 8],
                             backgroundColor: '#455A64',
+                        },
+                        {
+                            label: '# of Votes',
+                            data: [7, 26, 3, 15, 2, 15],
+                            backgroundColor: '#546E7A',
                         },
 
                     ]
