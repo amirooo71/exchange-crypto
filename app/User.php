@@ -39,7 +39,7 @@ class User extends Authenticatable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function orderSale()
+    public function orderSell()
     {
         return $this->hasMany(OrderSell::class);
     }

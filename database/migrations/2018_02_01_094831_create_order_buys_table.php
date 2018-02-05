@@ -19,6 +19,7 @@ class CreateOrderBuysTable extends Migration
             $table->integer('currency_id');
             $table->decimal('price', 64, 30);
             $table->decimal('amount', 64, 30);
+            $table->string('type', 10)->default('خرید');
             $table->timestamps();
         });
     }

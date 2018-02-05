@@ -35,6 +35,8 @@ class OrderBuyController extends Controller
             'amount' => \request('amount'),
         ]);
 
+        $order['type'] = 'خرید';
+
         return response()->json($order, 200);
     }
 }

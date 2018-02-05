@@ -22,8 +22,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/trade', 'PagesController@trade');
 
 
+Route::get('test', function () {
 
-Route::get('test',function (){
-    $orders = auth()->user();
-    dd($orders);
+    $buy = \App\OrderBuy::all();
+
+    $sell = \App\OrderSell::all();
+
+    $result = array_merge($buy->toArray(), $sell->toArray());
+
+    dd($result);
+
 });

@@ -23,8 +23,8 @@
                     </div>
                 </div>
 
-                <div class="form-group" v-if="price && amount">
-                    <label class="col-lg-3 control-label">کل مبلغ</label>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">کل:</label>
                     <div class="col-lg-9">
                         <input type="text" class="form-control" :value="price * amount">
                     </div>

@@ -21,7 +21,9 @@ class UserController extends Controller
      */
     public function orderHistory(User $user)
     {
-        $orders = $user->orderBuy()->latest()->get();
+        $buyOrders = $user->orderBuy()->latest()->get();
+        $sellOrders = $user->orderSell()->latest()->get();
+        $orders = array_merge($buyOrders->toArray(), $sellOrders->toArray());
         return response()->json($orders, 200);
     }
 }

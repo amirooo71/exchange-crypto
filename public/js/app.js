@@ -64512,21 +64512,19 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm.price && _vm.amount
-            ? _c("div", { staticClass: "form-group" }, [
-                _c("label", { staticClass: "col-lg-3 control-label" }, [
-                  _vm._v("کل مبلغ")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-lg-9" }, [
-                  _c("input", {
-                    staticClass: "form-control",
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.price * _vm.amount }
-                  })
-                ])
-              ])
-            : _vm._e(),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { staticClass: "col-lg-3 control-label" }, [
+              _vm._v("کل:")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-9" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.price * _vm.amount }
+              })
+            ])
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "text-right" }, [
             _c(
@@ -64888,21 +64886,19 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm.price && _vm.amount
-            ? _c("div", { staticClass: "form-group" }, [
-                _c("label", { staticClass: "col-lg-3 control-label" }, [
-                  _vm._v("کل مبلغ")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-lg-9" }, [
-                  _c("input", {
-                    staticClass: "form-control",
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.price * _vm.amount }
-                  })
-                ])
-              ])
-            : _vm._e(),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { staticClass: "col-lg-3 control-label" }, [
+              _vm._v("کل:")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-9" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.price * _vm.amount }
+              })
+            ])
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "text-right" }, [
             _c(
@@ -65169,7 +65165,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -65180,6 +65176,84 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -65219,7 +65293,10 @@ window.Global_Orders = [];
 
     data: function data() {
         return {
-            orders: []
+            orders: [],
+            price: '',
+            amount: '',
+            type: ''
         };
     },
     created: function created() {
@@ -65253,15 +65330,12 @@ window.Global_Orders = [];
                 console.log(error.response.data);
             });
         },
-        changeBgColorForPreiodOfTime: function changeBgColorForPreiodOfTime() {
-            var $el = $(".new-item"),
-                x = 2000,
-                originalColor = $el.css("background");
-
-            $el.css("background", "#78909C");
-            setTimeout(function () {
-                $el.css("background", originalColor);
-            }, x);
+        editOrder: function editOrder(order) {
+            console.log(order);
+            $('.js-order-price').val(order.price);
+            $('.js-order-amount').val(order.amount);
+            $('.js-order-total').val(order.amount * order.price);
+            $("#modal_default").modal('show');
         }
     },
 
@@ -65280,42 +65354,238 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("panel", { attrs: { title: "تاریخچه معاملات" } }, [
-    _c("div", { attrs: { slot: "body" }, slot: "body" }, [
-      _c("div", { staticClass: "table-responsive pre-scrollable" }, [
-        _c("table", { staticClass: "table" }, [
-          _c("thead", [
-            _c("tr", { staticClass: "v-bg-dark" }, [
-              _c("th", [_vm._v("ساعت")]),
+  return _c("div", [
+    _c("div", { staticClass: "table-responsive pre-scrollable" }, [
+      _c("table", { staticClass: "table" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.sortedOrders, function(order) {
+            return _c("tr", { style: { background: order.color } }, [
+              _c("td", [_vm._v(_vm._s(order.type))]),
               _vm._v(" "),
-              _c("th", [_vm._v("قیمت")]),
+              _c("td", [_vm._v(_vm._s(_vm._f("round")(order.amount)))]),
               _vm._v(" "),
-              _c("th", [_vm._v("میزان")]),
+              _c("td", [_vm._v(_vm._s(_vm._f("currency")(order.price)))]),
               _vm._v(" "),
-              _c("th", [_vm._v("ارز")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.sortedOrders, function(order) {
-              return _c("tr", { style: { background: order.color } }, [
-                _c("td", [_vm._v(_vm._s(order.created_at))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(_vm._f("currency")(order.price)))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(_vm._f("round")(order.amount)))]),
-                _vm._v(" "),
-                _c("td", [_vm._v("BTC")])
+              _c("td", [_vm._v("BTC")]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(order.created_at))]),
+              _vm._v(" "),
+              order.type == "فروش"
+                ? _c("td", [
+                    _c("span", { staticClass: "icon-checkmark2 text-success" })
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              order.type == "خرید"
+                ? _c("td", [
+                    _c("span", { staticClass: "icon-cross2 text-danger" })
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "ul",
+                  {
+                    staticClass: "icons-list",
+                    staticStyle: { color: "#CFD8DC" }
+                  },
+                  [
+                    _c("li", [
+                      _c(
+                        "a",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.editOrder(order)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "icon-pencil7" })]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(1, true)
+                  ]
+                )
               ])
-            })
-          )
+            ])
+          })
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "modal fade", attrs: { id: "modal_default" } }, [
+      _c("div", { staticClass: "modal-dialog" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _vm._m(2),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-body" }, [
+            _c("form", { staticClass: "form-horizontal" }, [
+              _c("div", { staticClass: "panel ng-bg-dark" }, [
+                _vm._m(3),
+                _vm._v(" "),
+                _c("div", { staticClass: "panel-body" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { staticClass: "col-lg-3 control-label" }, [
+                      _vm._v("قیمت:")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-9" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.price,
+                            expression: "price"
+                          }
+                        ],
+                        staticClass: "form-control js-order-price",
+                        attrs: { type: "text", name: "price" },
+                        domProps: { value: _vm.price },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.price = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "text-danger help-block" })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { staticClass: "col-lg-3 control-label" }, [
+                      _vm._v("مقدار:")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-9" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.amount,
+                            expression: "amount"
+                          }
+                        ],
+                        staticClass: "form-control js-order-amount",
+                        attrs: { type: "text", name: "amount" },
+                        domProps: { value: _vm.amount },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.amount = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "text-danger help-block" })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { staticClass: "col-lg-3 control-label" }, [
+                      _vm._v("کل مبلغ")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-9" }, [
+                      _c("input", {
+                        staticClass: "form-control js-order-total",
+                        attrs: { type: "text" },
+                        domProps: { value: _vm.price * _vm.amount }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(4)
+                ])
+              ])
+            ])
+          ])
         ])
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { staticClass: "v-bg-dark" }, [
+        _c("th", [_vm._v("نوع")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("میزان")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("قیمت")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("ارز")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("ساعت")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("وضعیت")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("ویرایش")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [_c("a", [_c("i", { staticClass: "icon-trash" })])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "button",
+        {
+          staticClass: "close text-white",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("×")]
+      ),
+      _vm._v(" "),
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("ویرایش")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-heading" }, [
+      _c("h5", { staticClass: "panel-title" }, [_vm._v("فروش")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "text-right" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-success", attrs: { type: "submit" } },
+        [
+          _vm._v("ویرایش خرید "),
+          _c("i", { staticClass: "icon-arrow-left13 position-right" })
+        ]
+      )
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -78807,7 +79077,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("canvas")
+  return _c("canvas", { attrs: { height: "130" } })
 }
 var staticRenderFns = []
 render._withStripped = true
