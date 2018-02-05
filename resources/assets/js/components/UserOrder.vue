@@ -50,7 +50,7 @@
                         <h5 class="modal-title">ویرایش</h5>
                     </div>
                     <div class="modal-body">
-                        <form class="form-horizontal">
+                        <form class="form-horizontal" @submit.prevent="onSubmit">
                             <div class="panel ng-bg-dark">
                                 <div class="panel-heading">
                                     <h5 class="panel-title">فروش</h5>
@@ -118,7 +118,9 @@
                 orders: [],
                 price: '',
                 amount: '',
+                currency_id: 1,
                 type: '',
+                currentOrderId: '',
             }
         },
 
@@ -141,6 +143,7 @@
         },
 
         methods: {
+
             getUserOrders() {
                 var user = JSON.parse(this.user);
                 axios.get('/api/v1/orders/' + user.id + '/history')
@@ -154,12 +157,24 @@
             },
 
             editOrder(order) {
-                console.log(order);
+                this.currentOrderId = order.id;
                 $('.js-order-price').val(order.price);
                 $('.js-order-amount').val(order.amount);
                 $('.js-order-total').val(order.amount * order.price);
                 $("#modal_default").modal('show');
             },
+
+            onSubmit() {
+                axios.post('api/v1/trade/orderbuy/' + this.currentOrderId + '/edit', this.$data)
+                    .then(response => {
+                        console.log(response.data);
+                    })
+                    .catch(error => {
+                        console.log(error.response.data)
+                    })
+                ;
+            },
+
         },
 
         computed: {

@@ -64274,7 +64274,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -65165,7 +65165,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -65296,7 +65296,9 @@ window.Global_Orders = [];
             orders: [],
             price: '',
             amount: '',
-            type: ''
+            currency_id: 1,
+            type: '',
+            currentOrderId: ''
         };
     },
     created: function created() {
@@ -65331,11 +65333,18 @@ window.Global_Orders = [];
             });
         },
         editOrder: function editOrder(order) {
-            console.log(order);
+            this.currentOrderId = order.id;
             $('.js-order-price').val(order.price);
             $('.js-order-amount').val(order.amount);
             $('.js-order-total').val(order.amount * order.price);
             $("#modal_default").modal('show');
+        },
+        onSubmit: function onSubmit() {
+            axios.post('api/v1/trade/orderbuy/' + this.currentOrderId + '/edit', this.$data).then(function (response) {
+                console.log(response.data);
+            }).catch(function (error) {
+                console.log(error.response.data);
+            });
         }
     },
 
@@ -65423,93 +65432,105 @@ var render = function() {
           _vm._m(2),
           _vm._v(" "),
           _c("div", { staticClass: "modal-body" }, [
-            _c("form", { staticClass: "form-horizontal" }, [
-              _c("div", { staticClass: "panel ng-bg-dark" }, [
-                _vm._m(3),
-                _vm._v(" "),
-                _c("div", { staticClass: "panel-body" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { staticClass: "col-lg-3 control-label" }, [
-                      _vm._v("قیمت:")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-lg-9" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.price,
-                            expression: "price"
-                          }
-                        ],
-                        staticClass: "form-control js-order-price",
-                        attrs: { type: "text", name: "price" },
-                        domProps: { value: _vm.price },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.price = $event.target.value
-                          }
-                        }
-                      }),
+            _c(
+              "form",
+              {
+                staticClass: "form-horizontal",
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    _vm.onSubmit($event)
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "panel ng-bg-dark" }, [
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "panel-body" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "col-lg-3 control-label" }, [
+                        _vm._v("قیمت:")
+                      ]),
                       _vm._v(" "),
-                      _c("span", { staticClass: "text-danger help-block" })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { staticClass: "col-lg-3 control-label" }, [
-                      _vm._v("مقدار:")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-lg-9" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.amount,
-                            expression: "amount"
-                          }
-                        ],
-                        staticClass: "form-control js-order-amount",
-                        attrs: { type: "text", name: "amount" },
-                        domProps: { value: _vm.amount },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                      _c("div", { staticClass: "col-lg-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.price,
+                              expression: "price"
                             }
-                            _vm.amount = $event.target.value
+                          ],
+                          staticClass: "form-control js-order-price",
+                          attrs: { type: "text", name: "price" },
+                          domProps: { value: _vm.price },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.price = $event.target.value
+                            }
                           }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "text-danger help-block" })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { staticClass: "col-lg-3 control-label" }, [
-                      _vm._v("کل مبلغ")
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "text-danger help-block" })
+                      ])
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-lg-9" }, [
-                      _c("input", {
-                        staticClass: "form-control js-order-total",
-                        attrs: { type: "text" },
-                        domProps: { value: _vm.price * _vm.amount }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(4)
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "col-lg-3 control-label" }, [
+                        _vm._v("مقدار:")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-lg-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.amount,
+                              expression: "amount"
+                            }
+                          ],
+                          staticClass: "form-control js-order-amount",
+                          attrs: { type: "text", name: "amount" },
+                          domProps: { value: _vm.amount },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.amount = $event.target.value
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "text-danger help-block" })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "col-lg-3 control-label" }, [
+                        _vm._v("کل مبلغ")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-lg-9" }, [
+                        _c("input", {
+                          staticClass: "form-control js-order-total",
+                          attrs: { type: "text" },
+                          domProps: { value: _vm.price * _vm.amount }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(4)
+                  ])
                 ])
-              ])
-            ])
+              ]
+            )
           ])
         ])
       ])

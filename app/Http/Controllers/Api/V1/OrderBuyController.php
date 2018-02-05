@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\OrderBuy;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class OrderBuyController extends Controller
 {
@@ -38,5 +39,26 @@ class OrderBuyController extends Controller
         $order['type'] = 'خرید';
 
         return response()->json($order, 200);
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function edit($id)
+    {
+        DB::table('order_buys')
+            ->where('id', $id)
+            ->update([
+                'price' => \request('price'),
+                'amount' => \request('amount'),
+            ]);
+
+        return response()->json(["status" => "success"], 201);
+    }
+
+
+    public function destroy()
+    {
     }
 }

@@ -72,8 +72,7 @@
         }
 
     }
-
-
+    
     export default {
         name: "order-buy",
 
