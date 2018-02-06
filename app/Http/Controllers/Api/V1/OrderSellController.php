@@ -40,4 +40,25 @@ class OrderSellController extends Controller
         return response()->json($order, 200);
     }
 
+    /**
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update($id, Request $request)
+    {
+        $this->validate($request, [
+            'price' => 'required|numeric',
+            'amount' => 'required|numeric',
+        ]);
+
+        $orderSell = OrderSell::find($id);
+        $orderSell->update([
+            'price' => \request('price'),
+            'amount' => \request('amount'),
+        ]);
+
+        return response()->json($orderSell, 201);
+    }
+
 }

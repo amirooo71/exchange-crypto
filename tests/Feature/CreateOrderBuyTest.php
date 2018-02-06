@@ -35,6 +35,35 @@ class CreateOrderBuyTest extends TestCase
     /**
      * @test
      */
+    function an_authenticated_user_can_update_order_buy()
+    {
+        $this->JWTSignIn();
+        $order = create('App\OrderBuy', ['user_id' => auth()->id()]);
+        $response = $this->patch("/api/v1/trade/orderbuy/{$order->id}/update", [
+            'price' => 99,
+            'amount' => 99,
+        ]);
+        $response->assertStatus(201);
+
+    }
+
+    /**
+     * @test
+     */
+    function an_unauthenticated_user_can_not_update_order_buy()
+    {
+        $this->expectException('Illuminate\Auth\AuthenticationException');
+        $order = create('App\OrderBuy');
+        $this->patch("/api/v1/trade/orderbuy/{$order->id}/update", [
+            'price' => 99,
+            'amount' => 99,
+        ]);
+
+    }
+
+    /**
+     * @test
+     */
     function a_order_buy_requires_price()
     {
         $this->expectException('Illuminate\Validation\ValidationException');

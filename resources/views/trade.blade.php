@@ -25,7 +25,7 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="bottom-justified-tab1">
-                            <user-order user="{{auth()->user()}}"></user-order>
+                            <user-order :user="{{auth()->user()}}"></user-order>
                         </div>
                         <div class="tab-pane" id="bottom-justified-tab2">
                             <order-book></order-book>

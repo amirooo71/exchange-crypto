@@ -65165,7 +65165,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -65176,9 +65176,10 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 //
 //
 //
@@ -65283,7 +65284,44 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 
-window.Global_Orders = [];
+var Errors = function () {
+    function Errors() {
+        _classCallCheck(this, Errors);
+
+        this.errors = {};
+    }
+
+    _createClass(Errors, [{
+        key: 'get',
+        value: function get(field) {
+            if (this.errors[field]) {
+                return this.errors[field][0];
+            }
+        }
+    }, {
+        key: 'has',
+        value: function has(field) {
+            return this.errors.hasOwnProperty(field);
+        }
+    }, {
+        key: 'any',
+        value: function any() {
+            return Object.keys(this.errors).length > 0;
+        }
+    }, {
+        key: 'record',
+        value: function record(errors) {
+            this.errors = errors;
+        }
+    }, {
+        key: 'clear',
+        value: function clear(field) {
+            delete this.errors[field];
+        }
+    }]);
+
+    return Errors;
+}();
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
@@ -65297,17 +65335,16 @@ window.Global_Orders = [];
             price: '',
             amount: '',
             currency_id: 1,
-            type: '',
-            currentOrderId: ''
+            selectedOrder: {},
+            uriAction: '',
+            errors: new Errors()
         };
     },
     created: function created() {
         var _this = this;
 
         Event.$on('orderApplied', function (data) {
-            data['color'] = "#78909C";
-            _this.orders.push(data);
-            console.log(data);
+            return _this.onOrderAppliedEvent(data);
         });
     },
     mounted: function mounted() {
@@ -65322,29 +65359,63 @@ window.Global_Orders = [];
     },
 
     methods: {
+        onOrderAppliedEvent: function onOrderAppliedEvent(data) {
+            data['color'] = "#78909C";
+            this.orders.push(data);
+        },
         getUserOrders: function getUserOrders() {
             var _this2 = this;
 
-            var user = JSON.parse(this.user);
-            axios.get('/api/v1/orders/' + user.id + '/history').then(function (response) {
-                _this2.orders = response.data;
+            axios.get('/api/v1/orders/' + this.user.id + '/history').then(function (response) {
+                return _this2.orders = response.data;
             }).catch(function (error) {
-                console.log(error.response.data);
+                return console.log(error.response.data);
             });
         },
-        editOrder: function editOrder(order) {
-            this.currentOrderId = order.id;
-            $('.js-order-price').val(order.price);
-            $('.js-order-amount').val(order.amount);
-            $('.js-order-total').val(order.amount * order.price);
-            $("#modal_default").modal('show');
+        updateOrder: function updateOrder(order) {
+            this.selectedOrder = order;
+            this.showModal();
         },
         onSubmit: function onSubmit() {
-            axios.post('api/v1/trade/orderbuy/' + this.currentOrderId + '/edit', this.$data).then(function (response) {
-                console.log(response.data);
-            }).catch(function (error) {
-                console.log(error.response.data);
+            var _this3 = this;
+
+            this.checkOrderType();
+            axios.patch('api/v1/trade/' + this.uriAction + '/' + this.selectedOrder.id + '/update', this.$data).then(this.onSuccess).catch(function (error) {
+                return _this3.errors.record(error.response.data);
             });
+        },
+        showModal: function showModal() {
+            this.price = this.selectedOrder.price;
+            this.amount = this.selectedOrder.amount;
+            $("#modal_default").modal('show');
+        },
+        onSuccess: function onSuccess(response) {
+            this.removeOrder();
+            response.data['color'] = "#26A69A";
+            this.orders.push(response.data);
+            this.price = '';
+            this.amount = '';
+            $("#modal_default").modal('hide');
+            this.notify("سفارش با موفقیت ویرایش شد.");
+        },
+        checkOrderType: function checkOrderType() {
+            if (this.selectedOrder.type == 'خرید') {
+                this.uriAction = "orderbuy";
+            } else {
+                this.uriAction = "ordersell";
+            }
+        },
+        removeOrder: function removeOrder() {
+            var index = this.orders.indexOf(this.selectedOrder);
+            this.orders.splice(index, 1);
+        },
+        notify: function notify(message) {
+            new Noty({
+                type: 'success',
+                layout: 'bottomRight',
+                theme: 'mint',
+                text: message
+            }).show();
         }
     },
 
@@ -65408,7 +65479,7 @@ var render = function() {
                         {
                           on: {
                             click: function($event) {
-                              _vm.editOrder(order)
+                              _vm.updateOrder(order)
                             }
                           }
                         },
@@ -65416,7 +65487,19 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _vm._m(1, true)
+                    _c("li", [
+                      _c(
+                        "a",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.removeOrder(order)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "icon-trash" })]
+                      )
+                    ])
                   ]
                 )
               ])
@@ -65429,7 +65512,7 @@ var render = function() {
     _c("div", { staticClass: "modal fade", attrs: { id: "modal_default" } }, [
       _c("div", { staticClass: "modal-dialog" }, [
         _c("div", { staticClass: "modal-content" }, [
-          _vm._m(2),
+          _vm._m(1),
           _vm._v(" "),
           _c("div", { staticClass: "modal-body" }, [
             _c(
@@ -65440,12 +65523,15 @@ var render = function() {
                   submit: function($event) {
                     $event.preventDefault()
                     _vm.onSubmit($event)
+                  },
+                  keydown: function($event) {
+                    _vm.errors.clear($event.target.name)
                   }
                 }
               },
               [
                 _c("div", { staticClass: "panel ng-bg-dark" }, [
-                  _vm._m(3),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c("div", { staticClass: "panel-body" }, [
                     _c("div", { staticClass: "form-group" }, [
@@ -65476,7 +65562,14 @@ var render = function() {
                           }
                         }),
                         _vm._v(" "),
-                        _c("span", { staticClass: "text-danger help-block" })
+                        _vm.errors.has("price")
+                          ? _c("span", {
+                              staticClass: "text-danger help-block",
+                              domProps: {
+                                textContent: _vm._s(_vm.errors.get("price"))
+                              }
+                            })
+                          : _vm._e()
                       ])
                     ]),
                     _vm._v(" "),
@@ -65508,13 +65601,20 @@ var render = function() {
                           }
                         }),
                         _vm._v(" "),
-                        _c("span", { staticClass: "text-danger help-block" })
+                        _vm.errors.has("amount")
+                          ? _c("span", {
+                              staticClass: "text-danger help-block",
+                              domProps: {
+                                textContent: _vm._s(_vm.errors.get("amount"))
+                              }
+                            })
+                          : _vm._e()
                       ])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", { staticClass: "col-lg-3 control-label" }, [
-                        _vm._v("کل مبلغ")
+                        _vm._v("کل مبلغ:")
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-lg-9" }, [
@@ -65526,7 +65626,23 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm._m(4)
+                    _c("div", { staticClass: "text-right" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-success",
+                          attrs: { type: "submit", disabled: _vm.errors.any() }
+                        },
+                        [
+                          _vm._v(
+                            "تایید\n                                        خرید "
+                          ),
+                          _c("i", {
+                            staticClass: "icon-arrow-left13 position-right"
+                          })
+                        ]
+                      )
+                    ])
                   ])
                 ])
               ]
@@ -65564,12 +65680,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("li", [_c("a", [_c("i", { staticClass: "icon-trash" })])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
       _c(
         "button",
@@ -65589,21 +65699,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "panel-heading" }, [
       _c("h5", { staticClass: "panel-title" }, [_vm._v("فروش")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-right" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-success", attrs: { type: "submit" } },
-        [
-          _vm._v("ویرایش خرید "),
-          _c("i", { staticClass: "icon-arrow-left13 position-right" })
-        ]
-      )
     ])
   }
 ]

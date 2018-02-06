@@ -43,20 +43,24 @@ class OrderBuyController extends Controller
 
     /**
      * @param $id
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function edit($id)
+    public function update($id, Request $request)
     {
-        DB::table('order_buys')
-            ->where('id', $id)
-            ->update([
-                'price' => \request('price'),
-                'amount' => \request('amount'),
-            ]);
+        $this->validate($request, [
+            'price' => 'required|numeric',
+            'amount' => 'required|numeric',
+        ]);
 
-        return response()->json(["status" => "success"], 201);
+        $orderBuy = OrderBuy::find($id);
+        $orderBuy->update([
+            'price' => \request('price'),
+            'amount' => \request('amount'),
+        ]);
+
+        return response()->json($orderBuy, 201);
     }
-
 
     public function destroy()
     {

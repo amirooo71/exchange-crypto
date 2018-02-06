@@ -24,12 +24,41 @@ class CreateOrderSellTest extends TestCase
     /**
      * @test
      */
-    public function an_authenticated_user_can_create_order_sale()
+    public function an_authenticated_user_can_create_order_sell()
     {
         $this->JWTSignIn();
         $orderSell = make('App\OrderSell');
         $response = $this->post(self::URL, $orderSell->toArray());
         $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    function an_authenticated_user_can_update_order_sell()
+    {
+        $this->JWTSignIn();
+        $order = create('App\OrderSell', ['user_id' => auth()->id()]);
+        $response = $this->patch("/api/v1/trade/ordersell/{$order->id}/update", [
+            'price' => 99,
+            'amount' => 99,
+        ]);
+        $response->assertStatus(201);
+
+    }
+
+    /**
+     * @test
+     */
+    function an_unauthenticated_user_can_not_update_order_sell()
+    {
+        $this->expectException('Illuminate\Auth\AuthenticationException');
+        $order = create('App\OrderSell');
+        $this->patch("/api/v1/trade/ordersell/{$order->id}/update", [
+            'price' => 99,
+            'amount' => 99,
+        ]);
+
     }
 
     /**

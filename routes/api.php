@@ -16,10 +16,10 @@ use Illuminate\Http\Request;
 Route::prefix('v1')->group(function () {
 
     Route::post('/trade/orderbuy', 'Api\V1\OrderBuyController@store');
-    Route::post('/trade/orderbuy/{id}/edit', 'Api\V1\OrderBuyController@edit');
+    Route::patch('/trade/orderbuy/{id}/update', 'Api\V1\OrderBuyController@update');
+    Route::patch('/trade/ordersell/{id}/update', 'Api\V1\OrderSellController@update');
 
     Route::post('/trade/ordersell', 'Api\V1\OrderSellController@store');
-
     Route::get('/orders/{user}/history', 'Api\V1\UserController@orderHistory');
 
 });

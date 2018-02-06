@@ -25,12 +25,12 @@
                     <td>
                         <ul class="icons-list" style="color: #CFD8DC;">
                             <li>
-                                <a @click="editOrder(order)">
+                                <a @click="updateOrder(order)">
                                     <i class="icon-pencil7"></i>
                                 </a>
                             </li>
                             <li>
-                                <a>
+                                <a @click="removeOrder(order)">
                                     <i class="icon-trash"></i>
                                 </a>
                             </li>
@@ -40,8 +40,6 @@
                 </tbody>
             </table>
         </div>
-
-
         <div id="modal_default" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -50,7 +48,8 @@
                         <h5 class="modal-title">ویرایش</h5>
                     </div>
                     <div class="modal-body">
-                        <form class="form-horizontal" @submit.prevent="onSubmit">
+                        <form class="form-horizontal" @submit.prevent="onSubmit"
+                              @keydown="errors.clear($event.target.name)">
                             <div class="panel ng-bg-dark">
                                 <div class="panel-heading">
                                     <h5 class="panel-title">فروش</h5>
@@ -61,7 +60,8 @@
                                         <div class="col-lg-9">
                                             <input type="text" class="form-control js-order-price" name="price"
                                                    v-model="price">
-                                            <span class="text-danger help-block"></span>
+                                            <span class="text-danger help-block" v-if="errors.has('price')"
+                                                  v-text="errors.get('price')"></span>
                                         </div>
                                     </div>
 
@@ -70,12 +70,13 @@
                                         <div class="col-lg-9">
                                             <input type="text" class="form-control js-order-amount" name="amount"
                                                    v-model="amount">
-                                            <span class="text-danger help-block"></span>
+                                            <span class="text-danger help-block" v-if="errors.has('amount')"
+                                                  v-text="errors.get('amount')"></span>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-lg-3 control-label">کل مبلغ</label>
+                                        <label class="col-lg-3 control-label">کل مبلغ:</label>
                                         <div class="col-lg-9">
                                             <input type="text" class="form-control js-order-total"
                                                    :value="price * amount">
@@ -83,18 +84,14 @@
                                     </div>
 
                                     <div class="text-right">
-                                        <button type="submit" class="btn btn-success">ویرایش خرید <i
-                                                class="icon-arrow-left13 position-right"></i></button>
+                                        <button type="submit" class="btn btn-success" :disabled="errors.any()">تایید
+                                            خرید <i
+                                                    class="icon-arrow-left13 position-right"></i></button>
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
-
-                    <!--<div class="modal-footer">-->
-                    <!--<button type="button" class="btn btn-link text-white" data-dismiss="modal">خروج</button>-->
-                    <!--&lt;!&ndash;<button type="button" class="btn btn-primary text-white">Save changes</button>&ndash;&gt;-->
-                    <!--</div>-->
                 </div>
             </div>
         </div>
@@ -105,7 +102,35 @@
 
 <script>
 
-    window.Global_Orders = [];
+    class Errors {
+
+        constructor() {
+            this.errors = {};
+        }
+
+        get(field) {
+            if (this.errors[field]) {
+                return this.errors[field][0];
+            }
+        }
+
+        has(field) {
+            return this.errors.hasOwnProperty(field);
+        }
+
+        any() {
+            return Object.keys(this.errors).length > 0;
+        }
+
+        record(errors) {
+            this.errors = errors;
+        }
+
+        clear(field) {
+            delete this.errors[field];
+        }
+
+    }
 
     export default {
 
@@ -119,17 +144,14 @@
                 price: '',
                 amount: '',
                 currency_id: 1,
-                type: '',
-                currentOrderId: '',
+                selectedOrder: {},
+                uriAction: '',
+                errors: new Errors(),
             }
         },
 
         created() {
-            Event.$on('orderApplied', data => {
-                data['color'] = "#78909C";
-                this.orders.push(data);
-                console.log(data);
-            });
+            Event.$on('orderApplied', data => this.onOrderAppliedEvent(data));
         },
 
         mounted() {
@@ -144,35 +166,67 @@
 
         methods: {
 
-            getUserOrders() {
-                var user = JSON.parse(this.user);
-                axios.get('/api/v1/orders/' + user.id + '/history')
-                    .then(response => {
-                        this.orders = response.data;
-                    })
-                    .catch(error => {
-                        console.log(error.response.data);
-                    })
-                ;
+            onOrderAppliedEvent(data) {
+                data['color'] = "#78909C";
+                this.orders.push(data);
             },
 
-            editOrder(order) {
-                this.currentOrderId = order.id;
-                $('.js-order-price').val(order.price);
-                $('.js-order-amount').val(order.amount);
-                $('.js-order-total').val(order.amount * order.price);
-                $("#modal_default").modal('show');
+            getUserOrders() {
+                axios.get('/api/v1/orders/' + this.user.id + '/history')
+                    .then(response => this.orders = response.data)
+                    .catch(error => console.log(error.response.data));
+            },
+
+            updateOrder(order) {
+                this.selectedOrder = order;
+                this.showModal();
             },
 
             onSubmit() {
-                axios.post('api/v1/trade/orderbuy/' + this.currentOrderId + '/edit', this.$data)
-                    .then(response => {
-                        console.log(response.data);
-                    })
-                    .catch(error => {
-                        console.log(error.response.data)
-                    })
+                this.checkOrderType();
+                axios.patch('api/v1/trade/' + this.uriAction + '/' + this.selectedOrder.id + '/update', this.$data)
+                    .then(this.onSuccess)
+                    .catch(error => this.errors.record(error.response.data))
                 ;
+            },
+
+            showModal() {
+                this.price = this.selectedOrder.price;
+                this.amount = this.selectedOrder.amount;
+                $("#modal_default").modal('show');
+            },
+
+            onSuccess(response) {
+                this.removeOrder();
+                response.data['color'] = "#26A69A";
+                this.orders.push(response.data);
+                this.price = '';
+                this.amount = '';
+                $("#modal_default").modal('hide');
+                this.notify("سفارش با موفقیت ویرایش شد.")
+            },
+
+
+            checkOrderType() {
+                if (this.selectedOrder.type == 'خرید') {
+                    this.uriAction = "orderbuy";
+                } else {
+                    this.uriAction = "ordersell";
+                }
+            },
+
+            removeOrder() {
+                var index = this.orders.indexOf(this.selectedOrder);
+                this.orders.splice(index, 1);
+            },
+
+            notify(message) {
+                new Noty({
+                    type: 'success',
+                    layout: 'bottomRight',
+                    theme: 'mint',
+                    text: message
+                }).show();
             },
 
         },
