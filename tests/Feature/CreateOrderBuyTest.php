@@ -64,6 +64,27 @@ class CreateOrderBuyTest extends TestCase
     /**
      * @test
      */
+    function an_authenticated_user_can_delete_order_buy()
+    {
+        $this->JWTSignIn();
+        $order = create('App\OrderBuy', ['user_id' => auth()->id()]);
+        $response = $this->delete("/api/v1/trade/orderbuy/{$order->id}/delete");
+        $response->assertStatus(204);
+    }
+
+    /**
+     * @test
+     */
+    function an_unauthenticated_user_can_not_remove_order_buy()
+    {
+        $this->expectException('Illuminate\Auth\AuthenticationException');
+        $order = create('App\OrderBuy');
+        $this->delete("/api/v1/trade/orderbuy/{$order->id}/delete");
+    }
+
+    /**
+     * @test
+     */
     function a_order_buy_requires_price()
     {
         $this->expectException('Illuminate\Validation\ValidationException');

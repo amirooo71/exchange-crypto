@@ -30,7 +30,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a @click="removeOrder(order)">
+                                <a @click="onRemove(order)">
                                     <i class="icon-trash"></i>
                                 </a>
                             </li>
@@ -218,6 +218,16 @@
             removeOrder() {
                 var index = this.orders.indexOf(this.selectedOrder);
                 this.orders.splice(index, 1);
+            },
+
+            onRemove(order) {
+                this.selectedOrder = order;
+                this.checkOrderType();
+                axios.delete('api/v1/trade/' + this.uriAction + '/' + this.selectedOrder.id + '/delete')
+                    .then(() => {
+                        this.removeOrder(order);
+                        this.notify("سفارش با موفقیت حذف شد.");
+                    });
             },
 
             notify(message) {

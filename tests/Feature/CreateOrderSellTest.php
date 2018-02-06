@@ -58,8 +58,29 @@ class CreateOrderSellTest extends TestCase
             'price' => 99,
             'amount' => 99,
         ]);
-
     }
+
+    /**
+     * @test
+     */
+    function an_authenticated_user_can_delete_order_sell()
+    {
+        $this->JWTSignIn();
+        $order = create('App\OrderSell', ['user_id' => auth()->id()]);
+        $response = $this->delete("/api/v1/trade/ordersell/{$order->id}/delete");
+        $response->assertStatus(204);
+    }
+
+    /**
+     * @test
+     */
+    function an_unauthenticated_user_can_not_remove_order_sell()
+    {
+        $this->expectException('Illuminate\Auth\AuthenticationException');
+        $order = create('App\OrderSell');
+        $this->delete("/api/v1/trade/ordersell/{$order->id}/delete");
+    }
+
 
     /**
      * @test

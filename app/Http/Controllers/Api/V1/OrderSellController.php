@@ -61,4 +61,15 @@ class OrderSellController extends Controller
         return response()->json($orderSell, 201);
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function destroy($id)
+    {
+        OrderSell::find($id)->delete();
+        return response()->json([], 204);
+    }
+
 }

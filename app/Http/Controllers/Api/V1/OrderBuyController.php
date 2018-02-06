@@ -62,7 +62,14 @@ class OrderBuyController extends Controller
         return response()->json($orderBuy, 201);
     }
 
-    public function destroy()
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function destroy($id)
     {
+        OrderBuy::find($id)->delete();
+        return response()->json([], 204);
     }
 }
