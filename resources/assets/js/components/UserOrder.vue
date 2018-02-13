@@ -168,11 +168,11 @@
 
             onOrderAppliedEvent(data) {
                 data['color'] = "#78909C";
-                this.orders.push(data);
+                this.orders.push(data)
             },
 
             getUserOrders() {
-                axios.get('/api/v1/orders/' + this.user.id + '/history')
+                axios.get('/api/v1/trade/user/orders/history')
                     .then(response => this.orders = response.data)
                     .catch(error => console.log(error.response.data));
             },

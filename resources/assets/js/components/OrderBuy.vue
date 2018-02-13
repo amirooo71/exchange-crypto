@@ -72,7 +72,7 @@
         }
 
     }
-    
+
     export default {
         name: "order-buy",
 
@@ -90,25 +90,31 @@
             onSubmit() {
                 axios.post('api/v1/trade/orderbuy ', this.$data)
                     .then(this.onSuccess)
-                    .catch(error => this.errors.record(error.response.data))
+                    .catch(error => {
+                        this.errors.record(error.response.data)
+                        if (error.response.status == 403) {
+                            this.notify('error', 'موجودی کافی نیست.');
+                        }
+                    })
                 ;
             },
 
             onSuccess(response) {
-                this.notify();
+                this.notify('success', 'تراکنش خرید با موفقیت ثبت شد.');
                 this.price = '';
                 this.amount = '';
                 Event.$emit('orderApplied', response.data);
             },
 
-            notify() {
+            notify(type, msg) {
                 new Noty({
-                    type: 'success',
+                    type: type,
                     layout: 'bottomRight',
                     theme: 'mint',
-                    text: 'تراکنش خرید با موفقیت ثبت شد.'
+                    text: msg
                 }).show();
             },
+
         }
     }
 </script>

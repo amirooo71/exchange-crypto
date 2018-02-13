@@ -21,5 +21,4 @@ class Currency extends Model
     {
         return $this->hasMany(OrderSell::class);
     }
-
 }

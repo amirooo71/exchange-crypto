@@ -22,14 +22,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/trade', 'PagesController@trade');
 
 
-Route::get('test', function () {
+Route::get('test', function (\App\Services\BuyExchanger $exchanger) {
 
-    $buy = \App\OrderBuy::all();
 
-    $sell = \App\OrderSell::all();
-
-    $result = array_merge($buy->toArray(), $sell->toArray());
-
-    dd($result);
+    $balance = \App\Balance::where('user_id', '=', 1)->where('currency_id', '=', 1)->first();
+    dd($balance->amount);
 
 });

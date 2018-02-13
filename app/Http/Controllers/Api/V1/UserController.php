@@ -16,11 +16,11 @@ class UserController extends Controller
     }
 
     /**
-     * @param User $user
      * @return \Illuminate\Http\JsonResponse
      */
-    public function orderHistory(User $user)
+    public function orderHistory()
     {
+        $user = auth()->user();
         $buyOrders = $user->orderBuy()->latest()->get();
         $sellOrders = $user->orderSell()->latest()->get();
         $orders = array_merge($buyOrders->toArray(), $sellOrders->toArray());

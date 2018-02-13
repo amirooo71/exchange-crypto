@@ -15,7 +15,8 @@ class CreateBalancesTable extends Migration
     {
         Schema::create('balances', function (Blueprint $table) {
             $table->increments('id');
-            $table->decimal('amount', 64, 30);
+            $table->unsignedInteger('user_id');
+            $table->decimal('amount', 16, 8);
             $table->integer('currency_id');
             $table->timestamps();
         });

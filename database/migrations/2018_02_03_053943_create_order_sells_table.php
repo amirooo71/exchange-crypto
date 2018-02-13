@@ -20,6 +20,7 @@ class CreateOrderSellsTable extends Migration
             $table->decimal('price', 64, 30);
             $table->decimal('amount', 64, 30);
             $table->string('type')->default('فروش');
+            $table->string('status')->default('in_progress');
             $table->timestamps();
         });
     }

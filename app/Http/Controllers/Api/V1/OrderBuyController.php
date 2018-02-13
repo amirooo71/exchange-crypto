@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Balance;
 use App\OrderBuy;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
 class OrderBuyController extends Controller
@@ -28,6 +30,13 @@ class OrderBuyController extends Controller
             'price' => 'required|numeric',
             'amount' => 'required|numeric',
         ]);
+
+        $userBalance = \App\Balance::where('user_id', '=', 1)->where('currency_id', '=', 2)->first();
+
+        if ($request->amount > $userBalance->amount) {
+            return \response()->json([], Response::HTTP_FORBIDDEN);
+        }
+
 
         $order = OrderBuy::create([
             'user_id' => auth()->id(),

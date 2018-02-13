@@ -11,22 +11,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td></td>
-                        <td>تومان</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><img src="./../../../../public/images/logo/dollar-logo.svg" alt="دلار"
-                                 class="v-tiny-svg"></td>
-                        <td>دلار</td>
-                        <td>12634</td>
-                    </tr>
-                    <tr>
-                        <td><img src="./../../../../public/images/logo/BTC.svg" alt="بیتکوین"
-                                 class="v-tiny-svg"></td>
-                        <td>بیتکوین</td>
-                        <td></td>
+                    <tr v-for="balance in balances">
+                        <td>
+                            <img src="./../../../../public/images/logo/dollar-logo.svg" alt="دلار" class="v-tiny-svg">
+                        </td>
+                        <td>{{balance.currency.symbol}}</td>
+                        <td>{{balance.amount}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -38,6 +28,39 @@
 <script>
     export default {
         name: "balance",
+
+        data() {
+            return {
+                balances: '',
+            }
+        },
+
+        created() {
+            Event.$on('orderApplied', data => this.remainAmount(data));
+        },
+
+        mounted() {
+            this.getUserBalance();
+        },
+
+        methods: {
+
+            getUserBalance() {
+                axios.get('api/v1/trade/user/balance')
+                    .then(response => this.balances = response.data)
+                    .catch(error => console.log(error.response.data))
+                ;
+            },
+
+            remainAmount(data) {
+                if (data.type === 'خرید') {
+
+                } else {
+
+                }
+            },
+
+        }
     }
 </script>
 
