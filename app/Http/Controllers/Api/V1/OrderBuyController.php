@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Balance;
 use App\OrderBuy;
+use App\Services\BuyExchanger;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
@@ -21,9 +22,10 @@ class OrderBuyController extends Controller
 
     /**
      * @param Request $request
+     * @param BuyExchanger $exchanger
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(Request $request, BuyExchanger $exchanger)
     {
         $this->validate($request, [
             'currency_id' => 'required',
@@ -31,12 +33,14 @@ class OrderBuyController extends Controller
             'amount' => 'required|numeric',
         ]);
 
-        $userBalance = \App\Balance::where('user_id', '=', 1)->where('currency_id', '=', 2)->first();
-
-        if ($request->amount > $userBalance->amount) {
+        $userBalance = \App\Balance::where('user_id', '=', auth()->user()->id)->where('currency_id', '=', 2)->first();
+        $requestedAmount = ($request->amount * $request->price);
+        if ($requestedAmount > $userBalance->amount) {
             return \response()->json([], Response::HTTP_FORBIDDEN);
         }
 
+        $remainAmount = ($userBalance->amount - $requestedAmount);
+        $userBalance->update(['amount' => $remainAmount]);
 
         $order = OrderBuy::create([
             'user_id' => auth()->id(),
@@ -46,6 +50,10 @@ class OrderBuyController extends Controller
         ]);
 
         $order['type'] = 'خرید';
+
+        $validOrder = OrderBuy::find($order->id);
+
+        $exchanger->process($validOrder);
 
         return response()->json($order, 200);
     }

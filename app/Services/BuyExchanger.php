@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: aparscoders
- * Date: 2/12/18
- * Time: 9:43 AM
- */
 
 namespace App\Services;
 
@@ -18,33 +12,33 @@ class BuyExchanger
         $orderSells = OrderSell::where('status', '=', 'in_progress')->orWhere('status', '=', 'partial')->get();
         foreach ($orderSells as $orderSell) {
 
-            //If price was equals
+            if ($orderSell->price === $orderBuy->price) {  // If price are equals
 
-            if ($orderSell->price === $orderBuy->price) {
+                if ($orderSell->amount === $orderBuy->amount) { // Is not partial
 
-                if ($orderSell->amount === $orderBuy->amount) {
-
-                    //  status == confirm
-
-                    $orderBuy->update(['status' => 'confirm']);
-                    $orderSell->update(['status' => 'confirm']);
+                    $orderBuy->update(['status' => 'confirmed']);
+                    $orderSell->update(['status' => 'confirmed']);
 
                 } else {
 
+                    //  OrderBuy amount bigger than OrderSell amount
 
                     if ($orderBuy->amount < $orderSell->amount) {
-                        $totalAmount = ($orderSell->amount - $orderBuy->amount);
-                        $orderSell->update(['amount' => $totalAmount]);
-                        $orderBuy->update(['status' => 'confirm']);
+                        $remainAmount = ($orderSell->amount - $orderBuy->amount);
+                        $orderSell->update(['amount' => $remainAmount]);
+                        $orderBuy->update(['status' => 'confirmed']);
                         $orderSell->update(['status' => 'partial']);
-                    } else {
-                        $totalAmount = ($orderBuy->amount - $orderSell->amount);
-                        $orderBuy->update(['amount' => $totalAmount]);
-                        $orderBuy->update(['status' => 'partial']);
-                        $orderSell->update(['status' => 'confirm']);
                     }
 
-                    // status == partial
+                    // OrderBuy amount smaller than OrderSell amount
+
+                    if ($orderBuy->amount > $orderSell->amount) {
+                        $remainAmount = ($orderBuy->amount - $orderSell->amount);
+                        $orderBuy->update(['amount' => $remainAmount]);
+                        $orderSell->update(['status' => 'confirmed']);
+                        $orderBuy->update(['status' => 'partial']);
+                    }
+
                 }
             }
 

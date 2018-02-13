@@ -93,7 +93,7 @@
                     .catch(error => {
                         this.errors.record(error.response.data)
                         if (error.response.status == 403) {
-                            this.notify('error', 'موجودی کافی نیست.');
+                            this.onError();
                         }
                     })
                 ;
@@ -114,6 +114,11 @@
                     text: msg
                 }).show();
             },
+
+            onError() {
+                this.notify('error', 'موجودی کافی نیست.');
+                this.amount = '';
+            }
 
         }
     }

@@ -89,25 +89,35 @@
             onSubmit() {
                 axios.post('api/v1/trade/ordersell ', this.$data)
                     .then(this.onSuccess)
-                    .catch(error => this.errors.record(error.response.data))
+                    .catch(error => {
+                        this.errors.record(error.response.data)
+                        if (error.response.status == 403) {
+                            this.onError();
+                        }
+                    })
                 ;
             },
 
             onSuccess(response) {
-                this.notify();
+                this.notify('success', 'تراکنش خرید با موفقیت ثبت شد.');
                 this.price = '';
                 this.amount = '';
                 Event.$emit('orderApplied', response.data)
             },
 
-            notify() {
+            notify(type, msg) {
                 new Noty({
-                    type: 'success',
+                    type: type,
                     layout: 'bottomRight',
                     theme: 'mint',
-                    text: 'تراکنش فروش با موفقیت ثبت شد.'
+                    text: msg
                 }).show();
             },
+
+            onError() {
+                this.notify('error', 'موجودی کافی نیست.');
+                this.amount = '';
+            }
         }
     }
 </script>

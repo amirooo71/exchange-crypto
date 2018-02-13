@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\OrderSell;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 
 class OrderSellController extends Controller
 {
@@ -27,6 +28,12 @@ class OrderSellController extends Controller
             'price' => 'required|numeric',
             'amount' => 'required|numeric',
         ]);
+
+
+        $userBalance = \App\Balance::where('user_id', '=', 1)->where('currency_id', '=', 1)->first();
+        if ($request->amount > $userBalance->amount) {
+            return \response()->json([], Response::HTTP_FORBIDDEN);
+        }
 
         $order = OrderSell::create([
             'user_id' => auth()->id(),

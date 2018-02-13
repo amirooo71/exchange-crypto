@@ -25,7 +25,7 @@ Route::get('/trade', 'PagesController@trade');
 Route::get('test', function (\App\Services\BuyExchanger $exchanger) {
 
 
-    $balance = \App\Balance::where('user_id', '=', 1)->where('currency_id', '=', 1)->first();
-    dd($balance->amount);
+    $orderBuy = \App\OrderBuy::find(1);
+    $exchanger->process($orderBuy);
 
 });

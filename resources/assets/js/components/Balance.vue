@@ -36,7 +36,7 @@
         },
 
         created() {
-            Event.$on('orderApplied', data => this.remainAmount(data));
+            Event.$on('orderApplied', () => this.getUserBalance());
         },
 
         mounted() {
@@ -51,15 +51,6 @@
                     .catch(error => console.log(error.response.data))
                 ;
             },
-
-            remainAmount(data) {
-                if (data.type === 'خرید') {
-
-                } else {
-
-                }
-            },
-
         }
     }
 </script>

@@ -64064,7 +64064,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -64114,8 +64114,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        Event.$on('orderApplied', function (data) {
-            return _this.remainAmount(data);
+        Event.$on('orderApplied', function () {
+            return _this.getUserBalance();
         });
     },
     mounted: function mounted() {
@@ -64132,9 +64132,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (error) {
                 return console.log(error.response.data);
             });
-        },
-        remainAmount: function remainAmount(data) {
-            if (data.type === 'خرید') {} else {}
         }
     }
 });
@@ -64288,7 +64285,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -64407,7 +64404,7 @@ var Errors = function () {
             axios.post('api/v1/trade/orderbuy ', this.$data).then(this.onSuccess).catch(function (error) {
                 _this.errors.record(error.response.data);
                 if (error.response.status == 403) {
-                    _this.notify('error', 'error');
+                    _this.onError();
                 }
             });
         },
@@ -64424,6 +64421,10 @@ var Errors = function () {
                 theme: 'mint',
                 text: msg
             }).show();
+        },
+        onError: function onError() {
+            this.notify('error', 'موجودی کافی نیست.');
+            this.amount = '';
         }
     }
 });
@@ -64666,7 +64667,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -64782,22 +64783,29 @@ var Errors = function () {
             var _this = this;
 
             axios.post('api/v1/trade/ordersell ', this.$data).then(this.onSuccess).catch(function (error) {
-                return _this.errors.record(error.response.data);
+                _this.errors.record(error.response.data);
+                if (error.response.status == 403) {
+                    _this.onError();
+                }
             });
         },
         onSuccess: function onSuccess(response) {
-            this.notify();
+            this.notify('success', 'تراکنش خرید با موفقیت ثبت شد.');
             this.price = '';
             this.amount = '';
             Event.$emit('orderApplied', response.data);
         },
-        notify: function notify() {
+        notify: function notify(type, msg) {
             new Noty({
-                type: 'success',
+                type: type,
                 layout: 'bottomRight',
                 theme: 'mint',
-                text: 'تراکنش فروش با موفقیت ثبت شد.'
+                text: msg
             }).show();
+        },
+        onError: function onError() {
+            this.notify('error', 'موجودی کافی نیست.');
+            this.amount = '';
         }
     }
 });
