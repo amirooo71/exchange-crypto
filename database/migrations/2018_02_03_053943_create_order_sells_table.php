@@ -17,9 +17,10 @@ class CreateOrderSellsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('currency_id');
-            $table->decimal('price', 64, 30);
-            $table->decimal('amount', 64, 30);
-            $table->string('type')->default('فروش');
+            $table->decimal('price', 16, 8);
+            $table->decimal('amount', 16, 8);
+            $table->decimal('fill', 16, 8)->default(0)->nullable();
+            $table->string('type', 10)->default('فروش');
             $table->string('status')->default('in_progress');
             $table->timestamps();
         });

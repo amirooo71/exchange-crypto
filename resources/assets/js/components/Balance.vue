@@ -7,7 +7,8 @@
                     <tr class="v-bg-dark">
                         <th></th>
                         <th>واحد</th>
-                        <th>مقدار</th>
+                        <th>مقدار کل</th>
+                        <th>قابل استفاده</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -17,6 +18,7 @@
                         </td>
                         <td>{{balance.currency.symbol}}</td>
                         <td>{{balance.amount}}</td>
+                        <td>{{balance.available}}</td>
                     </tr>
                     </tbody>
                 </table>

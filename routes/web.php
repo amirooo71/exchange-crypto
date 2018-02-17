@@ -1,15 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Auth::routes();
 
@@ -25,7 +15,10 @@ Route::get('/trade', 'PagesController@trade');
 Route::get('test', function (\App\Services\BuyExchanger $exchanger) {
 
 
-    $orderBuy = \App\OrderBuy::find(1);
-    $exchanger->process($orderBuy);
+    $orderSell = \App\OrderSell::orderBy('price','asc')->first();
+
+    dd($orderSell->price);
+
 
 });
+

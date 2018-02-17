@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Balance;
+use App\Http\Requests\StoreOrderBuy;
 use App\OrderBuy;
 use App\Services\BuyExchanger;
 use Illuminate\Http\Request;
@@ -12,50 +13,39 @@ use Illuminate\Support\Facades\DB;
 
 class OrderBuyController extends Controller
 {
+
+    /**
+     * @var Balance
+     */
+    protected $balance;
+
     /**
      * OrderBuyController constructor.
+     * @param Balance $balance
      */
-    public function __construct()
+    public function __construct(Balance $balance)
     {
         $this->middleware('auth:api');
+        $this->balance = $balance;
     }
 
     /**
      * @param Request $request
      * @param BuyExchanger $exchanger
+     * @param StoreOrderBuy $validation
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request, BuyExchanger $exchanger)
+    public function store(Request $request, BuyExchanger $exchanger, StoreOrderBuy $validation)
     {
-        $this->validate($request, [
-            'currency_id' => 'required',
-            'price' => 'required|numeric',
-            'amount' => 'required|numeric',
-        ]);
-
-        $userBalance = \App\Balance::where('user_id', '=', auth()->user()->id)->where('currency_id', '=', 2)->first();
-        $requestedAmount = ($request->amount * $request->price);
-        if ($requestedAmount > $userBalance->amount) {
+        $userBalance = $this->balance->getUserBalance(1);
+        if ($this->isNotValidAmount($userBalance, $this->requestedAmount($request))) {
             return \response()->json([], Response::HTTP_FORBIDDEN);
         }
-
-        $remainAmount = ($userBalance->amount - $requestedAmount);
-        $userBalance->update(['amount' => $remainAmount]);
-
-        $order = OrderBuy::create([
-            'user_id' => auth()->id(),
-            'currency_id' => \request('currency_id'),
-            'price' => \request('price'),
-            'amount' => \request('amount'),
-        ]);
-
-        $order['type'] = 'خرید';
-
+        $userBalance->update(['available' => $this->calculateAvailableAmount($userBalance, $request)]);
+        $order = OrderBuy::storeOrder();
         $validOrder = OrderBuy::find($order->id);
-
         $exchanger->process($validOrder);
-
-        return response()->json($order, 200);
+        return response()->json($order, Response::HTTP_OK);
     }
 
     /**
@@ -88,5 +78,34 @@ class OrderBuyController extends Controller
     {
         OrderBuy::find($id)->delete();
         return response()->json([], 204);
+    }
+
+    /**
+     * @param $userBalance
+     * @param $requestedAmount
+     * @return bool
+     */
+    private function isNotValidAmount($userBalance, $requestedAmount)
+    {
+        return ($requestedAmount > $userBalance->available);
+    }
+
+    /**
+     * @param $request
+     * @return float|int
+     */
+    private function requestedAmount($request)
+    {
+        return ($request->amount * $request->price);
+    }
+
+    /**
+     * @param $userBalance
+     * @param $request
+     * @return float|int
+     */
+    private function calculateAvailableAmount($userBalance, $request)
+    {
+        return $userBalance->available - $this->requestedAmount($request);
     }
 }

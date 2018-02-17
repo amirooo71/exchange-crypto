@@ -15,4 +15,43 @@ class OrderBuy extends Model
     {
         return $this->belongsTo(Currency::class);
     }
+
+    /**
+     * @param $status
+     */
+    public function updateStatus($status)
+    {
+        $this->update(['status' => $status]);
+    }
+
+    /**
+     * @param $amount
+     */
+    public function updateFill($amount)
+    {
+        $this->update(['fill' => $amount]);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function remainAmount()
+    {
+        return ($this->amount - $this->fill);
+    }
+
+    /**
+     * @return $this|Model
+     */
+    public static function storeOrder()
+    {
+        $order = self::create([
+            'user_id' => auth()->id(),
+            'currency_id' => \request('currency_id'),
+            'price' => \request('price'),
+            'amount' => \request('amount'),
+        ]);
+        $order['type'] = 'خرید';
+        return $order;
+    }
 }

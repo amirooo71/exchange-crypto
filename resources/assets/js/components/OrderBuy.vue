@@ -13,7 +13,6 @@
                               v-text="errors.get('price')"></span>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label class="col-lg-3 control-label">مقدار:</label>
                     <div class="col-lg-9">
@@ -22,14 +21,12 @@
                               v-text="errors.get('amount')"></span>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label class="col-lg-3 control-label">کل:</label>
                     <div class="col-lg-9">
                         <input type="text" class="form-control" :value="price * amount">
                     </div>
                 </div>
-
                 <div class="text-right">
                     <button type="submit" class="btn btn-success" :disabled="errors.any()">تایید خرید <i
                             class="icon-arrow-left13 position-right"></i></button>

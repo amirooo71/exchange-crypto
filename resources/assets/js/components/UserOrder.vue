@@ -20,8 +20,9 @@
                     <td>{{order.price | currency}}</td>
                     <td>BTC</td>
                     <td>{{order.created_at}}</td>
-                    <td v-if="order.type == 'فروش'"><span class="icon-checkmark2 text-success"></span></td>
-                    <td v-if="order.type == 'خرید'"><span class="icon-cross2 text-danger"></span></td>
+                    <td v-if="order.status == 'confirmed'"><span class="icon-checkmark2 text-success"></span></td>
+                    <td v-else><span class="icon-cross2 text-danger"></span>
+                    </td>
                     <td>
                         <ul class="icons-list" style="color: #CFD8DC;">
                             <li>
