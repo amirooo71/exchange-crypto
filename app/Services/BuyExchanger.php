@@ -59,16 +59,14 @@ class BuyExchanger
 
                     } else {
 
-                        if ($orderBuy->amount < $orderSell->remainAmount()) { // OrderSell should be partial
+                        if ($orderBuy->amount < $orderSell->remainAmount()) {
 
                             $this->updateOrderBuy($orderBuy, $orderBuy->amount, self::STATUS_CONFIRMED);
-                            $this->updateOrderSell($orderSell, ($orderSell->amount - $orderBuy->amount), self::STATUS_PARTIAL);
+                            $this->updateOrderSell($orderSell, ($orderSell->fill + $orderBuy->amount), self::STATUS_PARTIAL);
                             $this->calculateUserBalance($orderBuy, $orderSell);
-                        }
+                        } else {
 
-                        if ($orderBuy->amount > $orderSell->remainAmount()) { // OrderBuy should be partial
-
-                            $this->updateOrderBuy($orderBuy, ($orderBuy->amount - $orderSell->amount), self::STATUS_PARTIAL);
+                            $this->updateOrderBuy($orderBuy, ($orderBuy->fill + $orderSell->amount), self::STATUS_PARTIAL);
                             $this->updateOrderSell($orderSell, $orderSell->amount, self::STATUS_CONFIRMED);
                             $this->calculateUserBalance($orderBuy, $orderSell);
                         }
@@ -123,7 +121,13 @@ class BuyExchanger
             $USDBalance->update(['available' => ($USDBalance->available + $remain)]);
         }
 
-        $amount = ($USDBalance->amount - ($orderBuy->amount * $orderSell->price));
+        if ($orderBuy->amount > $orderSell->amount) {
+            $amount = $orderBuy->fill;
+        } else {
+            $amount = $orderBuy->amount;
+        }
+
+        $amount = $USDBalance->amount - ($amount * $orderSell->price);
         $this->balance->updateBalance($orderBuy->user_id, $amount);
     }
 
@@ -137,22 +141,6 @@ class BuyExchanger
             'amount' => ($BTCBalance->amount + $orderBuy->amount),
             'available' => ($BTCBalance->amount + $orderBuy->amount),
         ]);
-    }
-
-    /**
-     * @param $orderBuy
-     * @param $orderSell
-     */
-    private function computedCheaperPrice($orderBuy, $orderSell): void
-    {
-        if ($orderSell->price < $orderBuy->price) {
-            $remainPrice = ($orderBuy->amount * ($orderBuy->price - $orderSell->price));
-            $USDBalance = $this->balance->getUserBalanceByUserId($orderBuy->user_id, 1);
-            $USDBalance->update([
-                'amount' => ($USDBalance->amount + $remainPrice),
-                'available' => ($USDBalance->available + $remainPrice),
-            ]);
-        }
     }
 
 }

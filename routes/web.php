@@ -15,10 +15,9 @@ Route::get('/trade', 'PagesController@trade');
 Route::get('test', function (\App\Services\BuyExchanger $exchanger) {
 
 
-    $orderSell = \App\OrderSell::orderBy('price','asc')->first();
+    $order = \App\OrderBuy::find(2);
 
-    dd($orderSell->price);
-
+    $exchanger->process($order);
 
 });
 

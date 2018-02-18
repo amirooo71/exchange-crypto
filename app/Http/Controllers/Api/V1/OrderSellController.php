@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Balance;
+use App\Http\Requests\StoreOrderSell;
 use App\OrderSell;
+use App\Services\SellExchanger;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
@@ -10,40 +13,36 @@ use Illuminate\Http\Response;
 class OrderSellController extends Controller
 {
     /**
-     * OrderSellController constructor.
+     * @var Balance
      */
-    public function __construct()
+    protected $balance;
+
+    /**
+     * OrderSellController constructor.
+     * @param Balance $balance
+     */
+    public function __construct(Balance $balance)
     {
         $this->middleware('auth:api');
+        $this->balance = $balance;
     }
 
     /**
      * @param Request $request
+     * @param StoreOrderSell $validation
+     * @param SellExchanger $exchanger
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(Request $request, StoreOrderSell $validation, SellExchanger $exchanger)
     {
-        $this->validate($request, [
-            'currency_id' => 'required',
-            'price' => 'required|numeric',
-            'amount' => 'required|numeric',
-        ]);
-
-
-        $userBalance = \App\Balance::where('user_id', '=', 1)->where('currency_id', '=', 1)->first();
-        if ($request->amount > $userBalance->amount) {
+        $userBalance = $this->balance->getUserBalance(2);
+        if ($this->isNotValidAmount($userBalance)) {
             return \response()->json([], Response::HTTP_FORBIDDEN);
         }
-
-        $order = OrderSell::create([
-            'user_id' => auth()->id(),
-            'currency_id' => \request('currency_id'),
-            'price' => \request('price'),
-            'amount' => \request('amount'),
-        ]);
-
-        $order['type'] = 'فروش';
-
+        $userBalance->update(['available' => $this->calculateAvailableAmount($userBalance)]);
+        $order = OrderSell::storeOrder();
+        $validOrder = OrderSell::find($order->id);
+        $exchanger->process($validOrder);
         return response()->json($order, 200);
     }
 
@@ -77,6 +76,24 @@ class OrderSellController extends Controller
     {
         OrderSell::find($id)->delete();
         return response()->json([], 204);
+    }
+
+    /**
+     * @param $userBalance
+     * @return bool
+     */
+    private function isNotValidAmount($userBalance): bool
+    {
+        return \request()->amount > $userBalance->available;
+    }
+
+    /**
+     * @param $userBalance
+     * @return mixed
+     */
+    private function calculateAvailableAmount($userBalance)
+    {
+        return $userBalance->available - \request()->amount;
     }
 
 }

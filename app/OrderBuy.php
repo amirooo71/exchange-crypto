@@ -41,6 +41,18 @@ class OrderBuy extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getValidOrderBuys()
+    {
+        return $this
+            ->where('status', '=', 'in_progress')
+            ->orWhere('status', '=', 'partial')
+            ->orderBy('price', 'desc')
+            ->get();
+    }
+
+    /**
      * @return $this|Model
      */
     public static function storeOrder()

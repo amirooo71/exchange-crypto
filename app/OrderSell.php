@@ -51,4 +51,17 @@ class OrderSell extends Model
             ->orderBy('price', 'asc')
             ->get();
     }
+
+    public static function storeOrder()
+    {
+        $order = self::create([
+            'user_id' => auth()->id(),
+            'currency_id' => \request('currency_id'),
+            'price' => \request('price'),
+            'amount' => \request('amount'),
+        ]);
+
+        $order['type'] = 'فروش';
+        return $order;
+    }
 }

@@ -50,9 +50,24 @@ class Balance extends Model
      */
     public function updateBalance($id, $amount)
     {
-        $balance = $this->getUserBalanceByUserId($id,1);
+        $balance = $this->getUserBalanceByUserId($id, 1);
         $balance->update([
             'amount' => $amount,
+        ]);
+    }
+
+
+    /**
+     * @param $id
+     * @param $amount
+     * @param $available
+     */
+    public function updateBalanceOnSellAction($id, $amount, $available)
+    {
+        $balance = $this->getUserBalanceByUserId($id, 1);
+        $balance->update([
+            'amount' => $amount,
+            'available' => $available
         ]);
     }
 
