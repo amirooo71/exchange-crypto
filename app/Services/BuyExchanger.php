@@ -47,28 +47,31 @@ class BuyExchanger
     {
         foreach ($this->sell->getValidOrderSells() as $orderSell) {
 
-            if ($orderSell->price <= $orderBuy->price) {
-                
-                if ($orderSell->remainAmount() == $orderBuy->amount) {
+            if ($orderBuy->status != 'confirmed') {
 
-                    $this->updateOrderBuy($orderBuy, $orderBuy->amount, self::STATUS_CONFIRMED);
-                    $this->updateOrderSell($orderSell, $orderSell->amount, self::STATUS_CONFIRMED);
-                    $this->calculateUserBalance($orderBuy);
+                if ($orderSell->price <= $orderBuy->price) {
 
-                } else {
-
-                    if ($orderBuy->amount < $orderSell->remainAmount()) {
+                    if ($orderSell->remainAmount() == $orderBuy->amount) {
 
                         $this->updateOrderBuy($orderBuy, $orderBuy->amount, self::STATUS_CONFIRMED);
-                        $this->updateOrderSell($orderSell, ($orderSell->amount - $orderBuy->amount), self::STATUS_PARTIAL);
-                        $this->calculateUserBalance($orderBuy);
-                    }
-
-                    if ($orderBuy->amount > $orderSell->remainAmount()) {
-
-                        $this->updateOrderBuy($orderBuy, ($orderBuy->amount - $orderSell->amount), self::STATUS_PARTIAL);
                         $this->updateOrderSell($orderSell, $orderSell->amount, self::STATUS_CONFIRMED);
-                        $this->calculateUserBalance($orderBuy);
+                        $this->calculateUserBalance($orderBuy, $orderSell);
+
+                    } else {
+
+                        if ($orderBuy->amount < $orderSell->remainAmount()) { // OrderSell should be partial
+
+                            $this->updateOrderBuy($orderBuy, $orderBuy->amount, self::STATUS_CONFIRMED);
+                            $this->updateOrderSell($orderSell, ($orderSell->amount - $orderBuy->amount), self::STATUS_PARTIAL);
+                            $this->calculateUserBalance($orderBuy, $orderSell);
+                        }
+
+                        if ($orderBuy->amount > $orderSell->remainAmount()) { // OrderBuy should be partial
+
+                            $this->updateOrderBuy($orderBuy, ($orderBuy->amount - $orderSell->amount), self::STATUS_PARTIAL);
+                            $this->updateOrderSell($orderSell, $orderSell->amount, self::STATUS_CONFIRMED);
+                            $this->calculateUserBalance($orderBuy, $orderSell);
+                        }
                     }
                 }
             }
@@ -99,20 +102,28 @@ class BuyExchanger
 
     /**
      * @param $orderBuy
+     * @param $orderSell
      */
-    private function calculateUserBalance($orderBuy): void
+    private function calculateUserBalance($orderBuy, $orderSell): void
     {
-        $this->calculateUSDBalance($orderBuy);
+        $this->calculateUSDBalance($orderBuy, $orderSell);
         $this->calculateBTCBalance($orderBuy);
     }
 
     /**
      * @param $orderBuy
+     * @param $orderSell
      */
-    private function calculateUSDBalance($orderBuy): void
+    private function calculateUSDBalance($orderBuy, $orderSell): void
     {
         $USDBalance = $this->balance->getUserBalanceByUserId($orderBuy->user_id, 1);
-        $amount = ($USDBalance->amount - ($orderBuy->amount * $orderBuy->price));
+
+        if ($orderSell->price < $orderBuy->price) {
+            $remain = $orderBuy->amount * ($orderBuy->price - $orderSell->price);
+            $USDBalance->update(['available' => ($USDBalance->available + $remain)]);
+        }
+
+        $amount = ($USDBalance->amount - ($orderBuy->amount * $orderSell->price));
         $this->balance->updateBalance($orderBuy->user_id, $amount);
     }
 
