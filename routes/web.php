@@ -12,12 +12,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/trade', 'PagesController@trade');
 
 
-Route::get('test', function (\App\Services\BuyExchanger $exchanger) {
+Route::get('test', function () {
 
-
-    $order = \App\OrderBuy::find(2);
-
-    $exchanger->process($order);
+    $balance = \App\ Balance::where('user_id', '=', auth()->user()->id)->get();
+    dd($balance);
 
 });
 

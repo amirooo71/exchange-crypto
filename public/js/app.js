@@ -64176,8 +64176,6 @@ var render = function() {
                   })
                 ]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(balance.currency.symbol))]),
-                _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(balance.amount))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(balance.available))])

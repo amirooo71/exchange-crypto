@@ -16,7 +16,7 @@
                         <td>
                             <img src="./../../../../public/images/logo/dollar-logo.svg" alt="دلار" class="v-tiny-svg">
                         </td>
-                        <td>{{balance.currency.symbol}}</td>
+                        <!--<td>{{balance.currency.symbol}}</td>-->
                         <td>{{balance.amount}}</td>
                         <td>{{balance.available}}</td>
                     </tr>

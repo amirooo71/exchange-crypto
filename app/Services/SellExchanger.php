@@ -55,7 +55,40 @@ class SellExchanger
 
                         $this->updateOrderBuy($orderBuy, $orderBuy->amount, self::STATUS_CONFIRMED);
                         $this->updateOrderSell($orderSell, $orderSell->amount, self::STATUS_CONFIRMED);
-                        $this->calculateUserBalance($orderBuy, $orderSell);
+
+                        $SellerUSDBalance = $this->balance->getUserBalanceByUserId($orderSell->user_id, 1);
+                        $SellerBTCBalance = $this->balance->getUserBalanceByUserId($orderSell->user_id, 2);
+
+                        $BuyerUSDBalance = $this->balance->getUserBalanceByUserId($orderBuy->user_id, 1);
+                        $BuyerBTCBalance = $this->balance->getUserBalanceByUserId($orderBuy->user_id, 2);
+
+                        if ($orderBuy->price > $orderSell->price) {
+                            $remain = $orderSell->amount * ($orderBuy->price - $orderSell->price);
+                            $SellerUSDBalance->update([
+                                'amount' => $SellerUSDBalance->amount + $remain,
+                                'available' => $SellerUSDBalance->available + $remain,
+                            ]);
+                        }
+
+                        $SellerBTCBalance->update([
+                            'amount' => $SellerBTCBalance->amount - $orderSell->amount
+                        ]);
+
+                        $BuyerBTCBalance->update([
+                            'amount' => $BuyerBTCBalance->amount + $orderSell->amount,
+                            'available' => $BuyerBTCBalance->available + $orderSell->amount,
+
+                        ]);
+
+                        $SellerUSDBalance->update([
+                            'amount' => $SellerUSDBalance->amount + ($orderSell->price * $orderSell->amount),
+                            'available' => $SellerUSDBalance->available + ($orderSell->price * $orderSell->amount),
+                        ]);
+
+                        $BuyerUSDBalance->update([
+                            'amount' => $BuyerUSDBalance->amount - ($orderBuy->price * $orderSell->amount),
+                        ]);
+
 
                     } else {
 
@@ -63,14 +96,10 @@ class SellExchanger
 
                             $this->updateOrderSell($orderSell, $orderSell->amount, self::STATUS_CONFIRMED);
                             $this->updateOrderBuy($orderBuy, ($orderBuy->fill + $orderSell->amount), self::STATUS_PARTIAL);
-                            $this->calculateUserBalance($orderBuy, $orderSell);
-
                         } else {
 
                             $this->updateOrderSell($orderSell, ($orderBuy->fill + $orderSell->amount), self::STATUS_PARTIAL);
                             $this->updateOrderBuy($orderBuy, $orderBuy->amount, self::STATUS_CONFIRMED);
-                            $this->calculateUserBalance($orderBuy, $orderSell);
-
                         }
                     }
                 }
@@ -117,12 +146,16 @@ class SellExchanger
      */
     private function calculateUSDBalance($orderBuy, $orderSell): void
     {
-        $USDBalance = $this->balance->getUserBalanceByUserId($orderBuy->user_id, 1);
+        $USDBalance = $this->balance->getUserBalanceByUserId($orderSell->user_id, 1);
 
-        if ($orderSell->price > $orderBuy->price) {
-            $remain = $orderSell->amount * ($orderSell->price - $orderSell->price);
-            $USDBalance->update(['available' => ($USDBalance->available + $remain)]);
-        }
+//        if ($orderBuy->price > $orderSell->price) {
+//            $remain = $orderSell->amount * ($orderBuy->price - $orderSell->price);
+//            $USDBalance->update([
+//                'available' => ($USDBalance->available + $remain),
+//                'amount' => ($USDBalance->amount + $remain),
+//            ]);
+//        }
+
 //
 //        if ($orderSell->amount < $orderBuy->amount) {
 //            $amount = $orderSell->fill;
@@ -132,7 +165,7 @@ class SellExchanger
 
         $amount = ($USDBalance->amount + ($orderSell->amount * $orderSell->price));
         $available = ($USDBalance->amount + ($orderSell->amount * $orderSell->price));
-        $this->balance->updateBalanceOnSellAction($orderBuy->user_id, $amount, $available);
+        $this->balance->updateBalanceOnSellAction($orderSell->user_id, $amount, $available);
     }
 
     /**
@@ -141,17 +174,16 @@ class SellExchanger
      */
     private function calculateBTCBalance($orderBuy, $orderSell): void
     {
-        $BTCBalance = $this->balance->getUserBalanceByUserId($orderBuy->user_id, 2);
+        $BTCBalance = $this->balance->getUserBalanceByUserId($orderSell->user_id, 2);
 
-        if ($orderSell->amount < $orderBuy->amount) {
-            $amount = $orderSell->fill;
-        } else {
-            $amount = $orderSell->amount;
-        }
-
+//        if ($orderSell->amount < $orderBuy->amount) {
+//            $amount = $orderSell->fill;
+//        } else {
+//            $amount = $orderSell->amount;
+//        }
 
         $BTCBalance->update([
-            'amount' => $BTCBalance->amount - $amount,
+            'amount' => $BTCBalance->amount - $orderSell->amount,
         ]);
     }
 
