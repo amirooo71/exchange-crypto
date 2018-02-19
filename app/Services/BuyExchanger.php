@@ -56,6 +56,8 @@ class BuyExchanger
                         $this->updateOrderBuy($orderBuy, $orderBuy->amount, self::STATUS_CONFIRMED);
                         $this->updateOrderSell($orderSell, $orderSell->amount, self::STATUS_CONFIRMED);
 
+                        ///////////////////////////////////////////
+
                         $BuyerBTCBalance = $this->balance->getUserBalanceByUserId($orderBuy->user_id, 2);
                         $BuyerUSDBalance = $this->balance->getUserBalanceByUserId($orderBuy->user_id, 1);
 
@@ -84,8 +86,8 @@ class BuyExchanger
                         ]);
 
                         $SellerUSDBalance->update([
-                            'amount' => $SellerUSDBalance->amount + ($orderBuy->amount * $orderSell->price),
-                            'available' => $SellerUSDBalance->available + ($orderBuy->amount * $orderSell->price),
+                            'amount' => $SellerUSDBalance->amount + ($orderBuy->amount * $orderSell->price), //OrderBook Price
+                            'available' => $SellerUSDBalance->available + ($orderBuy->amount * $orderSell->price), //OrderBook Price
                         ]);
 
                     } else {
@@ -94,10 +96,89 @@ class BuyExchanger
 
                             $this->updateOrderBuy($orderBuy, $orderBuy->amount, self::STATUS_CONFIRMED);
                             $this->updateOrderSell($orderSell, ($orderSell->fill + $orderBuy->amount), self::STATUS_PARTIAL);
+
+
+                            ///////////////////////////////////////////////////
+
+
+                            $BuyerBTCBalance = $this->balance->getUserBalanceByUserId($orderBuy->user_id, 2);
+                            $BuyerUSDBalance = $this->balance->getUserBalanceByUserId($orderBuy->user_id, 1);
+
+                            $SellerBTCBalance = $this->balance->getUserBalanceByUserId($orderSell->user_id, 2);
+                            $SellerUSDBalance = $this->balance->getUserBalanceByUserId($orderSell->user_id, 1);
+
+
+                            if ($orderSell->price < $orderBuy->price) {
+                                $remain = $orderBuy->amount * ($orderBuy->price - $orderSell->price);
+                                $BuyerUSDBalance->update([
+                                    'amount' => $BuyerUSDBalance->amount + $remain,
+                                    'available' => $BuyerUSDBalance->available + $remain,
+                                ]);
+                            }
+
+                            $BuyerBTCBalance->update([
+                                'amount' => $BuyerBTCBalance->amount + $orderBuy->amount,
+                                'available' => $BuyerBTCBalance->available + $orderBuy->amount,
+                            ]);
+
+                            $SellerBTCBalance->update([
+                                'amount' => $SellerBTCBalance->amount - $orderBuy->amount
+                            ]);
+
+                            $BuyerUSDBalance->update([
+                                'amount' => $BuyerUSDBalance->amount - ($orderBuy->amount * $orderBuy->price),
+                            ]);
+
+                            $SellerUSDBalance->update([
+                                'amount' => $SellerUSDBalance->amount + ($orderBuy->amount * $orderSell->price), //OrderBook Price
+                                'available' => $SellerUSDBalance->available + ($orderBuy->amount * $orderSell->price), //OrderBook Price
+                            ]);
+
+
                         } else {
 
                             $this->updateOrderBuy($orderBuy, ($orderBuy->fill + $orderSell->amount), self::STATUS_PARTIAL);
                             $this->updateOrderSell($orderSell, $orderSell->amount, self::STATUS_CONFIRMED);
+
+                            ////////////////////////////////////////////////
+
+                            $BuyerBTCBalance = $this->balance->getUserBalanceByUserId($orderBuy->user_id, 2);
+                            $BuyerUSDBalance = $this->balance->getUserBalanceByUserId($orderBuy->user_id, 1);
+
+                            $SellerBTCBalance = $this->balance->getUserBalanceByUserId($orderSell->user_id, 2);
+                            $SellerUSDBalance = $this->balance->getUserBalanceByUserId($orderSell->user_id, 1);
+
+                            if ($orderSell->price < $orderBuy->price) {
+                                $remain = $orderBuy->amount * ($orderBuy->price - $orderSell->price);
+                                $BuyerUSDBalance->update([
+                                    'amount' => $BuyerUSDBalance->amount + $remain,
+                                    'available' => $BuyerUSDBalance->available + $remain,
+                                ]);
+                            }
+
+                            if ($orderBuy->amount > $orderSell->amount) {
+                                $amount = $orderBuy->fill;
+                            } else {
+                                $amount = $orderBuy->amount;
+                            }
+
+                            $BuyerBTCBalance->update([
+                                'amount' => $BuyerBTCBalance->amount + $amount, //fill
+                                'available' => $BuyerBTCBalance->available + $amount, //fill
+                            ]);
+
+                            $SellerBTCBalance->update([
+                                'amount' => $SellerBTCBalance->amount - $amount //fill
+                            ]);
+
+                            $BuyerUSDBalance->update([
+                                'amount' => $BuyerUSDBalance->amount - ($amount * $orderBuy->price), //fill
+                            ]);
+
+                            $SellerUSDBalance->update([
+                                'amount' => $SellerUSDBalance->amount + ($amount * $orderSell->price), //OrderBook Price & fill
+                                'available' => $SellerUSDBalance->available + ($amount * $orderSell->price), //OrderBook Price & fill
+                            ]);
                         }
                     }
                 }

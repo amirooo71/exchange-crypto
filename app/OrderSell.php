@@ -43,7 +43,7 @@ class OrderSell extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getValidOrderSells()
+    public function getSortedOrders()
     {
         return $this
             ->where('status', '=', 'in_progress')

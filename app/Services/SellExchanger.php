@@ -56,6 +56,8 @@ class SellExchanger
                         $this->updateOrderBuy($orderBuy, $orderBuy->amount, self::STATUS_CONFIRMED);
                         $this->updateOrderSell($orderSell, $orderSell->amount, self::STATUS_CONFIRMED);
 
+                        ////////////////////////////////////////////
+
                         $SellerUSDBalance = $this->balance->getUserBalanceByUserId($orderSell->user_id, 1);
                         $SellerBTCBalance = $this->balance->getUserBalanceByUserId($orderSell->user_id, 2);
 
@@ -86,7 +88,7 @@ class SellExchanger
                         ]);
 
                         $BuyerUSDBalance->update([
-                            'amount' => $BuyerUSDBalance->amount - ($orderBuy->price * $orderSell->amount),
+                            'amount' => $BuyerUSDBalance->amount - ($orderBuy->price * $orderSell->amount), //OrderBook Price
                         ]);
 
 
@@ -96,10 +98,87 @@ class SellExchanger
 
                             $this->updateOrderSell($orderSell, $orderSell->amount, self::STATUS_CONFIRMED);
                             $this->updateOrderBuy($orderBuy, ($orderBuy->fill + $orderSell->amount), self::STATUS_PARTIAL);
+
+                            ////////////////////////////////////////
+
+                            $SellerUSDBalance = $this->balance->getUserBalanceByUserId($orderSell->user_id, 1);
+                            $SellerBTCBalance = $this->balance->getUserBalanceByUserId($orderSell->user_id, 2);
+
+                            $BuyerUSDBalance = $this->balance->getUserBalanceByUserId($orderBuy->user_id, 1);
+                            $BuyerBTCBalance = $this->balance->getUserBalanceByUserId($orderBuy->user_id, 2);
+
+                            if ($orderBuy->price > $orderSell->price) {
+                                $remain = $orderSell->amount * ($orderBuy->price - $orderSell->price);
+                                $SellerUSDBalance->update([
+                                    'amount' => $SellerUSDBalance->amount + $remain,
+                                    'available' => $SellerUSDBalance->available + $remain,
+                                ]);
+                            }
+
+                            $SellerBTCBalance->update([
+                                'amount' => $SellerBTCBalance->amount - $orderSell->amount
+                            ]);
+
+                            $BuyerBTCBalance->update([
+                                'amount' => $BuyerBTCBalance->amount + $orderSell->amount,
+                                'available' => $BuyerBTCBalance->available + $orderSell->amount,
+
+                            ]);
+
+                            $SellerUSDBalance->update([
+                                'amount' => $SellerUSDBalance->amount + ($orderSell->price * $orderSell->amount),
+                                'available' => $SellerUSDBalance->available + ($orderSell->price * $orderSell->amount),
+                            ]);
+
+                            $BuyerUSDBalance->update([
+                                'amount' => $BuyerUSDBalance->amount - ($orderBuy->price * $orderSell->amount), //OrderBook Price
+                            ]);
                         } else {
 
-                            $this->updateOrderSell($orderSell, ($orderBuy->fill + $orderSell->amount), self::STATUS_PARTIAL);
+                            $this->updateOrderSell($orderSell, ($orderSell->fill + $orderBuy->amount), self::STATUS_PARTIAL);
                             $this->updateOrderBuy($orderBuy, $orderBuy->amount, self::STATUS_CONFIRMED);
+
+
+                            /////////////////////////////////////////////////////////////
+
+                            $SellerUSDBalance = $this->balance->getUserBalanceByUserId($orderSell->user_id, 1);
+                            $SellerBTCBalance = $this->balance->getUserBalanceByUserId($orderSell->user_id, 2);
+
+                            $BuyerUSDBalance = $this->balance->getUserBalanceByUserId($orderBuy->user_id, 1);
+                            $BuyerBTCBalance = $this->balance->getUserBalanceByUserId($orderBuy->user_id, 2);
+
+                            if ($orderBuy->price > $orderSell->price) {
+                                $remain = $orderSell->amount * ($orderBuy->price - $orderSell->price);
+                                $SellerUSDBalance->update([
+                                    'amount' => $SellerUSDBalance->amount + $remain,
+                                    'available' => $SellerUSDBalance->available + $remain,
+                                ]);
+                            }
+
+                            if ($orderSell->amount > $orderBuy->amount) {
+                                $amount = $orderSell->fill;
+                            } else {
+                                $amount = $orderSell->amount;
+                            }
+
+                            $SellerBTCBalance->update([
+                                'amount' => $SellerBTCBalance->amount - $amount
+                            ]);
+
+                            $BuyerBTCBalance->update([
+                                'amount' => $BuyerBTCBalance->amount + $amount,
+                                'available' => $BuyerBTCBalance->available + $amount,
+
+                            ]);
+
+                            $SellerUSDBalance->update([
+                                'amount' => $SellerUSDBalance->amount + ($orderSell->price * $amount),
+                                'available' => $SellerUSDBalance->available + ($orderSell->price * $amount),
+                            ]);
+
+                            $BuyerUSDBalance->update([
+                                'amount' => $BuyerUSDBalance->amount - ($orderBuy->price * $amount), //OrderBook Price
+                            ]);
                         }
                     }
                 }

@@ -6,6 +6,7 @@
                 <tr class="v-bg-dark">
                     <th>نوع</th>
                     <th>میزان</th>
+                    <th>فیل</th>
                     <th>قیمت</th>
                     <th>ارز</th>
                     <th>ساعت</th>
@@ -17,6 +18,7 @@
                 <tr v-for="order in sortedOrders" :style="{'background': order.color}">
                     <td>{{order.type}}</td>
                     <td>{{order.amount | round}}</td>
+                    <td>{{order.fill}}</td>
                     <td>{{order.price | currency}}</td>
                     <td>BTC</td>
                     <td>{{order.created_at}}</td>
@@ -161,7 +163,7 @@
 
         filters: {
             round(num) {
-                return Math.round(num);
+                return num;
             },
         },
 
