@@ -43,6 +43,45 @@ class Exchange
     }
 
     /**
+     * @param $order
+     * @return bool
+     */
+    protected function isFill($order)
+    {
+        return $order->amount == $order->fill;
+    }
+
+    /**
+     * @param $order
+     * @param $orderBook
+     * @return bool
+     */
+    protected function isPriceEqualsOrLess($order, $orderBook)
+    {
+        return $orderBook->price <= $order->price;
+    }
+
+    /**
+     * @param $order
+     * @param $orderBook
+     * @return bool
+     */
+    protected function isAmountEquals($order, $orderBook)
+    {
+        return $orderBook->remainAmount() == $order->amount;
+    }
+
+    /**
+     * @param $order
+     * @param $orderBook
+     * @return bool
+     */
+    protected function isOrderBookAmountLess($order, $orderBook)
+    {
+        return $orderBook->amount < $order->amount;
+    }
+
+    /**
      * @param $balance
      * @param array $data
      */

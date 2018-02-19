@@ -4,6 +4,7 @@ namespace App\Trading\Limit;
 
 use App\Balance;
 use App\OrderSell;
+use App\Trading\Limit\Exchange;
 
 class Buy extends Exchange
 {
@@ -20,7 +21,33 @@ class Buy extends Exchange
 
     public function process($order)
     {
-        foreach ($this->orderSell->getSortedOrders() as $orderBook) {
+        foreach ($this->orderSell->orderBooks() as $orderBook) {
+
+            if ($this->isFill($order)) {
+                break;
+            }
+
+            if ($this->isPriceEqualsOrLess($order, $orderBook)) {
+
+                if ($this->isAmountEquals($order, $orderBook)) {
+
+                    $this->updateOrder($orderBook, $orderBook->amount, Exchange::STATUS_CONFIRMED);
+                    $this->updateOrder($order, $order->amount, Exchange::STATUS_CONFIRMED);
+
+                } else {
+
+                    if ($this->isOrderBookAmountLess($order, $orderBook)) {
+
+                        //do process
+
+                    } else {
+
+                        //do process
+
+                    }
+                }
+
+            }
         }
     }
 }
