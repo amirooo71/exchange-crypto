@@ -17,6 +17,14 @@ class OrderBuy extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function transaction()
+    {
+        return $this->hasOne(Transaction::class);
+    }
+
+    /**
      * @param $status
      */
     public function updateStatus($status)
@@ -43,7 +51,7 @@ class OrderBuy extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getValidOrderBuys()
+    public function orderBook()
     {
         return $this
             ->where('status', '=', 'in_progress')

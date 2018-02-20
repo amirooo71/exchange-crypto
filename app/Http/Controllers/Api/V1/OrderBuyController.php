@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Balance;
 use App\Http\Requests\StoreOrderBuy;
 use App\OrderBuy;
-use App\Services\BuyExchanger;
+use App\Trading\Limit\Buy;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
@@ -31,11 +31,11 @@ class OrderBuyController extends Controller
 
     /**
      * @param Request $request
-     * @param BuyExchanger $exchanger
+     * @param Buy $exchanger
      * @param StoreOrderBuy $validation
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request, BuyExchanger $exchanger, StoreOrderBuy $validation)
+    public function store(Request $request, Buy $exchanger, StoreOrderBuy $validation)
     {
         $userBalance = $this->balance->getUserBalance(1);
         if ($this->isNotValidAmount($userBalance, $this->requestedAmount($request))) {

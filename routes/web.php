@@ -1,6 +1,8 @@
 <?php
 
 
+use App\Trading\Limit\Sell;
+
 Auth::routes();
 
 Route::get('/', function () {
@@ -12,10 +14,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/trade', 'PagesController@trade');
 
 
-Route::get('test', function () {
+Route::get('test', function (Sell $sell) {
 
-    $balance = \App\ Balance::where('user_id', '=', auth()->user()->id)->get();
-    dd($balance);
-
+    $order = \App\OrderSell::find(17);
+    $sell->process($order);
 });
 

@@ -72,6 +72,11 @@ class SellExchanger
                             ]);
                         }
 
+                        $SellerUSDBalance->update([
+                            'amount' => $SellerUSDBalance->amount + ($orderSell->price * $orderSell->amount),
+                            'available' => $SellerUSDBalance->available + ($orderSell->price * $orderSell->amount),
+                        ]);
+
                         $SellerBTCBalance->update([
                             'amount' => $SellerBTCBalance->amount - $orderSell->amount
                         ]);
@@ -80,11 +85,6 @@ class SellExchanger
                             'amount' => $BuyerBTCBalance->amount + $orderSell->amount,
                             'available' => $BuyerBTCBalance->available + $orderSell->amount,
 
-                        ]);
-
-                        $SellerUSDBalance->update([
-                            'amount' => $SellerUSDBalance->amount + ($orderSell->price * $orderSell->amount),
-                            'available' => $SellerUSDBalance->available + ($orderSell->price * $orderSell->amount),
                         ]);
 
                         $BuyerUSDBalance->update([

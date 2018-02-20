@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use \Illuminate\Support\Facades\DB;
 
 class CurrencyTableSeeder extends Seeder
 {
@@ -11,6 +12,14 @@ class CurrencyTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('currencies')->insert([
+            'symbol' => 'usd'
+        ]);
+
+        DB::table('currencies')->insert([
+            'symbol' => 'btc'
+        ]);
     }
+
+
 }

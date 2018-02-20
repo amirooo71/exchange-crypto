@@ -3,6 +3,8 @@
 namespace App\Trading\Limit;
 
 use App\Balance;
+use App\OrderSell;
+use App\OrderBuy;
 
 class Exchange
 {
@@ -12,15 +14,29 @@ class Exchange
     /**
      * @var Balance
      */
-    private $balance;
+    protected $balance;
+
+    /**
+     * @var OrderSell
+     */
+    protected $orderSell;
+
+    /**
+     * @var OrderBuy
+     */
+    protected $orderBuy;
 
     /**
      * Exchange constructor.
      * @param Balance $balance
+     * @param OrderSell $orderSell
+     * @param OrderBuy $orderBuy
      */
-    public function __construct(Balance $balance)
+    public function __construct(Balance $balance, OrderSell $orderSell, OrderBuy $orderBuy)
     {
         $this->balance = $balance;
+        $this->orderSell = $orderSell;
+        $this->orderBuy = $orderBuy;
     }
 
     /**
@@ -32,14 +48,6 @@ class Exchange
     {
         $order->updateFill($fill);
         $order->updateStatus($status);
-    }
-
-    protected function sellerBalanceCalculation()
-    {
-    }
-
-    protected function buyerBalanceCalculation()
-    {
     }
 
     /**
@@ -66,6 +74,16 @@ class Exchange
      * @param $orderBook
      * @return bool
      */
+    protected function isPriceEqualsOrMore($order, $orderBook)
+    {
+        return $orderBook->price >= $order->price;
+    }
+
+    /**
+     * @param $order
+     * @param $orderBook
+     * @return bool
+     */
     protected function isAmountEquals($order, $orderBook)
     {
         return $orderBook->remainAmount() == $order->amount;
@@ -78,14 +96,34 @@ class Exchange
      */
     protected function isOrderBookAmountLess($order, $orderBook)
     {
-        return $orderBook->amount < $order->amount;
+        return $orderBook->remainAmount() < $order->amount;
+    }
+
+    /**
+     * @param $order
+     * @param $orderBook
+     * @return bool
+     */
+    protected function isOrderBookPriceLess($order, $orderBook)
+    {
+        return $orderBook->price < $order->price;
+    }
+
+    /**
+     * @param $order
+     * @param $orderBook
+     * @return bool
+     */
+    protected function isOrderBookPriceMore($order, $orderBook)
+    {
+        return $orderBook->price > $order->price;
     }
 
     /**
      * @param $balance
      * @param array $data
      */
-    private function updateUserBalance($balance, $data = [])
+    protected function updateUserBalance($balance, $data = [])
     {
         $balance->update($data);
     }
@@ -95,9 +133,20 @@ class Exchange
      * @param $currencyId
      * @return \Illuminate\Database\Eloquent\Model|null|static
      */
-    private function getUserBalance($userId, $currencyId)
+    protected function getUserBalance($userId, $currencyId)
     {
         return $this->balance->getUserBalanceByUserId($userId, $currencyId);
     }
+
+    /**
+     * @param $order
+     * @param $orderBook
+     */
+    protected function tradingOrdersUpdateOnEqualsAmount($order, $orderBook)
+    {
+        $this->updateOrder($orderBook, $orderBook->amount, Exchange::STATUS_CONFIRMED);
+        $this->updateOrder($order, $order->amount, Exchange::STATUS_CONFIRMED);
+    }
+
 
 }
