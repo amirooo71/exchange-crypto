@@ -25,7 +25,7 @@ class Buy extends Exchange
 
                 } else {
 
-                    if ($this->isOrderBookAmountLess($order, $orderBook)) {
+                    if ($this->isOrderBookRemainAmountLess($order, $orderBook)) {
 
                         $this->tradingProcessOnLessOrderBookAmount($order, $orderBook);
 
@@ -57,8 +57,7 @@ class Buy extends Exchange
      */
     private function tradingProcessOnLessOrderBookAmount($order, $orderBook)
     {
-        $this->updateOrder($orderBook, $orderBook->amount, Exchange::STATUS_CONFIRMED);
-        $this->updateOrder($order, ($order->fill + $orderBook->amount), Exchange::STATUS_PARTIAL);
+        $this->tradingOrdersUpdateOnLessAmountBookAmount($order, $orderBook);
         $this->balanceCalculation($order, $orderBook);
         $this->saveTransaction($order, $orderBook);
     }
@@ -92,7 +91,7 @@ class Buy extends Exchange
         $amount = $this->getBuyerAmount($order, $orderBook);
 
         $this->updateUserBalance($BuyerUSDBalance, [
-            'amount' => $BuyerUSDBalance->amount - ($amount * $order->price),
+            'amount' => $BuyerUSDBalance->amount - ($amount * $orderBook->price),
         ]);
 
         $this->updateUserBalance($BuyerBTCBalance, [
@@ -111,12 +110,12 @@ class Buy extends Exchange
     {
 
         $this->updateUserBalance($SellerBTCBalance, [
-            'amount' => $SellerBTCBalance->amount - $orderBook->amount,
+            'amount' => $SellerBTCBalance->amount - $order->amount,
         ]);
 
         $this->updateUserBalance($SellerUSDBalance, [
-            'amount' => $SellerUSDBalance->amount + ($orderBook->amount * $orderBook->price),
-            'available' => $SellerUSDBalance->available + ($orderBook->amount * $orderBook->price),
+            'amount' => $SellerUSDBalance->amount + ($order->amount * $orderBook->price),
+            'available' => $SellerUSDBalance->available + ($order->amount * $orderBook->price),
         ]);
 
     }
@@ -135,7 +134,6 @@ class Buy extends Exchange
             $remainAmount = $amount * ($order->price - $orderBook->price);
 
             $this->updateUserBalance($BuyerUSDBalance, [
-                'amount' => $BuyerUSDBalance->amount + $remainAmount,
                 'available' => $BuyerUSDBalance->available + $remainAmount,
             ]);
 
@@ -149,7 +147,7 @@ class Buy extends Exchange
      */
     private function getBuyerAmount($order, $orderBook)
     {
-        if ($this->isOrderBookAmountLess($order, $orderBook)) {
+        if ($orderBook->amount < $order->amount) {
             $amount = $order->remainAmount();
         } else {
             $amount = $order->amount;
@@ -170,5 +168,4 @@ class Buy extends Exchange
             'order_buy_id' => $order->id,
         ]);
     }
-
 }

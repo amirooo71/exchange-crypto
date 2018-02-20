@@ -28,9 +28,9 @@ class Sell extends Exchange
 
                 } else {
 
-                    if ($this->isOrderBookAmountLess($order, $orderBook)) {
+                    if ($this->isOrderBookRemainAmountLess($order, $orderBook)) {
 
-                        //do process
+                        $this->tradingProcessOnLessOrderBookAmount($order, $orderBook);
 
                     } else {
 
@@ -60,6 +60,17 @@ class Sell extends Exchange
      * @param $order
      * @param $orderBook
      */
+    private function tradingProcessOnLessOrderBookAmount($order, $orderBook)
+    {
+        $this->tradingOrdersUpdateOnLessAmountBookAmount($order, $orderBook);
+        $this->balanceCalculation($order, $orderBook);
+        $this->saveTransaction($order, $orderBook);
+    }
+
+    /**
+     * @param $order
+     * @param $orderBook
+     */
     protected function balanceCalculation($order, $orderBook)
     {
         $BuyerBTCBalance = $this->getUserBalance($orderBook->user_id, 2);
@@ -67,25 +78,29 @@ class Sell extends Exchange
         $SellerBTCBalance = $this->getUserBalance($order->user_id, 2);
         $SellerUSDBalance = $this->getUserBalance($order->user_id, 1);
 
-        $this->calculateSellerBalance($order, $SellerUSDBalance, $SellerBTCBalance);
+        $this->calculateSellerBalance($order, $orderBook, $SellerUSDBalance, $SellerBTCBalance);
         $this->calculateBuyerBalance($order, $orderBook, $BuyerUSDBalance, $BuyerBTCBalance);
         $this->calculateRemainAmountBalance($order, $orderBook, $SellerUSDBalance);
     }
 
     /**
      * @param $order
+     * @param $orderBook
      * @param $SellerUSDBalance
      * @param $SellerBTCBalance
      */
-    protected function calculateSellerBalance($order, $SellerUSDBalance, $SellerBTCBalance)
+    protected function calculateSellerBalance($order, $orderBook, $SellerUSDBalance, $SellerBTCBalance)
     {
-        $this->updateUserBalance($SellerUSDBalance, [
-            'amount' => $SellerUSDBalance->amount + ($order->amount * $order->price),
-            'available' => $SellerUSDBalance->available + ($order->amount * $order->price),
-        ]);
+
+        $amount = $this->getBuyerAmount($order, $orderBook);
 
         $this->updateUserBalance($SellerBTCBalance, [
-            'amount' => $SellerBTCBalance->amount - $order->amount,
+            'amount' => $SellerBTCBalance->amount - $amount,
+        ]);
+
+        $this->updateUserBalance($SellerUSDBalance, [
+            'amount' => $SellerUSDBalance->amount + ($amount * $orderBook->price),
+            'available' => $SellerUSDBalance->available + ($amount * $orderBook->price),
         ]);
     }
 
@@ -97,13 +112,13 @@ class Sell extends Exchange
      */
     protected function calculateBuyerBalance($order, $orderBook, $BuyerUSDBalance, $BuyerBTCBalance)
     {
-        $this->updateUserBalance($BuyerUSDBalance, [
-            'amount' => $BuyerUSDBalance->amount - ($order->amount * $orderBook->price),
+        $this->updateUserBalance($BuyerBTCBalance, [
+            'amount' => $BuyerBTCBalance->amount + $orderBook->amount,
+            'available' => $BuyerBTCBalance->available + $orderBook->amount,
         ]);
 
-        $this->updateUserBalance($BuyerBTCBalance, [
-            'amount' => $BuyerBTCBalance->amount + $order->amount,
-            'available' => $BuyerBTCBalance->available + $order->amount,
+        $this->updateUserBalance($BuyerUSDBalance, [
+            'amount' => $BuyerUSDBalance->amount - ($orderBook->amount * $orderBook->price),
         ]);
     }
 
@@ -129,6 +144,21 @@ class Sell extends Exchange
     /**
      * @param $order
      * @param $orderBook
+     * @return mixed
+     */
+    private function getBuyerAmount($order, $orderBook)
+    {
+        if ($orderBook->amount < $order->amount) {
+            $amount = $order->remainAmount();
+        } else {
+            $amount = $order->amount;
+        }
+        return $amount;
+    }
+
+    /**
+     * @param $order
+     * @param $orderBook
      */
     private function saveTransaction($order, $orderBook)
     {
@@ -139,6 +169,5 @@ class Sell extends Exchange
             'order_buy_id' => $orderBook->id,
         ]);
     }
-
 
 }

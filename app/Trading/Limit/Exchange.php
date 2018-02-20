@@ -94,7 +94,7 @@ class Exchange
      * @param $orderBook
      * @return bool
      */
-    protected function isOrderBookAmountLess($order, $orderBook)
+    protected function isOrderBookRemainAmountLess($order, $orderBook)
     {
         return $orderBook->remainAmount() < $order->amount;
     }
@@ -146,6 +146,16 @@ class Exchange
     {
         $this->updateOrder($orderBook, $orderBook->amount, Exchange::STATUS_CONFIRMED);
         $this->updateOrder($order, $order->amount, Exchange::STATUS_CONFIRMED);
+    }
+
+    /**
+     * @param $order
+     * @param $orderBook
+     */
+    protected function tradingOrdersUpdateOnLessAmountBookAmount($order, $orderBook)
+    {
+        $this->updateOrder($orderBook, $orderBook->amount, Exchange::STATUS_CONFIRMED);
+        $this->updateOrder($order, ($order->fill + $orderBook->amount), Exchange::STATUS_PARTIAL);
     }
 
 
