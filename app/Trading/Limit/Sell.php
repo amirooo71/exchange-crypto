@@ -51,13 +51,13 @@ class Sell extends Exchange
                     'amount' => $SellerBTCBalance->amount - $amount
                 ]);
 
-                $remainAmount = $amount * ($price - $order->price);
-
-                if ($remainAmount != 0) {
-                    $this->updateUserBalance($BuyerUSDBalance, [
-                        'available' => $BuyerUSDBalance->available + $remainAmount,
-                    ]);
-                }
+//                $remainAmount = $amount * ($price - $order->price);
+//
+//                if ($remainAmount != 0) {
+//                    $this->updateUserBalance($BuyerUSDBalance, [
+//                        'available' => $BuyerUSDBalance->available + $remainAmount,
+//                    ]);
+//                }
 
                 $this->saveTransaction($order, $orderBook, $amount, $price, 'sell');
 
