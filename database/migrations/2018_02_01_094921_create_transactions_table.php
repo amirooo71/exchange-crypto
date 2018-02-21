@@ -19,6 +19,9 @@ class CreateTransactionsTable extends Migration
             $table->integer('buyer_id');
             $table->integer('order_buy_id');
             $table->integer('order_sale_id');
+            $table->decimal('price', 16, 8);
+            $table->decimal('amount', 16, 8);
+            $table->string('status');
             $table->timestamps();
         });
     }

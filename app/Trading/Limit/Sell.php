@@ -12,32 +12,107 @@ class Sell extends Exchange
      */
     public function process($order)
     {
+
         foreach ($this->orderBuy->orderBook() as $orderBook) {
 
-            if ($this->isFill($order)) {
+            if ($orderBook->user_id != $order->user_id) {
 
-                break;
+                if ($this->isFill($order)) {
 
-            }
+                    break;
 
-            if ($this->isPriceEqualsOrMore($order, $orderBook)) {
+                }
 
-                if ($this->isAmountEquals($order, $orderBook)) {
+                if ($this->isPriceEqualsOrMore($order, $orderBook)) {
 
-                    $this->tradingProcessOnEqualsAmount($order, $orderBook);
+                    if ($this->isAmountEquals($order, $orderBook)) {
 
-                } else {
+                        $this->tradingProcessOnEqualsAmount($order, $orderBook);
 
-                    if ($this->isOrderBookRemainAmountLess($order, $orderBook)) {
+                        $BuyerBTCBalance = $this->getUserBalance($orderBook->user_id, 2);
+                        $BuyerUSDBalance = $this->getUserBalance($orderBook->user_id, 1);
+                        $SellerBTCBalance = $this->getUserBalance($order->user_id, 2);
+                        $SellerUSDBalance = $this->getUserBalance($order->user_id, 1);
 
-                        $this->tradingProcessOnLessOrderBookAmount($order, $orderBook);
+                        $this->updateUserBalance($SellerUSDBalance, [
+                            'amount' => $SellerUSDBalance->amount + ($order->amount * $orderBook->price),
+                            'available' => $SellerUSDBalance->available + ($order->amount * $orderBook->price),
+                        ]);
+
+                        $this->updateUserBalance($SellerBTCBalance, [
+                            'amount' => $SellerBTCBalance->amount - $order->amount
+                        ]);
+
+                        $this->updateUserBalance($BuyerUSDBalance, [
+                            'amount' => $BuyerUSDBalance->amount - ($order->amount * $orderBook->price)
+                        ]);
+
+                        $this->updateUserBalance($BuyerBTCBalance, [
+                            'amount' => $BuyerBTCBalance->amount + $order->amount,
+                            'available' => $BuyerBTCBalance->available + $order->amount,
+                        ]);
 
                     } else {
 
-                        //do process
+                        if ($this->isOrderBookRemainAmountLess($order, $orderBook)) {
+
+                            $BuyerBTCBalance = $this->getUserBalance($orderBook->user_id, 2);
+                            $BuyerUSDBalance = $this->getUserBalance($orderBook->user_id, 1);
+                            $SellerBTCBalance = $this->getUserBalance($order->user_id, 2);
+                            $SellerUSDBalance = $this->getUserBalance($order->user_id, 1);
+
+                            $this->updateUserBalance($SellerUSDBalance, [
+                                'amount' => $SellerUSDBalance->amount + ($orderBook->remainAmount() * $orderBook->price),
+                                'available' => $SellerUSDBalance->available + ($orderBook->remainAmount() * $orderBook->price),
+                            ]);
+
+                            $this->updateUserBalance($SellerBTCBalance, [
+                                'amount' => $SellerBTCBalance->amount - $orderBook->remainAmount()
+                            ]);
+
+                            $this->updateUserBalance($BuyerUSDBalance, [
+                                'amount' => $BuyerUSDBalance->amount - ($orderBook->remainAmount() * $orderBook->price)
+                            ]);
+
+                            $this->updateUserBalance($BuyerBTCBalance, [
+                                'amount' => $BuyerBTCBalance->amount + $orderBook->remainAmount(),
+                                'available' => $BuyerBTCBalance->available + $orderBook->remainAmount(),
+                            ]);
+
+                            $this->tradingProcessOnLessOrderBookAmount($order, $orderBook);
+
+                        } else {
+
+                            $BuyerBTCBalance = $this->getUserBalance($orderBook->user_id, 2);
+                            $BuyerUSDBalance = $this->getUserBalance($orderBook->user_id, 1);
+                            $SellerBTCBalance = $this->getUserBalance($order->user_id, 2);
+                            $SellerUSDBalance = $this->getUserBalance($order->user_id, 1);
+
+                            $this->updateUserBalance($SellerUSDBalance, [
+                                'amount' => $SellerUSDBalance->amount + ($order->remainAmount() * $orderBook->price),
+                                'available' => $SellerUSDBalance->available + ($order->remainAmount() * $orderBook->price),
+                            ]);
+
+                            $this->updateUserBalance($SellerBTCBalance, [
+                                'amount' => $SellerBTCBalance->amount - $order->remainAmount()
+                            ]);
+
+                            $this->updateUserBalance($BuyerUSDBalance, [
+                                'amount' => $BuyerUSDBalance->amount - ($order->remainAmount() * $orderBook->price)
+                            ]);
+
+                            $this->updateUserBalance($BuyerBTCBalance, [
+                                'amount' => $BuyerBTCBalance->amount + $order->remainAmount(),
+                                'available' => $BuyerBTCBalance->available + $order->remainAmount(),
+                            ]);
+
+                            $this->updateOrder($orderBook, ($orderBook->fill + $order->amount), Exchange::STATUS_PARTIAL);
+                            $this->updateOrder($order, $order->amount, Exchange::STATUS_CONFIRMED);
+                            $this->saveTransaction($order, $orderBook);
+
+                        }
 
                     }
-
                 }
 
             }
@@ -52,7 +127,7 @@ class Sell extends Exchange
     private function tradingProcessOnEqualsAmount($order, $orderBook)
     {
         $this->tradingOrdersUpdateOnEqualsAmount($order, $orderBook);
-        $this->balanceCalculation($order, $orderBook);
+//        $this->balanceCalculation($order, $orderBook);
         $this->saveTransaction($order, $orderBook);
     }
 
@@ -63,7 +138,7 @@ class Sell extends Exchange
     private function tradingProcessOnLessOrderBookAmount($order, $orderBook)
     {
         $this->tradingOrdersUpdateOnLessAmountBookAmount($order, $orderBook);
-        $this->balanceCalculation($order, $orderBook);
+//        $this->balanceCalculation($order, $orderBook);
         $this->saveTransaction($order, $orderBook);
     }
 
@@ -92,10 +167,8 @@ class Sell extends Exchange
     protected function calculateSellerBalance($order, $orderBook, $SellerUSDBalance, $SellerBTCBalance)
     {
 
-        $amount = $this->getBuyerAmount($order, $orderBook);
-
         $this->updateUserBalance($SellerBTCBalance, [
-            'amount' => $SellerBTCBalance->amount - $amount,
+            'amount' => $SellerBTCBalance->amount - $orderBook->amount,
         ]);
 
         $this->updateUserBalance($SellerUSDBalance, [
@@ -167,6 +240,9 @@ class Sell extends Exchange
             'buyer_id' => $orderBook->user_id,
             'order_sale_id' => $order->id,
             'order_buy_id' => $orderBook->id,
+            'amount' => $order->amount,
+            'price' => $order->price,
+            'status' => 'buy',
         ]);
     }
 

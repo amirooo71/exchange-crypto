@@ -16,7 +16,7 @@ Route::get('/trade', 'PagesController@trade');
 
 Route::get('test', function (Sell $sell) {
 
-    $order = \App\OrderSell::find(17);
+    $order = \App\OrderSell::find(1);
     $sell->process($order);
 });
 

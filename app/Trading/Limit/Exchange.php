@@ -28,7 +28,7 @@ class Exchange
 
     /**
      * Exchange constructor.
-     * @param Balance $balance
+     * @param Balance $balance{
      * @param OrderSell $orderSell
      * @param OrderBuy $orderBuy
      */
@@ -156,6 +156,34 @@ class Exchange
     {
         $this->updateOrder($orderBook, $orderBook->amount, Exchange::STATUS_CONFIRMED);
         $this->updateOrder($order, ($order->fill + $orderBook->amount), Exchange::STATUS_PARTIAL);
+    }
+
+    /**
+     * @param $BuyerUSDBalance
+     * @param $orderBook
+     * @param $BuyerBTCBalance
+     * @param $SellerUSDBalance
+     * @param $SellerBTCBalance
+     */
+    protected function balanceCalculationOnEqualsAmount($BuyerUSDBalance, $orderBook, $BuyerBTCBalance, $SellerUSDBalance, $SellerBTCBalance): void
+    {
+        $this->updateUserBalance($BuyerUSDBalance, [
+            'amount' => $BuyerUSDBalance->amount - ($orderBook->amount * $orderBook->price)
+        ]);
+
+        $this->updateUserBalance($BuyerBTCBalance, [
+            'amount' => $BuyerBTCBalance->amount + $orderBook->amount,
+            'available' => $BuyerBTCBalance->available + $orderBook->amount,
+        ]);
+
+        $this->updateUserBalance($SellerUSDBalance, [
+            'amount' => $SellerUSDBalance->amount + ($orderBook->amount * $orderBook->price),
+            'available' => $SellerUSDBalance->available + ($orderBook->amount * $orderBook->price),
+        ]);
+
+        $this->updateUserBalance($SellerBTCBalance, [
+            'amount' => $SellerBTCBalance->amount - $orderBook->amount
+        ]);
     }
 
 
