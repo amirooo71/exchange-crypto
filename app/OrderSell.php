@@ -51,11 +51,11 @@ class OrderSell extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function orderBook()
+    public function orderBook($price)
     {
         return $this
-            ->where('status', '=', 'in_progress')
-            ->orWhere('status', '=', 'partial')
+            ->whereRaw('fill < amount')
+            ->where('price', '<=',$price)
             ->orderBy('price', 'asc')
             ->get();
     }

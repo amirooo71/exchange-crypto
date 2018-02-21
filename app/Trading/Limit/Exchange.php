@@ -44,10 +44,15 @@ class Exchange
      * @param $fill
      * @param $status
      */
-    protected function updateOrder($order, $fill, $status)
+    protected function updateOrderFill($order, $amount)
     {
-        $order->updateFill($fill);
-        $order->updateStatus($status);
+        $order->updateFill($order->fill + $amount);
+        if($order->fill == $order->amount){
+            $order->updateStatus(Exchange::STATUS_CONFIRMED);
+        }else{
+            $order->updateStatus(Exchange::STATUS_PARTIAL);
+        }
+
     }
 
     /**

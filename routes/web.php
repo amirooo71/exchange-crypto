@@ -16,7 +16,11 @@ Route::get('/trade', 'PagesController@trade');
 
 Route::get('test', function (Sell $sell) {
 
-    $order = \App\OrderSell::find(1);
-    $sell->process($order);
+
+    $orderSell = new \App\OrderSell();
+
+    $orders = $orderSell->orderBook(980);
+
+    dd($orders);
 });
 
