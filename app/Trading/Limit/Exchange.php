@@ -5,6 +5,7 @@ namespace App\Trading\Limit;
 use App\Balance;
 use App\OrderSell;
 use App\OrderBuy;
+use App\Transaction;
 
 class Exchange
 {
@@ -28,7 +29,7 @@ class Exchange
 
     /**
      * Exchange constructor.
-     * @param Balance $balance{
+     * @param Balance $balance {
      * @param OrderSell $orderSell
      * @param OrderBuy $orderBuy
      */
@@ -47,9 +48,9 @@ class Exchange
     protected function updateOrderFill($order, $amount)
     {
         $order->updateFill($order->fill + $amount);
-        if($order->fill == $order->amount){
+        if ($order->fill == $order->amount) {
             $order->updateStatus(Exchange::STATUS_CONFIRMED);
-        }else{
+        } else {
             $order->updateStatus(Exchange::STATUS_PARTIAL);
         }
 
@@ -191,5 +192,23 @@ class Exchange
         ]);
     }
 
-
+    /**
+     * @param $order
+     * @param $orderBook
+     * @param $amount
+     * @param $price
+     * @param $type
+     */
+    protected function saveTransaction($order, $orderBook, $amount, $price, $type)
+    {
+        Transaction::create([
+            'seller_id' => $orderBook->user_id,
+            'buyer_id' => $order->user_id,
+            'order_sale_id' => $orderBook->id,
+            'order_buy_id' => $order->id,
+            'amount' => $amount,
+            'price' => $price,
+            'status' => $type,
+        ]);
+    }
 }

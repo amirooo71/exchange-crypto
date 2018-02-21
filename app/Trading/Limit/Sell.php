@@ -2,7 +2,6 @@
 
 namespace App\Trading\Limit;
 
-use App\Transaction;
 
 class Sell extends Exchange
 {
@@ -178,21 +177,5 @@ class Sell extends Exchange
         return $amount;
     }
 
-    /**
-     * @param $order
-     * @param $orderBook
-     */
-    private function saveTransaction($order, $orderBook)
-    {
-        Transaction::create([
-            'seller_id' => $order->user_id,
-            'buyer_id' => $orderBook->user_id,
-            'order_sale_id' => $order->id,
-            'order_buy_id' => $orderBook->id,
-            'amount' => $order->amount,
-            'price' => $order->price,
-            'status' => 'buy',
-        ]);
-    }
 
 }

@@ -19,8 +19,9 @@ Route::get('test', function (Sell $sell) {
 
     $orderSell = new \App\OrderSell();
 
-    $orders = $orderSell->orderBook(980);
 
-    dd($orders);
+    $orders = $orderSell->orderBook(980)->get;
+
+    dd($orders->toSql());
 });
 
