@@ -49,13 +49,14 @@ class OrderBuy extends Model
     }
 
     /**
+     * @param $price
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function orderBook($price)
     {
         return $this
             ->whereRaw('fill < amount')
-            ->where('price', '>=',$price)
+            ->where('price', '>=', $price)
             ->orderBy('price', 'desc')
             ->get();
     }

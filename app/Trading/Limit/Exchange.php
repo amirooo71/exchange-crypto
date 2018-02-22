@@ -9,8 +9,8 @@ use App\Transaction;
 
 class Exchange
 {
-    protected const STATUS_CONFIRMED = "confirmed";
-    protected const STATUS_PARTIAL = "partial";
+    const STATUS_CONFIRMED = "confirmed";
+    const STATUS_PARTIAL = "partial";
 
     /**
      * @var Balance
@@ -42,8 +42,7 @@ class Exchange
 
     /**
      * @param $order
-     * @param $fill
-     * @param $status
+     * @param $amount
      */
     protected function updateOrderFill($order, $amount)
     {
@@ -66,66 +65,6 @@ class Exchange
     }
 
     /**
-     * @param $order
-     * @param $orderBook
-     * @return bool
-     */
-    protected function isPriceEqualsOrLess($order, $orderBook)
-    {
-        return $orderBook->price <= $order->price;
-    }
-
-    /**
-     * @param $order
-     * @param $orderBook
-     * @return bool
-     */
-    protected function isPriceEqualsOrMore($order, $orderBook)
-    {
-        return $orderBook->price >= $order->price;
-    }
-
-    /**
-     * @param $order
-     * @param $orderBook
-     * @return bool
-     */
-    protected function isAmountEquals($order, $orderBook)
-    {
-        return $orderBook->remainAmount() == $order->amount;
-    }
-
-    /**
-     * @param $order
-     * @param $orderBook
-     * @return bool
-     */
-    protected function isOrderBookRemainAmountLess($order, $orderBook)
-    {
-        return $orderBook->remainAmount() < $order->amount;
-    }
-
-    /**
-     * @param $order
-     * @param $orderBook
-     * @return bool
-     */
-    protected function isOrderBookPriceLess($order, $orderBook)
-    {
-        return $orderBook->price < $order->price;
-    }
-
-    /**
-     * @param $order
-     * @param $orderBook
-     * @return bool
-     */
-    protected function isOrderBookPriceMore($order, $orderBook)
-    {
-        return $orderBook->price > $order->price;
-    }
-
-    /**
      * @param $balance
      * @param array $data
      */
@@ -142,54 +81,6 @@ class Exchange
     protected function getUserBalance($userId, $currencyId)
     {
         return $this->balance->getUserBalanceByUserId($userId, $currencyId);
-    }
-
-    /**
-     * @param $order
-     * @param $orderBook
-     */
-    protected function tradingOrdersUpdateOnEqualsAmount($order, $orderBook)
-    {
-        $this->updateOrder($orderBook, $orderBook->amount, Exchange::STATUS_CONFIRMED);
-        $this->updateOrder($order, $order->amount, Exchange::STATUS_CONFIRMED);
-    }
-
-    /**
-     * @param $order
-     * @param $orderBook
-     */
-    protected function tradingOrdersUpdateOnLessAmountBookAmount($order, $orderBook)
-    {
-        $this->updateOrder($orderBook, $orderBook->amount, Exchange::STATUS_CONFIRMED);
-        $this->updateOrder($order, ($order->fill + $orderBook->amount), Exchange::STATUS_PARTIAL);
-    }
-
-    /**
-     * @param $BuyerUSDBalance
-     * @param $orderBook
-     * @param $BuyerBTCBalance
-     * @param $SellerUSDBalance
-     * @param $SellerBTCBalance
-     */
-    protected function balanceCalculationOnEqualsAmount($BuyerUSDBalance, $orderBook, $BuyerBTCBalance, $SellerUSDBalance, $SellerBTCBalance): void
-    {
-        $this->updateUserBalance($BuyerUSDBalance, [
-            'amount' => $BuyerUSDBalance->amount - ($orderBook->amount * $orderBook->price)
-        ]);
-
-        $this->updateUserBalance($BuyerBTCBalance, [
-            'amount' => $BuyerBTCBalance->amount + $orderBook->amount,
-            'available' => $BuyerBTCBalance->available + $orderBook->amount,
-        ]);
-
-        $this->updateUserBalance($SellerUSDBalance, [
-            'amount' => $SellerUSDBalance->amount + ($orderBook->amount * $orderBook->price),
-            'available' => $SellerUSDBalance->available + ($orderBook->amount * $orderBook->price),
-        ]);
-
-        $this->updateUserBalance($SellerBTCBalance, [
-            'amount' => $SellerBTCBalance->amount - $orderBook->amount
-        ]);
     }
 
     /**

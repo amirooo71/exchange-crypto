@@ -2,7 +2,6 @@
 
 namespace App\Trading\Limit;
 
-
 class Buy extends Exchange
 {
     /**
@@ -10,9 +9,6 @@ class Buy extends Exchange
      */
     public function process($order)
     {
-
-        $amount = $order->remainAmount();
-
         foreach ($this->orderSell->orderBook($order->price) as $orderBook) {
 
             if ($orderBook->user_id != $order->user_id) {
@@ -65,117 +61,5 @@ class Buy extends Exchange
             }
         }
     }
-
-    /**
-     * @param $order
-     * @param $orderBook
-     */
-    private function tradingProcessOnEqualsAmount($order, $orderBook)
-    {
-
-    }
-
-    /**
-     * @param $order
-     * @param $orderBook
-     */
-    private function tradingProcessOnLessOrderBookAmount($order, $orderBook)
-    {
-        $this->tradingOrdersUpdateOnLessAmountBookAmount($order, $orderBook);
-//        $this->balanceCalculation($order, $orderBook);
-        $this->saveTransaction($order, $orderBook);
-    }
-
-    /**
-     * @param $order
-     * @param $orderBook
-     */
-    private function balanceCalculation($order, $orderBook)
-    {
-        $BuyerBTCBalance = $this->getUserBalance($order->user_id, 2);
-        $BuyerUSDBalance = $this->getUserBalance($order->user_id, 1);
-        $SellerBTCBalance = $this->getUserBalance($orderBook->user_id, 2);
-        $SellerUSDBalance = $this->getUserBalance($orderBook->user_id, 1);
-
-        $this->calculateBuyerBalance($order, $orderBook, $BuyerUSDBalance, $BuyerBTCBalance);
-        $this->calculateSellerBalance($order, $orderBook, $SellerBTCBalance, $SellerUSDBalance);
-        $this->calculateRemainAmountBalance($order, $orderBook, $BuyerUSDBalance);
-
-    }
-
-    /**
-     * @param $order
-     * @param $orderBook
-     * @param $BuyerUSDBalance
-     * @param $BuyerBTCBalance
-     */
-    private function calculateBuyerBalance($order, $orderBook, $BuyerUSDBalance, $BuyerBTCBalance)
-    {
-
-        $this->updateUserBalance($BuyerUSDBalance, [
-            'amount' => $BuyerUSDBalance->amount - ($orderBook->amount * $orderBook->price),
-        ]);
-
-        $this->updateUserBalance($BuyerBTCBalance, [
-            'amount' => $BuyerBTCBalance->amount + $orderBook->amount,
-            'available' => $BuyerBTCBalance->available + $orderBook->amount,
-        ]);
-    }
-
-    /**
-     * @param $order
-     * @param $orderBook
-     * @param $SellerBTCBalance
-     * @param $SellerUSDBalance
-     */
-    private function calculateSellerBalance($order, $orderBook, $SellerBTCBalance, $SellerUSDBalance)
-    {
-
-        $this->updateUserBalance($SellerBTCBalance, [
-            'amount' => $SellerBTCBalance->amount - $orderBook->amount,
-        ]);
-
-        $this->updateUserBalance($SellerUSDBalance, [
-            'amount' => $SellerUSDBalance->amount + ($orderBook->amount * $orderBook->price),
-            'available' => $SellerUSDBalance->available + ($orderBook->amount * $orderBook->price),
-        ]);
-
-    }
-
-    /**
-     * @param $order
-     * @param $orderBook
-     * @param $BuyerUSDBalance
-     */
-    private function calculateRemainAmountBalance($order, $orderBook, $BuyerUSDBalance)
-    {
-        if ($this->isOrderBookPriceLess($order, $orderBook)) {
-
-            $amount = $this->getBuyerAmount($order, $orderBook);
-
-            $remainAmount = $amount * ($order->price - $orderBook->price);
-
-            $this->updateUserBalance($BuyerUSDBalance, [
-                'available' => $BuyerUSDBalance->available + $remainAmount,
-            ]);
-
-        }
-    }
-
-    /**
-     * @param $order
-     * @param $orderBook
-     * @return mixed
-     */
-    private function getBuyerAmount($order, $orderBook)
-    {
-        if ($orderBook->amount < $order->amount) {
-            $amount = $order->remainAmount();
-        } else {
-            $amount = $order->amount;
-        }
-        return $amount;
-    }
-
 
 }
