@@ -14,14 +14,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/trade', 'PagesController@trade');
 
 
-Route::get('test', function (Sell $sell) {
+Route::get('test', function () {
 
+    \Illuminate\Support\Facades\DB::table('balances')->where('id',1)->increment('amount',1000);
 
-    $orderSell = new \App\OrderSell();
+    return view('welcome');
 
-
-    $orders = $orderSell->orderBook(980)->get;
-
-    dd($orders->toSql());
 });
 

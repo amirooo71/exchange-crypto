@@ -2,6 +2,8 @@
 
 namespace App\Trading\Limit;
 
+use Illuminate\Support\Facades\DB;
+
 class Sell extends Exchange
 {
 
@@ -13,55 +15,29 @@ class Sell extends Exchange
 
         foreach ($this->orderBuy->orderBook($order->price) as $orderBook) {
 
-            if ($orderBook->user_id != $order->user_id) {
+            if ($this->isFill($order)) {
 
-                if ($this->isFill($order)) {
-
-                    break;
-
-                }
-
-                $SellerBTCBalance = $this->getUserBalance($order->user_id, 2);
-                $SellerUSDBalance = $this->getUserBalance($order->user_id, 1);
-                $BuyerBTCBalance = $this->getUserBalance($orderBook->user_id, 2);
-                $BuyerUSDBalance = $this->getUserBalance($orderBook->user_id, 1);
-
-                $price = $orderBook->price;
-                $amount = min($order->remainAmount(), $orderBook->remainAmount());
-                $totalPrice = $amount * $price;
-
-                $this->updateUserBalance($BuyerUSDBalance, [
-                    'amount' => $BuyerUSDBalance->amount - $totalPrice
-                ]);
-
-                $this->updateUserBalance($BuyerBTCBalance, [
-                    'amount' => $BuyerBTCBalance->amount + $amount,
-                    'available' => $BuyerBTCBalance->available + $amount,
-                ]);
-
-                $this->updateUserBalance($SellerUSDBalance, [
-                    'amount' => $SellerUSDBalance->amount + $totalPrice,
-                    'available' => $SellerUSDBalance->available + $totalPrice,
-                ]);
-
-                $this->updateUserBalance($SellerBTCBalance, [
-                    'amount' => $SellerBTCBalance->amount - $amount
-                ]);
-
-//                $remainAmount = $amount * ($price - $order->price);
-//
-//                if ($remainAmount != 0) {
-//                    $this->updateUserBalance($BuyerUSDBalance, [
-//                        'available' => $BuyerUSDBalance->available + $remainAmount,
-//                    ]);
-//                }
-
-                $this->saveTransaction($order, $orderBook, $amount, $price, 'sell');
-
-                $this->updateOrderFill($orderBook, $amount);
-                $this->updateOrderFill($order, $amount);
+                break;
 
             }
+
+            $price = $orderBook->price;
+            $amount = min($order->remainAmount(), $orderBook->remainAmount());
+            $totalPrice = $amount * $price;
+
+            //Seller Balance Calculation
+            DB::table('balances')->where('user_id', $order->user_id)->where('currency_id', 1)->increment('amount', $totalPrice);
+            DB::table('balances')->where('user_id', $order->user_id)->where('currency_id', 1)->increment('available', $totalPrice);
+            DB::table('balances')->where('user_id', $order->user_id)->where('currency_id', 2)->decrement('amount', $amount);
+
+            //Buyer Balance Calculation
+            DB::table('balances')->where('user_id', $orderBook->user_id)->where('currency_id', 1)->decrement('amount', $totalPrice);
+            DB::table('balances')->where('user_id', $orderBook->user_id)->where('currency_id', 2)->increment('amount', $amount);
+            DB::table('balances')->where('user_id', $orderBook->user_id)->where('currency_id', 2)->increment('available', $amount);
+
+            $this->saveTransaction($order, $orderBook, $amount, $price, 'sell');
+            $this->updateOrderFill($orderBook, $amount);
+            $this->updateOrderFill($order, $amount);
 
         }
     }
