@@ -9,6 +9,7 @@ use App\Trading\Limit\Sell;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class OrderSellController extends Controller
 {
@@ -35,15 +36,15 @@ class OrderSellController extends Controller
      */
     public function store(Request $request, StoreOrderSell $validation, Sell $exchanger)
     {
-        $userBalance = $this->balance->getUserBalance(2);
-        if ($this->isNotValidAmount($userBalance)) {
-            return \response()->json([], Response::HTTP_FORBIDDEN);
+        if ($this->isValidOrder(2)) {
+            $this->decrementUserBalance(2, $request->amount);
+            $order = OrderSell::storeOrder();
+            $validOrder = OrderSell::find($order->id);
+            $exchanger->process($validOrder);
+            return response()->json($validOrder, 200);
         }
-        $userBalance->update(['available' => $this->calculateAvailableAmount($userBalance)]);
-        $order = OrderSell::storeOrder();
-        $validOrder = OrderSell::find($order->id);
-        $exchanger->process($validOrder);
-        return response()->json($order, 200);
+
+        return \response()->json([], 403);
     }
 
     /**
@@ -74,26 +75,53 @@ class OrderSellController extends Controller
      */
     public function destroy($id)
     {
-        OrderSell::find($id)->delete();
+        $order = OrderSell::find($id);
+        $this->incrementUserBalance(2, $order->remainAmount());
+        $order->delete();
         return response()->json([], 204);
     }
 
     /**
-     * @param $userBalance
-     * @return bool
+     * @return float|int
      */
-    private function isNotValidAmount($userBalance): bool
+    private function totalPrice()
     {
-        return \request()->amount > $userBalance->available;
+        return (\request()->amount * \request()->price);
     }
 
     /**
-     * @param $userBalance
+     * @param $currency
+     * @return bool
+     */
+    private function isValidOrder($currency): bool
+    {
+        $balance = $this->balance->getUserBalance($currency);
+        return \request()->amount < $balance->available && $this->totalPrice() != 0;
+    }
+
+    /**
+     * @param $currencyId
+     * @param $amount
      * @return mixed
      */
-    private function calculateAvailableAmount($userBalance)
+    private function decrementUserBalance($currencyId, $amount)
     {
-        return $userBalance->available - \request()->amount;
+        return DB::table('balances')
+            ->where('user_id', auth()->user()->id)
+            ->where('currency_id', $currencyId)
+            ->decrement('available', $amount);
+    }
+
+    /**
+     * @param $currencyId
+     * @param $amount
+     */
+    private function incrementUserBalance($currencyId, $amount): void
+    {
+        DB::table('balances')
+            ->where('user_id', auth()->user()->id)
+            ->where('currency_id', $currencyId)
+            ->increment('available', $amount);
     }
 
 }

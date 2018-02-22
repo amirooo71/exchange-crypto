@@ -15,6 +15,19 @@
 </template>
 
 <script>
+
+    window.Event = new Vue();
+
+    window.notify = function (type, msg) {
+        new Noty({
+            type: type,
+            layout: 'bottomRight',
+            theme: 'mint',
+            text: msg,
+            timeout: 2000,
+        }).show();
+    }
+
     export default {
         mounted() {
             console.log('Component mounted.')

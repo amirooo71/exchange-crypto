@@ -11,14 +11,15 @@ Route::get('/', function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/trade', 'PagesController@trade');
-
+Route::get('/trading', 'PagesController@trading');
+Route::post('trading/order/buy', 'OrderBuyController@store');
 
 Route::get('test', function () {
 
-    \Illuminate\Support\Facades\DB::table('balances')->where('id',1)->increment('amount',1000);
+    $order = \App\OrderBuy::find(1);
 
-    return view('welcome');
+    dd($order->currency_id);
+
 
 });
 

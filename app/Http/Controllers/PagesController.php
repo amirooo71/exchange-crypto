@@ -18,8 +18,8 @@ class PagesController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function trade()
+    public function trading()
     {
-        return view('trade');
+        return view('trading.trading');
     }
 }

@@ -39,6 +39,7 @@
 
         created() {
             Event.$on('orderApplied', () => this.getUserBalance());
+            Event.$on('orderDeleted', () => this.getUserBalance());
         },
 
         mounted() {

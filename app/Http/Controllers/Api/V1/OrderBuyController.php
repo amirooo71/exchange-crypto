@@ -37,15 +37,15 @@ class OrderBuyController extends Controller
      */
     public function store(Request $request, Buy $exchanger, StoreOrderBuy $validation)
     {
-        $userBalance = $this->balance->getUserBalance(1);
-        if ($this->isNotValidAmount($userBalance, $this->requestedAmount($request))) {
-            return \response()->json([], Response::HTTP_FORBIDDEN);
+        if ($this->isValidOrder(1)) {
+            $this->decrementUserBalance(1, $this->totalPrice($request));
+            $order = OrderBuy::storeOrder();
+            $validOrder = OrderBuy::find($order->id);
+            $exchanger->process($validOrder);
+            return response()->json($validOrder, Response::HTTP_OK);
         }
-        $userBalance->update(['available' => $this->calculateAvailableAmount($userBalance, $request)]);
-        $order = OrderBuy::storeOrder();
-        $validOrder = OrderBuy::find($order->id);
-        $exchanger->process($validOrder);
-        return response()->json($order, Response::HTTP_OK);
+
+        return \response()->json([], 403);
     }
 
     /**
@@ -76,36 +76,53 @@ class OrderBuyController extends Controller
      */
     public function destroy($id)
     {
-        OrderBuy::find($id)->delete();
+        $order = OrderBuy::find($id);
+        $amount = $order->remainAmount() * $order->price;
+        $this->incrementUserBalance(1, $amount);
+        $order->delete();
         return response()->json([], 204);
     }
 
     /**
-     * @param $userBalance
-     * @param $requestedAmount
+     * @return float|int
+     */
+    private function totalPrice()
+    {
+        return (\request()->amount * \request()->price);
+    }
+
+    /**
+     * @param $currency
      * @return bool
      */
-    private function isNotValidAmount($userBalance, $requestedAmount)
+    private function isValidOrder($currency): bool
     {
-        return ($requestedAmount > $userBalance->available);
+        $balance = $this->balance->getUserBalance($currency);
+        return $this->totalPrice() < $balance->available && $this->totalPrice() != 0;
     }
 
     /**
-     * @param $request
-     * @return float|int
+     * @param $currencyId
+     * @param $amount
      */
-    private function requestedAmount($request)
+    private function decrementUserBalance($currencyId, $amount): void
     {
-        return ($request->amount * $request->price);
+        DB::table('balances')
+            ->where('user_id', auth()->user()->id)
+            ->where('currency_id', $currencyId)
+            ->decrement('available', $amount);
     }
 
     /**
-     * @param $userBalance
-     * @param $request
-     * @return float|int
+     * @param $currencyId
+     * @param $amount
      */
-    private function calculateAvailableAmount($userBalance, $request)
+    private function incrementUserBalance($currencyId, $amount): void
     {
-        return $userBalance->available - $this->requestedAmount($request);
+        DB::table('balances')
+            ->where('user_id', auth()->user()->id)
+            ->where('currency_id', $currencyId)
+            ->increment('available', $amount);
     }
+
 }

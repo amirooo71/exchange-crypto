@@ -20,7 +20,7 @@ Vue.component('balance', require('./components/Balance.vue'));
 Vue.component('order-buy', require('./components/OrderBuy.vue'));
 Vue.component('order-sell', require('./components/OrderSell.vue'));
 Vue.component('exchange', require('./components/Exchange.vue'));
-Vue.component('user-order', require('./components/UserOrder.vue'));
+Vue.component('order-history', require('./components/OrderHistory.vue'));
 Vue.component('order-book', require('./components/OrderBook.vue'));
 
 Vue.component('panel', require('./components/widget/Panel.vue'));

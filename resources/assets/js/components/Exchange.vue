@@ -1,10 +1,10 @@
 <template>
-    <panel title="خرید و فروش">
+    <panel title="فرم سفارش">
         <div slot="body" class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-6 col-xs-6">
                 <order-buy></order-buy>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-6 col-xs-6">
                 <order-sell></order-sell>
             </div>
         </div>

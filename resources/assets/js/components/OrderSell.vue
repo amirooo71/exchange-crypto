@@ -2,37 +2,34 @@
     <form class="form-horizontal" @submit.prevent="onSubmit" @keydown="errors.clear($event.target.name)">
         <div class="panel ng-bg-dark">
             <div class="panel-heading">
-                <h5 class="panel-title">فروش</h5>
+                <h5 class="panel-title text-center">فروش</h5>
             </div>
             <div class="panel-body">
                 <div class="form-group">
-                    <label class="col-lg-3 control-label">قیمت:</label>
-                    <div class="col-lg-9">
-                        <input type="text" class="form-control" name="price" v-model="price">
+                    <div>
+                        <input type="text" class="form-control" name="price" v-model="price" placeholder="قیمت">
                         <span class="text-danger help-block" v-if="errors.has('price')"
                               v-text="errors.get('price')"></span>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-lg-3 control-label">مقدار:</label>
-                    <div class="col-lg-9">
-                        <input type="text" class="form-control" name="amount" v-model="amount">
+                    <div>
+                        <input type="text" class="form-control" name="amount" v-model="amount" placeholder="مقدار">
                         <span class="text-danger help-block" v-if="errors.has('amount')"
                               v-text="errors.get('amount')"></span>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-lg-3 control-label">کل:</label>
-                    <div class="col-lg-9">
-                        <input type="text" class="form-control" :value="price * amount">
+                    <div>
+                        <input type="text" class="form-control" :value="price * amount" placeholder="جمع کل">
                     </div>
                 </div>
-
-                <div class="text-right">
-                    <button type="submit" class="btn btn-danger" :disabled="errors.any()">تایید فروش <i
-                            class="icon-arrow-left13 position-right"></i></button>
+                <div class="form-group">
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-danger btn-block" :disabled="errors.any()">فروش</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -40,8 +37,6 @@
 </template>
 
 <script>
-
-    window.Event = new Vue();
 
     class Errors {
 
@@ -99,23 +94,14 @@
             },
 
             onSuccess(response) {
-                this.notify('success', 'تراکنش خرید با موفقیت ثبت شد.');
+                notify('success', 'سفارش خرید با موفقیت ثبت شد.');
                 this.price = '';
                 this.amount = '';
-                Event.$emit('orderApplied', response.data)
-            },
-
-            notify(type, msg) {
-                new Noty({
-                    type: type,
-                    layout: 'bottomRight',
-                    theme: 'mint',
-                    text: msg
-                }).show();
+                Event.$emit('orderApplied')
             },
 
             onError() {
-                this.notify('error', 'موجودی کافی نیست.');
+                notify('error', 'موجودی کافی نیست.');
                 this.amount = '';
             }
         }

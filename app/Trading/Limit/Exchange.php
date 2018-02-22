@@ -65,25 +65,6 @@ class Exchange
     }
 
     /**
-     * @param $balance
-     * @param array $data
-     */
-    protected function updateUserBalance($balance, $data = [])
-    {
-        $balance->update($data);
-    }
-
-    /**
-     * @param $userId
-     * @param $currencyId
-     * @return \Illuminate\Database\Eloquent\Model|null|static
-     */
-    protected function getUserBalance($userId, $currencyId)
-    {
-        return $this->balance->getUserBalanceByUserId($userId, $currencyId);
-    }
-
-    /**
      * @param $order
      * @param $orderBook
      * @param $amount

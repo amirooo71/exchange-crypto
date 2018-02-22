@@ -66,13 +66,14 @@ class OrderBuy extends Model
      */
     public static function storeOrder()
     {
-        $order = self::create([
+        return self::create([
             'user_id' => auth()->id(),
             'currency_id' => \request('currency_id'),
             'price' => \request('price'),
             'amount' => \request('amount'),
         ]);
-        $order['type'] = 'خرید';
-        return $order;
+
     }
+
+
 }
