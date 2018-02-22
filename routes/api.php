@@ -23,6 +23,14 @@ Route::prefix('v1')->group(function () {
     Route::delete('/trade/ordersell/{id}/delete', 'Api\V1\OrderSellController@destroy');
     Route::post('/trade/ordersell', 'Api\V1\OrderSellController@store');
 
-    Route::get('/trade/user/orders/history', 'Api\V1\UserController@orderHistory');
+
+    /**
+     |------------------------------------
+     | OrderBook & Balance & OrderHistory
+     |------------------------------------
+     */
+    Route::get('/trade/user/orders/history', 'Api\V1\UserController@orders');
     Route::get('/trade/user/balance', 'Api\V1\BalanceController@userBalance');
+    Route::get('/trade/orderbook/buy', 'Api\V1\OrderBookController@buyOrderBook');
+    Route::get('/trade/orderbook/sell', 'Api\V1\OrderBookController@sellOrderBook');
 });

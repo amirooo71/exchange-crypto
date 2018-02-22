@@ -18,7 +18,7 @@ class UserController extends Controller
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function orderHistory()
+    public function orders()
     {
         $user = auth()->user();
         $buyOrders = $user->orderBuy()->latest()->get();

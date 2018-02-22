@@ -12,7 +12,6 @@ Route::get('/', function () {
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/trading', 'PagesController@trading');
-Route::post('trading/order/buy', 'OrderBuyController@store');
 
 Route::get('test', function () {
 
