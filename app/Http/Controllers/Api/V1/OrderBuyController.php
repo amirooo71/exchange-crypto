@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Balance;
+use App\Events\OrderBook;
 use App\Http\Requests\StoreOrderBuy;
 use App\OrderBuy;
 use App\Trading\Limit\Buy;
@@ -42,7 +43,8 @@ class OrderBuyController extends Controller
             $order = OrderBuy::storeOrder();
             $validOrder = OrderBuy::find($order->id);
             $exchanger->process($validOrder);
-            return response()->json($validOrder, Response::HTTP_OK);
+            OrderBook::dispatch($validOrder);
+            return response()->json([], Response::HTTP_OK);
         }
 
         return \response()->json([], 403);

@@ -54,6 +54,17 @@
             }
         },
 
+
+        created() {
+            window.Echo.channel('order-book').listen('OrderBook', e => {
+                if (e.order.type == 'خرید') {
+                    this.orderBuys.push(e.order);
+                } else {
+                    this.orderSells.push(e.order);
+                }
+            });
+        },
+
         mounted() {
             this.getSellOrderBook();
             this.getBuyOrderBook();

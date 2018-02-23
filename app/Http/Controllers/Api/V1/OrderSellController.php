@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Balance;
+use App\Events\OrderBook;
 use App\Http\Requests\StoreOrderSell;
 use App\OrderSell;
 use App\Trading\Limit\Sell;
@@ -41,7 +42,8 @@ class OrderSellController extends Controller
             $order = OrderSell::storeOrder();
             $validOrder = OrderSell::find($order->id);
             $exchanger->process($validOrder);
-            return response()->json($validOrder, 200);
+            OrderBook::dispatch($validOrder);
+            return response()->json([], 200);
         }
 
         return \response()->json([], 403);

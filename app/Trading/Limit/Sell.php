@@ -2,6 +2,7 @@
 
 namespace App\Trading\Limit;
 
+use App\Events\OrderConfirm;
 use Illuminate\Support\Facades\DB;
 
 class Sell extends Exchange
@@ -38,6 +39,8 @@ class Sell extends Exchange
             $this->saveTransaction($order, $orderBook, $amount, $price, 'sell');
             $this->updateOrderFill($orderBook, $amount);
             $this->updateOrderFill($order, $amount);
+
+            OrderConfirm::dispatch($price);
 
         }
     }

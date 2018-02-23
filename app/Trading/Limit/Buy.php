@@ -2,6 +2,7 @@
 
 namespace App\Trading\Limit;
 
+use App\Events\OrderConfirm;
 use Illuminate\Support\Facades\DB;
 
 class Buy extends Exchange
@@ -12,7 +13,7 @@ class Buy extends Exchange
     public function process($order)
     {
         foreach ($this->orderSell->orderBook($order->price) as $orderBook) {
-            
+
             if ($this->isFill($order)) {
                 break;
             }
@@ -41,6 +42,8 @@ class Buy extends Exchange
             $this->saveTransaction($order, $orderBook, $amount, $price, 'buy');
             $this->updateOrderFill($orderBook, $amount);
             $this->updateOrderFill($order, $amount);
+
+            OrderConfirm::dispatch($price);
         }
     }
 }

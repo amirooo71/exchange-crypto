@@ -15,10 +15,10 @@ Route::get('/trading', 'PagesController@trading');
 
 Route::get('test', function () {
 
-    $order = \App\OrderBuy::find(1);
 
-    dd($order->currency_id);
-
-
+    return 'Done';
 });
+
+
+
 

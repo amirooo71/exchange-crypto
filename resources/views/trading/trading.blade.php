@@ -16,18 +16,18 @@
             <div slot="body">
                 <div class="tabbable">
                     <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
-                        <li class="active">
+                        <li>
                             <a href="#order-history-tab" data-toggle="tab">معاملات کاربر</a>
                         </li>
-                        <li>
+                        <li class="active">
                             <a href="#order-book-tab" data-toggle="tab">کل معاملات</a>
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane active" id="order-history-tab">
+                        <div class="tab-pane" id="order-history-tab">
                             <order-history :user="{{auth()->user()}}"></order-history>
                         </div>
-                        <div class="tab-pane" id="order-book-tab">
+                        <div class="tab-pane active" id="order-book-tab">
                             <order-book></order-book>
                         </div>
                     </div>

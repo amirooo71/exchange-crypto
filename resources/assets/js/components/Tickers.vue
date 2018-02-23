@@ -17,8 +17,8 @@
                             <img src="./../../../../public/images/logo/BTC.svg" alt="بیتکوین"
                                  class="v-tiny-svg">
                         </td>
-                        <td></td>
-                        <td></td>
+                        <td>بیتکوین</td>
+                        <td>{{price}}</td>
                         <td></td>
                     </tr>
                     </tbody>
@@ -29,8 +29,41 @@
 </template>
 
 <script>
+
+    // import VueSocketio from 'vue-socket.io';
+    // Vue.use(VueSocketio, 'http://localhost:3000');
+
     export default {
         name: "tickers",
+
+        data() {
+
+            return {
+
+                price: '',
+
+            }
+
+        },
+
+
+        created() {
+            window.Echo.channel('order-confirm').listen('OrderConfirm', e => {
+                this.price = e.price;
+            });
+        },
+
+        // sockets: {
+        //
+        //     connect: function () {
+        //         console.log('socket connected')
+        //     },
+        //
+        //     'test-channel:UserSignUp': function(data){
+        //         this.users.push(data.username);
+        //     },
+        // },
+
     }
 </script>
 

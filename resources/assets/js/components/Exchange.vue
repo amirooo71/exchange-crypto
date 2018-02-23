@@ -15,6 +15,12 @@
 
     export default {
         name: "exchange",
+
+        created() {
+            window.Echo.channel('order-confirm').listen('OrderConfirm', () => {
+                notify('info', 'سفارش خرید با موفقیت انجام شد.');
+            });
+        },
     }
 </script>
 
