@@ -16,21 +16,20 @@
         mounted() {
             var ctx = this.$el.getContext('2d');
             new Chart(ctx, {
-                type: 'line',
+                type: 'bar',
                 data: {
                     labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
                     datasets: [
                         {
                             label: '# of Votes',
-                            data: [11, 36, 3, 5, 2, 8],
+                            data: [7, 26, 3, 15, 2, 15],
                             backgroundColor: '#455A64',
                         },
                         {
                             label: '# of Votes',
-                            data: [7, 26, 3, 15, 2, 15],
-                            backgroundColor: '#546E7A',
+                            data: [4, 16, 7, 25, 6, 35],
+                            backgroundColor: '#345A64',
                         },
-
                     ]
                 },
                 options: {
@@ -43,7 +42,8 @@
                     }
                 }
             });
-        }
+        },
+
     }
 </script>
 

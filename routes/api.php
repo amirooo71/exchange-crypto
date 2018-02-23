@@ -25,9 +25,9 @@ Route::prefix('v1')->group(function () {
 
 
     /**
-     |------------------------------------
-     | OrderBook & Balance & OrderHistory
-     |------------------------------------
+     * |------------------------------------
+     * | OrderBook & Balance & OrderHistory
+     * |------------------------------------
      */
     Route::get('/trade/user/orders/history', 'Api\V1\UserController@orders');
     Route::get('/trade/user/balance', 'Api\V1\BalanceController@userBalance');
