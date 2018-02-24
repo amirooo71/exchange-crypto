@@ -7,7 +7,7 @@
                     <tr class="bg-info">
                         <th>قیمت</th>
                         <th>مقدار</th>
-                        <th>زمان</th>
+                        <th>تاریخ</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -27,7 +27,7 @@
                     <tr class="bg-success">
                         <th>قیمت</th>
                         <th>مقدار</th>
-                        <th>زمان</th>
+                        <th>تاریخ</th>
                     </tr>
                     </thead>
                     <tbody>
