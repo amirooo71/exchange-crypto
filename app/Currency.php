@@ -21,4 +21,13 @@ class Currency extends Model
     {
         return $this->hasMany(OrderSell::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function assets()
+    {
+        return $this->belongsToMany(Asset::class);
+    }
+
 }

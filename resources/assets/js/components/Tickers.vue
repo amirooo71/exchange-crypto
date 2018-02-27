@@ -6,19 +6,27 @@
                     <thead>
                     <tr class="v-bg-dark">
                         <th>نماد</th>
-                        <th>نام</th>
+                        <th>ارز</th>
+                        <th>واحد پول</th>
                         <th>قیمت</th>
                         <th>تغییرات</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
+                    <tr v-for="ticker in tickers">
                         <td>
                             <img src="./../../../../public/images/logo/BTC.svg" alt="بیتکوین"
                                  class="v-tiny-svg">
                         </td>
-                        <td>بیتکوین</td>
-                        <td>{{price}}</td>
+                        <td>{{ticker.symbol | upper }}</td>
+                        <td>
+                            <table>
+                                <tr v-for="currency in ticker.currencies">
+                                    <td>{{currency.symbol | upper }}</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td></td>
                         <td></td>
                     </tr>
                     </tbody>
@@ -30,9 +38,6 @@
 
 <script>
 
-    // import VueSocketio from 'vue-socket.io';
-    // Vue.use(VueSocketio, 'http://localhost:3000');
-
     export default {
         name: "tickers",
 
@@ -40,29 +45,31 @@
 
             return {
 
-                price: '',
+                tickers: [],
 
             }
 
         },
 
-
-        created() {
-            window.Echo.channel('order-confirm').listen('OrderConfirm', e => {
-                this.price = e.price;
-            });
+        mounted() {
+            this.getTickers();
         },
 
-        // sockets: {
-        //
-        //     connect: function () {
-        //         console.log('socket connected')
-        //     },
-        //
-        //     'test-channel:UserSignUp': function(data){
-        //         this.users.push(data.username);
-        //     },
-        // },
+        created() {
+
+        },
+
+        filters: {
+            upper(str) {
+                return str.toUpperCase();
+            }
+        },
+
+        methods: {
+            getTickers() {
+                axios.get('api/v1/trade/tickers ').then(response => this.tickers = response.data);
+            }
+        },
 
     }
 </script>

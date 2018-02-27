@@ -46,15 +46,13 @@ if (token) {
 
 import Echo from 'laravel-echo'
 
-window.Pusher = require('pusher-js');
-
 window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: '8254e5bbe8bc3891661c'
+    broadcaster: 'socket.io',
+    host: window.location.hostname + ':6001'
 });
 
-// window.Echo.channel('tickers').listen('Tickers', e => {
-//     console.log('Event Recevied');
-//     console.log(e);
-// });
+
+window.Echo.channel('test-channel').listen('Price', e => {
+    console.log('Work!!!');
+});
 

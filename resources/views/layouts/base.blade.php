@@ -28,6 +28,9 @@
     <!--App Custom Css -->
     <link href="{{asset('css/custom.css')}}" rel="stylesheet" type="text/css">
     <!--/App Custom Css -->
+
+    {{--WebSocket--}}
+    <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
 </head>
 <body>
 

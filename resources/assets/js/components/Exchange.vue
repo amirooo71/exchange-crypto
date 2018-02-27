@@ -17,10 +17,17 @@
         name: "exchange",
 
         created() {
-            window.Echo.channel('order-confirm').listen('OrderConfirm', () => {
-                notify('info', 'سفارش خرید با موفقیت انجام شد.');
+            window.Echo.channel('order-confirm').listen('OrderConfirm', (e) => {
+                notify('info', this.getConfirmOrderMsg(e.order, e.price));
             });
         },
+
+        methods: {
+
+            getConfirmOrderMsg($order, $price) {
+                return "سفارشی با مقدار " + $order.amount + " روی قیمت " + $price + " انجام شد. ";
+            },
+        }
     }
 </script>
 

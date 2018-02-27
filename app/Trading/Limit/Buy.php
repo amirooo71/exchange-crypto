@@ -43,7 +43,7 @@ class Buy extends Exchange
             $this->updateOrderFill($orderBook, $amount);
             $this->updateOrderFill($order, $amount);
 
-            OrderConfirm::dispatch($price);
+            OrderConfirm::dispatch($order, $price);
         }
     }
 }

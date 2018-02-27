@@ -4,7 +4,7 @@
             <div class="table-responsive pre-scrollable">
                 <table class="table">
                     <thead>
-                    <tr class="bg-info">
+                    <tr class="bg-danger">
                         <th>قیمت</th>
                         <th>مقدار</th>
                         <th>تاریخ</th>
@@ -53,8 +53,7 @@
                 orderBuys: [],
             }
         },
-
-
+        
         created() {
             window.Echo.channel('order-book').listen('OrderBook', e => {
                 if (e.order.type == 'خرید') {

@@ -15,16 +15,11 @@ Route::get('/trading', 'PagesController@trading');
 
 Route::get('test', function () {
 
-    $orders = \App\Transaction::all();
-    $dates = $orders->pluck('created_at');
+    \App\Events\OrderBook::dispatch('Amir Shojaei');
+    \App\Events\OrderConfirm::dispatch(15000,145000);
 
-    $datest = [];
+    return 'Done';
 
-    foreach ($dates->all() as $date) {
-        $datest[] = $date->toDateTimeString();
-    }
-
-    dd($datest);
 
 });
 

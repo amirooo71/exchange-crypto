@@ -24,7 +24,7 @@
             layout: 'bottomRight',
             theme: 'mint',
             text: msg,
-            timeout: 2000,
+            timeout: 3000,
         }).show();
     }
 

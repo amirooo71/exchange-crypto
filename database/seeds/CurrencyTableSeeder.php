@@ -19,6 +19,10 @@ class CurrencyTableSeeder extends Seeder
         DB::table('currencies')->insert([
             'symbol' => 'btc'
         ]);
+
+        DB::table('currencies')->insert([
+            'symbol' => 'rial'
+        ]);
     }
 
 

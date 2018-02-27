@@ -14,15 +14,18 @@ class OrderConfirm implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $order;
+
     public $price;
 
     /**
-     * Create a new event instance.
-     *
-     * @return void
+     * OrderConfirm constructor.
+     * @param $order
+     * @param $price
      */
-    public function __construct($price)
+    public function __construct($order, $price)
     {
+        $this->order = $order;
         $this->price = $price;
     }
 
