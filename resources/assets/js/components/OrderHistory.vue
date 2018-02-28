@@ -1,109 +1,114 @@
 <template>
-    <div>
-        <div class="table-responsive pre-scrollable table-condensed">
-            <table class="table">
-                <thead>
-                <tr class="v-bg-dark">
-                    <th>معامله</th>
-                    <th>میزان</th>
-                    <th>قیمت</th>
-                    <th>پر شده</th>
-                    <th>تاریخ</th>
-                    <th>وضعیت</th>
-                    <th>ویرایش</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="order in sortedOrders">
-                    <td>{{order.type}}</td>
-                    <td>{{order.amount | round}}</td>
-                    <td>{{order.price | currency}}</td>
-                    <td>{{(order.fill * 100) / order.amount}} %</td>
-                    <td>{{order.created_at}}</td>
-                    <td v-if="order.status == 'confirmed'">
-                        <span class="label bg-success">انجام شده</span>
-                    </td>
-                    <td v-else>
-                        <span class="label bg-info">در انتظار</span>
-                    </td>
-                    <td v-if="order.status != 'confirmed'">
-                        <ul class="icons-list" style="color: #CFD8DC;">
-                            <li>
-                                <a @click="update(order)">
-                                    <i class="icon-pencil7"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a @click="destroy(order)">
-                                    <i class="icon-trash"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </td>
-                    <td v-else>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div id="modal_default" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form-horizontal" @submit.prevent="onSubmit"
-                              @keydown="errors.clear($event.target.name)">
-                            <div class="panel ng-bg-dark">
-                                <div class="panel-heading">
-                                    <h5 class="panel-title">
-                                        {{selectedOrder.type}}
-                                    </h5>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">قیمت:</label>
-                                        <div class="col-lg-9">
-                                            <input type="text" class="form-control js-order-price" name="price"
-                                                   v-model="price = selectedOrder.price">
-                                            <span class="text-danger help-block" v-if="errors.has('price')"
-                                                  v-text="errors.get('price')"></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">مقدار:</label>
-                                        <div class="col-lg-9">
-                                            <input type="text" class="form-control js-order-amount" name="amount"
-                                                   v-model="amount = selectedOrder.amount">
-                                            <span class="text-danger help-block" v-if="errors.has('amount')"
-                                                  v-text="errors.get('amount')"></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">کل مبلغ:</label>
-                                        <div class="col-lg-9">
-                                            <input type="text" class="form-control js-order-total"
-                                                   :value="price * amount">
-                                        </div>
-                                    </div>
-
-                                    <div class="text-right">
-                                        <button type="submit" class="btn btn-success" :disabled="errors.any()">ویرایش <i
-                                                class="icon-arrow-left13 position-right"></i></button>
-                                    </div>
-                                </div>
+    <panel title="تاریخچه معاملات">
+        <div slot="body">
+            <div>
+                <div class="table-responsive pre-scrollable table-condensed">
+                    <table class="table">
+                        <thead>
+                        <tr class="v-bg-dark">
+                            <th>معامله</th>
+                            <th>میزان</th>
+                            <th>قیمت</th>
+                            <th>پر شده</th>
+                            <th>تاریخ</th>
+                            <th>وضعیت</th>
+                            <th>ویرایش</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="order in sortedOrders">
+                            <td>{{order.type}}</td>
+                            <td>{{order.amount | round}}</td>
+                            <td>{{order.price | currency}}</td>
+                            <td>{{(order.fill * 100) / order.amount}} %</td>
+                            <td>{{order.created_at}}</td>
+                            <td v-if="order.status == 'confirmed'">
+                                <span class="label bg-success">انجام شده</span>
+                            </td>
+                            <td v-else>
+                                <span class="label bg-info">در انتظار</span>
+                            </td>
+                            <td v-if="order.status != 'confirmed'">
+                                <ul class="icons-list" style="color: #CFD8DC;">
+                                    <li>
+                                        <a @click="update(order)">
+                                            <i class="icon-pencil7"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a @click="destroy(order)">
+                                            <i class="icon-trash"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td v-else>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="modal_default" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
                             </div>
-                        </form>
+                            <div class="modal-body">
+                                <form class="form-horizontal" @submit.prevent="onSubmit"
+                                      @keydown="errors.clear($event.target.name)">
+                                    <div class="panel ng-bg-dark">
+                                        <div class="panel-heading">
+                                            <h5 class="panel-title">
+                                                {{selectedOrder.type}}
+                                            </h5>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <label class="col-lg-3 control-label">قیمت:</label>
+                                                <div class="col-lg-9">
+                                                    <input type="text" class="form-control js-order-price" name="price"
+                                                           v-model="price = selectedOrder.price">
+                                                    <span class="text-danger help-block" v-if="errors.has('price')"
+                                                          v-text="errors.get('price')"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-3 control-label">مقدار:</label>
+                                                <div class="col-lg-9">
+                                                    <input type="text" class="form-control js-order-amount"
+                                                           name="amount"
+                                                           v-model="amount = selectedOrder.amount">
+                                                    <span class="text-danger help-block" v-if="errors.has('amount')"
+                                                          v-text="errors.get('amount')"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-3 control-label">کل مبلغ:</label>
+                                                <div class="col-lg-9">
+                                                    <input type="text" class="form-control js-order-total"
+                                                           :value="price * amount">
+                                                </div>
+                                            </div>
+
+                                            <div class="text-right">
+                                                <button type="submit" class="btn btn-success" :disabled="errors.any()">
+                                                    ویرایش <i
+                                                        class="icon-arrow-left13 position-right"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <!-- /basic modal -->
             </div>
         </div>
-        <!-- /basic modal -->
-    </div>
-
+    </panel>
 </template>
 
 <script>

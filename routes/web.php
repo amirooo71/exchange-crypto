@@ -15,11 +15,10 @@ Route::get('/trading', 'PagesController@trading');
 
 Route::get('test', function () {
 
-    \App\Events\OrderBook::dispatch('Amir Shojaei');
-    \App\Events\OrderConfirm::dispatch(15000,145000);
 
-    return 'Done';
+    $bb = \App\Balance::find(1);
 
+    dd($bb->currency->symbol);
 
 });
 

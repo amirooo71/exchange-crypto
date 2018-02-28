@@ -26,6 +26,11 @@ body {
     height: 15px;
 }
 
+.v-md-svg {
+    width: 60px;
+    height: 60px;
+}
+
 .ng-bg-dark {
     background-color: #263238;
     border-color: #263238;
@@ -96,4 +101,10 @@ body {
     background-clip: padding-box;
     outline: 0;
 }
+
+.table-borderless td,
+.table-borderless th {
+    border: 0;
+}
+
 

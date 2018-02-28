@@ -17,11 +17,19 @@ class OrderBuy extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function asset()
+    {
+        return $this->belongsTo(Asset::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function transaction()
     {
-        return $this->hasOne(Transaction::class);
+        return $this->hasMany(Transaction::class);
     }
 
     /**
@@ -68,6 +76,7 @@ class OrderBuy extends Model
     {
         return self::create([
             'user_id' => auth()->id(),
+            'asset_id' => request('asset_id'),
             'currency_id' => \request('currency_id'),
             'price' => \request('price'),
             'amount' => \request('amount'),

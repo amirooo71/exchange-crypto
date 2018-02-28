@@ -1,46 +1,50 @@
 <template>
-    <div>
-        <div class="col-md-6">
-            <div class="table-responsive pre-scrollable">
-                <table class="table">
-                    <thead>
-                    <tr class="bg-danger">
-                        <th>قیمت</th>
-                        <th>مقدار</th>
-                        <th>تاریخ</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="orderSell in orderSells">
-                        <td>{{orderSell.price}}</td>
-                        <td>{{orderSell.amount}}</td>
-                        <td>{{orderSell.created_at}}</td>
-                    </tr>
-                    </tbody>
-                </table>
+    <panel title="معاملات">
+        <div slot="body">
+            <div>
+                <div class="col-md-6">
+                    <div class="table-responsive pre-scrollable">
+                        <table class="table">
+                            <thead>
+                            <tr class="bg-success">
+                                <th>قیمت</th>
+                                <th>مقدار</th>
+                                <th>تاریخ</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="orderBuy in orderBuys">
+                                <td>{{orderBuy.price}}</td>
+                                <td>{{orderBuy.amount}}</td>
+                                <td>{{orderBuy.created_at}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="table-responsive pre-scrollable">
+                        <table class="table">
+                            <thead>
+                            <tr class="bg-danger">
+                                <th>قیمت</th>
+                                <th>مقدار</th>
+                                <th>تاریخ</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="orderSell in orderSells">
+                                <td>{{orderSell.price}}</td>
+                                <td>{{orderSell.amount}}</td>
+                                <td>{{orderSell.created_at}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="table-responsive pre-scrollable">
-                <table class="table">
-                    <thead>
-                    <tr class="bg-success">
-                        <th>قیمت</th>
-                        <th>مقدار</th>
-                        <th>تاریخ</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="orderBuy in orderBuys">
-                        <td>{{orderBuy.price}}</td>
-                        <td>{{orderBuy.amount}}</td>
-                        <td>{{orderBuy.created_at}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+    </panel>
 </template>
 
 <script>
@@ -53,7 +57,7 @@
                 orderBuys: [],
             }
         },
-        
+
         created() {
             window.Echo.channel('order-book').listen('OrderBook', e => {
                 if (e.order.type == 'خرید') {

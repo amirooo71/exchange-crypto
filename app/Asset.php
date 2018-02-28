@@ -19,4 +19,20 @@ class Asset extends Model
         return $this->belongsToMany(Currency::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orderBuys()
+    {
+        return $this->hasMany(OrderBuy::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orderSells()
+    {
+        return $this->hasMany(OrderSell::class);
+    }
+
 }

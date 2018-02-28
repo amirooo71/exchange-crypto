@@ -18,7 +18,6 @@
                 </ul>
             </div>
         </div>
-
         <div class="panel-body">
             <slot name="body"></slot>
         </div>

@@ -64652,7 +64652,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -64734,6 +64734,61 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -64743,14 +64798,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         return {
 
-            tickers: []
+            tickers: [],
+            asset: '',
+            currency: ''
 
         };
     },
     mounted: function mounted() {
         this.getTickers();
     },
-    created: function created() {},
 
 
     filters: {
@@ -64763,9 +64819,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getTickers: function getTickers() {
             var _this = this;
 
-            axios.get('api/v1/trade/tickers ').then(function (response) {
+            axios.get('api/v1/trade/tickers').then(function (response) {
                 return _this.tickers = response.data;
             });
+        },
+        onPairs: function onPairs(asset, currency) {
+            this.asset = asset;
+            this.currency = currency;
+            var data = {
+                asset: asset,
+                currency: currency
+            };
+            Event.$emit('SelectedTicker', data);
         }
     }
 
@@ -64779,65 +64844,205 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("panel", { attrs: { title: "نرخ ارزها" } }, [
-    _c("div", { attrs: { slot: "body" }, slot: "body" }, [
-      _c("div", { staticClass: "table-responsive pre-scrollable" }, [
-        _c("table", { staticClass: "table" }, [
-          _c("thead", [
-            _c("tr", { staticClass: "v-bg-dark" }, [
-              _c("th", [_vm._v("نماد")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("ارز")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("واحد پول")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("قیمت")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("تغییرات")])
-            ])
-          ]),
-          _vm._v(" "),
+  return _c(
+    "div",
+    [
+      _c(
+        "div",
+        {
+          staticClass: "well ng-bg-dark",
+          staticStyle: { "margin-bottom": "15px" }
+        },
+        [
           _c(
-            "tbody",
-            _vm._l(_vm.tickers, function(ticker) {
-              return _c("tr", [
-                _c("td", [
-                  _c("img", {
-                    staticClass: "v-tiny-svg",
-                    attrs: {
-                      src: __webpack_require__(177),
-                      alt: "بیتکوین"
-                    }
-                  })
+            "table",
+            {
+              staticClass: "table table-borderless table-condensed",
+              staticStyle: { display: "table" }
+            },
+            [
+              _c("tbody", [
+                _c("tr", [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("h5", [
+                      _vm.asset
+                        ? _c("span", [
+                            _vm._v(_vm._s(_vm._f("upper")(_vm.asset.symbol)))
+                          ])
+                        : _c("span", [_vm._v("BTC")]),
+                      _vm._v(" "),
+                      _c("span", [_vm._v("/")]),
+                      _vm._v(" "),
+                      _vm.currency
+                        ? _c("span", [
+                            _vm._v(_vm._s(_vm._f("upper")(_vm.currency.symbol)))
+                          ])
+                        : _c("span", [_vm._v("USD")])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(1)
                 ]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(_vm._f("upper")(ticker.symbol)))]),
+                _vm._m(2),
                 _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "table",
-                    _vm._l(ticker.currencies, function(currency) {
-                      return _c("tr", [
-                        _c("td", [
-                          _vm._v(_vm._s(_vm._f("upper")(currency.symbol)))
+                _c("tr", { staticClass: "text-muted" }, [
+                  _c("td", [
+                    _c("span", [_vm._v("45,872")]),
+                    _vm._v(" "),
+                    _vm.asset
+                      ? _c("span", [
+                          _vm._v(_vm._s(_vm._f("upper")(_vm.asset.symbol)))
                         ])
-                      ])
-                    })
-                  )
-                ]),
-                _vm._v(" "),
-                _c("td"),
-                _vm._v(" "),
-                _c("td")
+                      : _c("span", [_vm._v("BTC")]),
+                    _vm._v(" "),
+                    _c("span", [_vm._v("حجم بازار")])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(3)
+                ])
               ])
-            })
+            ]
           )
+        ]
+      ),
+      _vm._v(" "),
+      _c("panel", { attrs: { title: "نرخ ارزها" } }, [
+        _c("div", { attrs: { slot: "body" }, slot: "body" }, [
+          _c("div", { staticClass: "table-responsive pre-scrollable" }, [
+            _c("table", { staticClass: "table table-condensed" }, [
+              _c("thead", [
+                _c("tr", { staticClass: "v-bg-dark" }, [
+                  _c("th", [_vm._v("نماد")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("ارز")]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "text-center" }, [_vm._v("تغییرات")])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.tickers, function(ticker) {
+                  return _c("tr", [
+                    _c("td", [
+                      _c("img", {
+                        staticClass: "v-tiny-svg",
+                        attrs: {
+                          src: __webpack_require__(177),
+                          alt: "بیتکوین"
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(_vm._f("upper")(ticker.symbol)))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "table",
+                        {
+                          staticClass:
+                            "table table-borderless table-condensed table-hover",
+                          staticStyle: { background: "#263238" }
+                        },
+                        [
+                          _c(
+                            "tbody",
+                            _vm._l(ticker.currencies, function(currency) {
+                              return _c(
+                                "tr",
+                                {
+                                  staticStyle: { cursor: "pointer" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.onPairs(ticker, currency)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("td", [
+                                    _vm._v(
+                                      "\n                                        " +
+                                        _vm._s(
+                                          _vm._f("upper")(currency.symbol)
+                                        ) +
+                                        "\n                                    "
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v("19500")]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v("24%")])
+                                ]
+                              )
+                            })
+                          )
+                        ]
+                      )
+                    ])
+                  ])
+                })
+              )
+            ])
+          ])
         ])
       ])
-    ])
-  ])
+    ],
+    1
+  )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { attrs: { rowspan: "3" } }, [
+      _c("img", {
+        staticClass: "v-md-svg",
+        attrs: {
+          src: __webpack_require__(177),
+          alt: "بیتکوین"
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("h5", [_vm._v("10,813")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", { staticClass: "text-muted" }, [
+      _c("td", [
+        _vm._v("\n                    10,270\n                    "),
+        _c("span", [_vm._v("کم ترین")])
+      ]),
+      _vm._v(" "),
+      _c("td", [
+        _vm._v("\n                    11,065\n                    "),
+        _c("span", [_vm._v("بیش ترین")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "text-success" }, [
+      _c("span", [
+        _vm._v("\n                        523.00\n                        "),
+        _c("i"),
+        _vm._v("\n                        (5.08%)\n                    ")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -64939,7 +65144,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -64988,6 +65193,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             balances: ''
         };
     },
+
+
+    filters: {
+        upper: function upper(str) {
+            return str.toUpperCase();
+        }
+    },
+
     created: function created() {
         var _this = this;
 
@@ -65036,7 +65249,7 @@ var render = function() {
               _vm._v(" "),
               _c("th", [_vm._v("مقدار کل")]),
               _vm._v(" "),
-              _c("th", [_vm._v("قابل استفاده")])
+              _c("th", [_vm._v("در گردش")])
             ])
           ]),
           _vm._v(" "),
@@ -65052,6 +65265,10 @@ var render = function() {
                       alt: "دلار"
                     }
                   })
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _vm._v(_vm._s(_vm._f("upper")(balance.currency.symbol)))
                 ]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(balance.amount))]),
@@ -65167,7 +65384,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -65182,6 +65399,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+//
+//
 //
 //
 //
@@ -65267,19 +65486,30 @@ var Errors = function () {
             price: '',
             amount: '',
             currency_id: 1,
-            errors: new Errors()
+            asset_id: 1,
+            errors: new Errors(),
+            asset: 'USD'
         };
+    },
+    created: function created() {
+        var _this = this;
+
+        Event.$on('SelectedTicker', function (data) {
+            _this.currency_id = data.currency.id;
+            _this.asset_id = data.asset.id;
+            _this.asset = data.asset.symbol;
+        });
     },
 
 
     methods: {
         onSubmit: function onSubmit() {
-            var _this = this;
+            var _this2 = this;
 
             axios.post('api/v1/trade/orderbuy ', this.$data).then(this.onSuccess).catch(function (error) {
-                _this.errors.record(error.response.data);
+                _this2.errors.record(error.response.data);
                 if (error.response.status == 403) {
-                    _this.onError();
+                    _this2.onError();
                 }
             });
         },
@@ -65292,6 +65522,12 @@ var Errors = function () {
         onError: function onError() {
             notify('error', 'موجودی کافی نیست.');
             this.amount = '';
+        }
+    },
+
+    computed: {
+        assetName: function assetName() {
+            return this.asset.toUpperCase();
         }
     }
 });
@@ -65335,7 +65571,11 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text", name: "price", placeholder: "قیمت" },
+                attrs: {
+                  type: "text",
+                  name: "price",
+                  placeholder: "قیمت " + _vm.assetName
+                },
                 domProps: { value: _vm.price },
                 on: {
                   input: function($event) {
@@ -65368,7 +65608,11 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text", name: "amount", placeholder: "مقدار" },
+                attrs: {
+                  type: "text",
+                  name: "amount",
+                  placeholder: "مقدار " + _vm.assetName
+                },
                 domProps: { value: _vm.amount },
                 on: {
                   input: function($event) {
@@ -65521,7 +65765,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -65536,6 +65780,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+//
+//
 //
 //
 //
@@ -65622,19 +65868,30 @@ var Errors = function () {
             price: '',
             amount: '',
             currency_id: 1,
-            errors: new Errors()
+            asset_id: 1,
+            errors: new Errors(),
+            asset: 'USD'
         };
+    },
+    created: function created() {
+        var _this = this;
+
+        Event.$on('SelectedTicker', function (data) {
+            _this.currency_id = data.currency.id;
+            _this.asset_id = data.asset.id;
+            _this.asset = data.asset.symbol;
+        });
     },
 
 
     methods: {
         onSubmit: function onSubmit() {
-            var _this = this;
+            var _this2 = this;
 
             axios.post('api/v1/trade/ordersell ', this.$data).then(this.onSuccess).catch(function (error) {
-                _this.errors.record(error.response.data);
+                _this2.errors.record(error.response.data);
                 if (error.response.status == 403) {
-                    _this.onError();
+                    _this2.onError();
                 }
             });
         },
@@ -65647,6 +65904,12 @@ var Errors = function () {
         onError: function onError() {
             notify('error', 'موجودی کافی نیست.');
             this.amount = '';
+        }
+    },
+
+    computed: {
+        assetName: function assetName() {
+            return this.asset.toUpperCase();
         }
     }
 });
@@ -65690,7 +65953,11 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text", name: "price", placeholder: "قیمت" },
+                attrs: {
+                  type: "text",
+                  name: "price",
+                  placeholder: "قیمت " + _vm.assetName
+                },
                 domProps: { value: _vm.price },
                 on: {
                   input: function($event) {
@@ -65723,7 +65990,11 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text", name: "amount", placeholder: "مقدار" },
+                attrs: {
+                  type: "text",
+                  name: "amount",
+                  placeholder: "مقدار " + _vm.assetName
+                },
                 domProps: { value: _vm.amount },
                 on: {
                   input: function($event) {
@@ -66043,7 +66314,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -66058,6 +66329,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -66314,290 +66590,303 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "div",
-      { staticClass: "table-responsive pre-scrollable table-condensed" },
-      [
-        _c("table", { staticClass: "table" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.sortedOrders, function(order) {
-              return _c("tr", [
-                _c("td", [_vm._v(_vm._s(order.type))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(_vm._f("round")(order.amount)))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(_vm._f("currency")(order.price)))]),
-                _vm._v(" "),
-                _c("td", [
-                  _vm._v(_vm._s(order.fill * 100 / order.amount) + " %")
+  return _c("panel", { attrs: { title: "تاریخچه معاملات" } }, [
+    _c("div", { attrs: { slot: "body" }, slot: "body" }, [
+      _c("div", [
+        _c(
+          "div",
+          { staticClass: "table-responsive pre-scrollable table-condensed" },
+          [
+            _c("table", { staticClass: "table" }, [
+              _c("thead", [
+                _c("tr", { staticClass: "v-bg-dark" }, [
+                  _c("th", [_vm._v("معامله")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("میزان")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("قیمت")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("پر شده")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("تاریخ")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("وضعیت")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("ویرایش")])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.sortedOrders, function(order) {
+                  return _c("tr", [
+                    _c("td", [_vm._v(_vm._s(order.type))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(_vm._f("round")(order.amount)))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(_vm._f("currency")(order.price)))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(_vm._s(order.fill * 100 / order.amount) + " %")
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(order.created_at))]),
+                    _vm._v(" "),
+                    order.status == "confirmed"
+                      ? _c("td", [
+                          _c("span", { staticClass: "label bg-success" }, [
+                            _vm._v("انجام شده")
+                          ])
+                        ])
+                      : _c("td", [
+                          _c("span", { staticClass: "label bg-info" }, [
+                            _vm._v("در انتظار")
+                          ])
+                        ]),
+                    _vm._v(" "),
+                    order.status != "confirmed"
+                      ? _c("td", [
+                          _c(
+                            "ul",
+                            {
+                              staticClass: "icons-list",
+                              staticStyle: { color: "#CFD8DC" }
+                            },
+                            [
+                              _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    on: {
+                                      click: function($event) {
+                                        _vm.update(order)
+                                      }
+                                    }
+                                  },
+                                  [_c("i", { staticClass: "icon-pencil7" })]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    on: {
+                                      click: function($event) {
+                                        _vm.destroy(order)
+                                      }
+                                    }
+                                  },
+                                  [_c("i", { staticClass: "icon-trash" })]
+                                )
+                              ])
+                            ]
+                          )
+                        ])
+                      : _c("td")
+                  ])
+                })
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "modal fade", attrs: { id: "modal_default" } },
+          [
+            _c("div", { staticClass: "modal-dialog" }, [
+              _c("div", { staticClass: "modal-content" }, [
+                _c("div", { staticClass: "modal-header" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close text-white",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("×")]
+                  )
                 ]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(order.created_at))]),
-                _vm._v(" "),
-                order.status == "confirmed"
-                  ? _c("td", [
-                      _c("span", { staticClass: "label bg-success" }, [
-                        _vm._v("انجام شده")
-                      ])
-                    ])
-                  : _c("td", [
-                      _c("span", { staticClass: "label bg-info" }, [
-                        _vm._v("در انتظار")
-                      ])
-                    ]),
-                _vm._v(" "),
-                order.status != "confirmed"
-                  ? _c("td", [
-                      _c(
-                        "ul",
-                        {
-                          staticClass: "icons-list",
-                          staticStyle: { color: "#CFD8DC" }
+                _c("div", { staticClass: "modal-body" }, [
+                  _c(
+                    "form",
+                    {
+                      staticClass: "form-horizontal",
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          _vm.onSubmit($event)
                         },
-                        [
-                          _c("li", [
-                            _c(
-                              "a",
-                              {
-                                on: {
-                                  click: function($event) {
-                                    _vm.update(order)
-                                  }
-                                }
-                              },
-                              [_c("i", { staticClass: "icon-pencil7" })]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _c(
-                              "a",
-                              {
-                                on: {
-                                  click: function($event) {
-                                    _vm.destroy(order)
-                                  }
-                                }
-                              },
-                              [_c("i", { staticClass: "icon-trash" })]
+                        keydown: function($event) {
+                          _vm.errors.clear($event.target.name)
+                        }
+                      }
+                    },
+                    [
+                      _c("div", { staticClass: "panel ng-bg-dark" }, [
+                        _c("div", { staticClass: "panel-heading" }, [
+                          _c("h5", { staticClass: "panel-title" }, [
+                            _vm._v(
+                              "\n                                            " +
+                                _vm._s(_vm.selectedOrder.type) +
+                                "\n                                        "
                             )
                           ])
-                        ]
-                      )
-                    ])
-                  : _c("td")
-              ])
-            })
-          )
-        ])
-      ]
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "modal fade", attrs: { id: "modal_default" } }, [
-      _c("div", { staticClass: "modal-dialog" }, [
-        _c("div", { staticClass: "modal-content" }, [
-          _vm._m(1),
-          _vm._v(" "),
-          _c("div", { staticClass: "modal-body" }, [
-            _c(
-              "form",
-              {
-                staticClass: "form-horizontal",
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    _vm.onSubmit($event)
-                  },
-                  keydown: function($event) {
-                    _vm.errors.clear($event.target.name)
-                  }
-                }
-              },
-              [
-                _c("div", { staticClass: "panel ng-bg-dark" }, [
-                  _c("div", { staticClass: "panel-heading" }, [
-                    _c("h5", { staticClass: "panel-title" }, [
-                      _vm._v(
-                        "\n                                    " +
-                          _vm._s(_vm.selectedOrder.type) +
-                          "\n                                "
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "panel-body" }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { staticClass: "col-lg-3 control-label" }, [
-                        _vm._v("قیمت:")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-lg-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: (_vm.price = _vm.selectedOrder.price),
-                              expression: "price = selectedOrder.price"
-                            }
-                          ],
-                          staticClass: "form-control js-order-price",
-                          attrs: { type: "text", name: "price" },
-                          domProps: {
-                            value: (_vm.price = _vm.selectedOrder.price)
-                          },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                (_vm.price = _vm.selectedOrder),
-                                "price",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
+                        ]),
                         _vm._v(" "),
-                        _vm.errors.has("price")
-                          ? _c("span", {
-                              staticClass: "text-danger help-block",
-                              domProps: {
-                                textContent: _vm._s(_vm.errors.get("price"))
-                              }
-                            })
-                          : _vm._e()
+                        _c("div", { staticClass: "panel-body" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              { staticClass: "col-lg-3 control-label" },
+                              [_vm._v("قیمت:")]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-9" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: (_vm.price =
+                                      _vm.selectedOrder.price),
+                                    expression: "price = selectedOrder.price"
+                                  }
+                                ],
+                                staticClass: "form-control js-order-price",
+                                attrs: { type: "text", name: "price" },
+                                domProps: {
+                                  value: (_vm.price = _vm.selectedOrder.price)
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      (_vm.price = _vm.selectedOrder),
+                                      "price",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.has("price")
+                                ? _c("span", {
+                                    staticClass: "text-danger help-block",
+                                    domProps: {
+                                      textContent: _vm._s(
+                                        _vm.errors.get("price")
+                                      )
+                                    }
+                                  })
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              { staticClass: "col-lg-3 control-label" },
+                              [_vm._v("مقدار:")]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-9" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: (_vm.amount =
+                                      _vm.selectedOrder.amount),
+                                    expression: "amount = selectedOrder.amount"
+                                  }
+                                ],
+                                staticClass: "form-control js-order-amount",
+                                attrs: { type: "text", name: "amount" },
+                                domProps: {
+                                  value: (_vm.amount = _vm.selectedOrder.amount)
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      (_vm.amount = _vm.selectedOrder),
+                                      "amount",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.has("amount")
+                                ? _c("span", {
+                                    staticClass: "text-danger help-block",
+                                    domProps: {
+                                      textContent: _vm._s(
+                                        _vm.errors.get("amount")
+                                      )
+                                    }
+                                  })
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              { staticClass: "col-lg-3 control-label" },
+                              [_vm._v("کل مبلغ:")]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-9" }, [
+                              _c("input", {
+                                staticClass: "form-control js-order-total",
+                                attrs: { type: "text" },
+                                domProps: { value: _vm.price * _vm.amount }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "text-right" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-success",
+                                attrs: {
+                                  type: "submit",
+                                  disabled: _vm.errors.any()
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                                ویرایش "
+                                ),
+                                _c("i", {
+                                  staticClass:
+                                    "icon-arrow-left13 position-right"
+                                })
+                              ]
+                            )
+                          ])
+                        ])
                       ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { staticClass: "col-lg-3 control-label" }, [
-                        _vm._v("مقدار:")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-lg-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: (_vm.amount = _vm.selectedOrder.amount),
-                              expression: "amount = selectedOrder.amount"
-                            }
-                          ],
-                          staticClass: "form-control js-order-amount",
-                          attrs: { type: "text", name: "amount" },
-                          domProps: {
-                            value: (_vm.amount = _vm.selectedOrder.amount)
-                          },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                (_vm.amount = _vm.selectedOrder),
-                                "amount",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.has("amount")
-                          ? _c("span", {
-                              staticClass: "text-danger help-block",
-                              domProps: {
-                                textContent: _vm._s(_vm.errors.get("amount"))
-                              }
-                            })
-                          : _vm._e()
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { staticClass: "col-lg-3 control-label" }, [
-                        _vm._v("کل مبلغ:")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-lg-9" }, [
-                        _c("input", {
-                          staticClass: "form-control js-order-total",
-                          attrs: { type: "text" },
-                          domProps: { value: _vm.price * _vm.amount }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "text-right" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-success",
-                          attrs: { type: "submit", disabled: _vm.errors.any() }
-                        },
-                        [
-                          _vm._v("ویرایش "),
-                          _c("i", {
-                            staticClass: "icon-arrow-left13 position-right"
-                          })
-                        ]
-                      )
-                    ])
-                  ])
+                    ]
+                  )
                 ])
-              ]
-            )
-          ])
-        ])
+              ])
+            ])
+          ]
+        )
       ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", { staticClass: "v-bg-dark" }, [
-        _c("th", [_vm._v("معامله")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("میزان")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("قیمت")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("پر شده")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("تاریخ")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("وضعیت")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("ویرایش")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "button",
-        {
-          staticClass: "close text-white",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("×")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -66693,7 +66982,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -66704,6 +66993,10 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
 //
 //
 //
@@ -66802,80 +67095,71 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "col-md-6" }, [
-      _c("div", { staticClass: "table-responsive pre-scrollable" }, [
-        _c("table", { staticClass: "table" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.orderSells, function(orderSell) {
-              return _c("tr", [
-                _c("td", [_vm._v(_vm._s(orderSell.price))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(orderSell.amount))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(orderSell.created_at))])
-              ])
-            })
-          )
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-md-6" }, [
-      _c("div", { staticClass: "table-responsive pre-scrollable" }, [
-        _c("table", { staticClass: "table" }, [
-          _vm._m(1),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.orderBuys, function(orderBuy) {
-              return _c("tr", [
-                _c("td", [_vm._v(_vm._s(orderBuy.price))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(orderBuy.amount))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(orderBuy.created_at))])
-              ])
-            })
-          )
+  return _c("panel", { attrs: { title: "معاملات" } }, [
+    _c("div", { attrs: { slot: "body" }, slot: "body" }, [
+      _c("div", [
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("div", { staticClass: "table-responsive pre-scrollable" }, [
+            _c("table", { staticClass: "table" }, [
+              _c("thead", [
+                _c("tr", { staticClass: "bg-success" }, [
+                  _c("th", [_vm._v("قیمت")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("مقدار")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("تاریخ")])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.orderBuys, function(orderBuy) {
+                  return _c("tr", [
+                    _c("td", [_vm._v(_vm._s(orderBuy.price))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(orderBuy.amount))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(orderBuy.created_at))])
+                  ])
+                })
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("div", { staticClass: "table-responsive pre-scrollable" }, [
+            _c("table", { staticClass: "table" }, [
+              _c("thead", [
+                _c("tr", { staticClass: "bg-danger" }, [
+                  _c("th", [_vm._v("قیمت")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("مقدار")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("تاریخ")])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.orderSells, function(orderSell) {
+                  return _c("tr", [
+                    _c("td", [_vm._v(_vm._s(orderSell.price))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(orderSell.amount))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(orderSell.created_at))])
+                  ])
+                })
+              )
+            ])
+          ])
         ])
       ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", { staticClass: "bg-danger" }, [
-        _c("th", [_vm._v("قیمت")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("مقدار")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("تاریخ")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", { staticClass: "bg-success" }, [
-        _c("th", [_vm._v("قیمت")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("مقدار")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("تاریخ")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -66971,7 +67255,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -66982,7 +67266,6 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
 //
 //
 //

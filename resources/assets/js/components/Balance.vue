@@ -8,7 +8,7 @@
                         <th></th>
                         <th>واحد</th>
                         <th>مقدار کل</th>
-                        <th>قابل استفاده</th>
+                        <th>در گردش</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -16,7 +16,7 @@
                         <td>
                             <img src="./../../../../public/images/logo/dollar-logo.svg" alt="دلار" class="v-tiny-svg">
                         </td>
-                        <!--<td>{{balance.currency.symbol}}</td>-->
+                        <td>{{balance.currency.symbol | upper}}</td>
                         <td>{{balance.amount}}</td>
                         <td>{{balance.available}}</td>
                     </tr>
@@ -34,6 +34,12 @@
         data() {
             return {
                 balances: '',
+            }
+        },
+
+        filters: {
+            upper(str) {
+                return str.toUpperCase();
             }
         },
 

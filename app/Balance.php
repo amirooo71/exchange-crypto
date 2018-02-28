@@ -12,11 +12,11 @@ class Balance extends Model
     protected $with = ['currency'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function currency()
     {
-        return $this->hasOne(Currency::class, 'id');
+        return $this->belongsTo(Currency::class);
     }
 
     /**
@@ -55,7 +55,6 @@ class Balance extends Model
             'amount' => $amount,
         ]);
     }
-
 
     /**
      * @param $id

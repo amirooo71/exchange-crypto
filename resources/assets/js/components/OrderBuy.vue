@@ -7,14 +7,16 @@
             <div class="panel-body">
                 <div class="form-group">
                     <div>
-                        <input type="text" class="form-control" name="price" v-model="price" placeholder="قیمت">
+                        <input type="text" class="form-control" name="price" v-model="price"
+                               :placeholder="'قیمت '+assetName">
                         <span class="text-danger help-block" v-if="errors.has('price')"
                               v-text="errors.get('price')"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <div>
-                        <input type="text" class="form-control" name="amount" v-model="amount" placeholder="مقدار">
+                        <input type="text" class="form-control" name="amount" v-model="amount"
+                               :placeholder="'مقدار '+assetName">
                         <span class="text-danger help-block" v-if="errors.has('amount')"
                               v-text="errors.get('amount')"></span>
                     </div>
@@ -74,8 +76,18 @@
                 price: '',
                 amount: '',
                 currency_id: 1,
+                asset_id: 1,
                 errors: new Errors(),
+                asset: 'USD',
             }
+        },
+
+        created() {
+            Event.$on('SelectedTicker', data => {
+                this.currency_id = data.currency.id;
+                this.asset_id = data.asset.id;
+                this.asset = data.asset.symbol;
+            });
         },
 
         methods: {
@@ -104,7 +116,13 @@
                 this.amount = '';
             }
 
-        }
+        },
+
+        computed: {
+            assetName: function () {
+                return this.asset.toUpperCase();
+            }
+        },
     }
 </script>
 
