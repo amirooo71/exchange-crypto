@@ -16,9 +16,12 @@ Route::get('/trading', 'PagesController@trading');
 Route::get('test', function () {
 
 
-    $bb = \App\Balance::find(1);
+    $assetName = \App\Asset::find(1)->symbol;
 
-    dd($bb->currency->symbol);
+
+    $name = \App\Currency::whereSymbol($assetName)->first();
+
+    dd($name->id);
 
 });
 

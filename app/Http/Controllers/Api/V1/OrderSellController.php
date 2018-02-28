@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Asset;
 use App\Balance;
+use App\Currency;
 use App\Events\OrderBook;
 use App\Http\Requests\StoreOrderSell;
 use App\OrderSell;
@@ -37,15 +39,16 @@ class OrderSellController extends Controller
      */
     public function store(Request $request, StoreOrderSell $validation, Sell $exchanger)
     {
-        if ($this->isValidOrder(2)) {
-            $this->decrementUserBalance(2, $request->amount);
+        $assetSymbol = Asset::find($request->asset_id)->symbol;
+        $currencyId = Currency::whereSymbol($assetSymbol)->first()->id;
+        if ($this->isValidOrder($currencyId)) {
+            $this->decrementUserBalance($currencyId, $request->amount);
             $order = OrderSell::storeOrder();
             $validOrder = OrderSell::find($order->id);
             $exchanger->process($validOrder);
             OrderBook::dispatch($validOrder);
             return response()->json([], 200);
         }
-
         return \response()->json([], 403);
     }
 

@@ -3,7 +3,7 @@
         <div slot="body">
             <div>
                 <div class="table-responsive pre-scrollable table-condensed">
-                    <table class="table">
+                    <table class="table table-condensed">
                         <thead>
                         <tr class="v-bg-dark">
                             <th>معامله</th>

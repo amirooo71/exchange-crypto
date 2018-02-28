@@ -9,16 +9,6 @@ class Balance extends Model
 
     protected $guarded = [];
 
-    protected $with = ['currency'];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function currency()
-    {
-        return $this->belongsTo(Currency::class);
-    }
-
     /**
      * @param $currency
      * @return Model|null|static
@@ -30,45 +20,5 @@ class Balance extends Model
             ->where('currency_id', '=', $currency)
             ->first();
     }
-
-    /**
-     * @param $id
-     * @param $currency
-     * @return Model|null|static
-     */
-    public function getUserBalanceByUserId($id, $currency)
-    {
-        return $this
-            ->where('user_id', '=', $id)
-            ->where('currency_id', '=', $currency)
-            ->first();
-    }
-
-    /**
-     * @param $id
-     * @param $amount
-     */
-    public function updateBalance($id, $amount)
-    {
-        $balance = $this->getUserBalanceByUserId($id, 1);
-        $balance->update([
-            'amount' => $amount,
-        ]);
-    }
-
-    /**
-     * @param $id
-     * @param $amount
-     * @param $available
-     */
-    public function updateBalanceOnSellAction($id, $amount, $available)
-    {
-        $balance = $this->getUserBalanceByUserId($id, 1);
-        $balance->update([
-            'amount' => $amount,
-            'available' => $available
-        ]);
-    }
-
 
 }

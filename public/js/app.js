@@ -64652,7 +64652,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -64806,6 +64806,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     mounted: function mounted() {
         this.getTickers();
+    },
+    created: function created() {
+        Event.$on('SelectedTicker', function (data) {
+            return console.log(data);
+        });
     },
 
 
@@ -65240,7 +65245,7 @@ var render = function() {
   return _c("panel", { attrs: { title: "کیف پول" } }, [
     _c("div", { attrs: { slot: "body" }, slot: "body" }, [
       _c("div", { staticClass: "table-responsive" }, [
-        _c("table", { staticClass: "table" }, [
+        _c("table", { staticClass: "table table-condensed" }, [
           _c("thead", [
             _c("tr", { staticClass: "v-bg-dark" }, [
               _c("th"),
@@ -66597,7 +66602,7 @@ var render = function() {
           "div",
           { staticClass: "table-responsive pre-scrollable table-condensed" },
           [
-            _c("table", { staticClass: "table" }, [
+            _c("table", { staticClass: "table table-condensed" }, [
               _c("thead", [
                 _c("tr", { staticClass: "v-bg-dark" }, [
                   _c("th", [_vm._v("معامله")]),
@@ -67100,7 +67105,7 @@ var render = function() {
       _c("div", [
         _c("div", { staticClass: "col-md-6" }, [
           _c("div", { staticClass: "table-responsive pre-scrollable" }, [
-            _c("table", { staticClass: "table" }, [
+            _c("table", { staticClass: "table table-condensed" }, [
               _c("thead", [
                 _c("tr", { staticClass: "bg-success" }, [
                   _c("th", [_vm._v("قیمت")]),

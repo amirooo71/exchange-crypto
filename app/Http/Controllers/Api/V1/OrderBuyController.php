@@ -38,8 +38,9 @@ class OrderBuyController extends Controller
      */
     public function store(Request $request, Buy $exchanger, StoreOrderBuy $validation)
     {
-        if ($this->isValidOrder(1)) {
-            $this->decrementUserBalance(1, $this->totalPrice($request));
+        $currencyId = $request->currency_id;
+        if ($this->isValidOrder($currencyId)) {
+            $this->decrementUserBalance($currencyId, $this->totalPrice($request));
             $order = OrderBuy::storeOrder();
             $validOrder = OrderBuy::find($order->id);
             $exchanger->process($validOrder);

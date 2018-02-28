@@ -2,7 +2,9 @@
 
 namespace App\Trading\Limit;
 
+use App\Asset;
 use App\Balance;
+use App\Currency;
 use App\OrderSell;
 use App\OrderBuy;
 use App\Transaction;
@@ -83,4 +85,5 @@ class Exchange
             'status' => $type,
         ]);
     }
+
 }

@@ -112,6 +112,10 @@
             this.getTickers();
         },
 
+        created() {
+            Event.$on('SelectedTicker', data => console.log(data));
+        },
+
         filters: {
             upper(str) {
                 return str.toUpperCase();

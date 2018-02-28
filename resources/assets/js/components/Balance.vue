@@ -2,7 +2,7 @@
     <panel title="کیف پول">
         <div slot="body">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-condensed">
                     <thead>
                     <tr class="v-bg-dark">
                         <th></th>

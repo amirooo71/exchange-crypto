@@ -15,9 +15,8 @@ class CreateOrderBuysTable extends Migration
     {
         Schema::create('order_buys', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('asset_id');
-            $table->integer('currency_id');
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('pair_id');
             $table->decimal('price', 16, 8);
             $table->decimal('amount', 16, 8);
             $table->decimal('fill', 16, 8)->default(0)->nullable();
