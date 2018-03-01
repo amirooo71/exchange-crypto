@@ -80,7 +80,7 @@
     TradingView.onready(function () {
         var widget = window.tvWidget = new TradingView.widget({
             // debug: true, // uncomment this line to see Library errors and warnings in the console
-            fullscreen: true,
+            fullscreen: false,
             symbol: 'AAPL',
             interval: 'D',
             container_id: "tv_chart_container",
@@ -97,7 +97,18 @@
             client_id: 'tradingview.com',
             user_id: 'public_user_id',
             toolbar_bg: '#263238',
-            custom_css_url: 'css/custom.css',
+            width: '100%',
+            height: 600,
+            custom_css_url: "{{asset('css/custom.css')}}",
+            disabled_features: ["header_widget"],
+            overrides: {
+                "paneProperties.background": "#263238",
+                "paneProperties.vertGridProperties.color": "#454545",
+                "paneProperties.horzGridProperties.color": "#454545",
+                "symbolWatermarkProperties.transparency": 90,
+                "scalesProperties.textColor": "#AAA",
+            }
+
         });
     });
 
