@@ -25,8 +25,8 @@ class Sell extends Exchange
             $price = $orderBook->price;
             $amount = min($order->remainAmount(), $orderBook->remainAmount());
             $totalPrice = $amount * $price;
-            $cId = $order->pair->currency_id; //1
-            $aId = $order->pair->asset_id; //2
+            $cId = $order->pair->currency_id;
+            $aId = $order->pair->asset_id;
 
             //Seller Balance Calculation
             DB::table('balances')->where('user_id', $order->user_id)->where('ac_id', $cId)->increment('amount', $totalPrice);
