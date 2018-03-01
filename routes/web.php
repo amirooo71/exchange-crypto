@@ -16,14 +16,12 @@ Route::get('/trading', 'PagesController@trading');
 Route::get('test', function () {
 
 
-    $assetName = \App\Asset::find(1)->symbol;
-
-
-    $name = \App\Currency::whereSymbol($assetName)->first();
-
-    dd($name->id);
+    return \App\Pair::where('asset_id',2)->where('currency_id',1)->first()->id;
 
 });
+
+
+
 
 
 

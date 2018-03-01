@@ -76,7 +76,7 @@
                 price: '',
                 amount: '',
                 currency_id: 1,
-                asset_id: 1,
+                asset_id: 2,
                 errors: new Errors(),
                 asset: 'USD',
             }

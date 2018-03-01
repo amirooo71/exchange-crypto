@@ -9,6 +9,16 @@ class Balance extends Model
 
     protected $guarded = [];
 
+    protected $with = ['ac'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function ac()
+    {
+        return $this->belongsTo(Ac::class);
+    }
+
     /**
      * @param $currency
      * @return Model|null|static
@@ -17,7 +27,7 @@ class Balance extends Model
     {
         return $this
             ->where('user_id', '=', auth()->user()->id)
-            ->where('currency_id', '=', $currency)
+            ->where('ac_id', '=', $currency)
             ->first();
     }
 

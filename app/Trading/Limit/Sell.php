@@ -14,7 +14,7 @@ class Sell extends Exchange
     public function process($order)
     {
 
-        foreach ($this->orderBuy->orderBook($order->price) as $orderBook) {
+        foreach ($this->orderBuy->orderBook($order) as $orderBook) {
 
             if ($this->isFill($order)) {
 
@@ -25,16 +25,18 @@ class Sell extends Exchange
             $price = $orderBook->price;
             $amount = min($order->remainAmount(), $orderBook->remainAmount());
             $totalPrice = $amount * $price;
+            $cId = $order->pair->currency_id; //1
+            $aId = $order->pair->asset_id; //2
 
             //Seller Balance Calculation
-            DB::table('balances')->where('user_id', $order->user_id)->where('currency_id', 1)->increment('amount', $totalPrice);
-            DB::table('balances')->where('user_id', $order->user_id)->where('currency_id', 1)->increment('available', $totalPrice);
-            DB::table('balances')->where('user_id', $order->user_id)->where('currency_id', 2)->decrement('amount', $amount);
+            DB::table('balances')->where('user_id', $order->user_id)->where('ac_id', $cId)->increment('amount', $totalPrice);
+            DB::table('balances')->where('user_id', $order->user_id)->where('ac_id', $cId)->increment('available', $totalPrice);
+            DB::table('balances')->where('user_id', $order->user_id)->where('ac_id', $aId)->decrement('amount', $amount);
 
             //Buyer Balance Calculation
-            DB::table('balances')->where('user_id', $orderBook->user_id)->where('currency_id', 1)->decrement('amount', $totalPrice);
-            DB::table('balances')->where('user_id', $orderBook->user_id)->where('currency_id', 2)->increment('amount', $amount);
-            DB::table('balances')->where('user_id', $orderBook->user_id)->where('currency_id', 2)->increment('available', $amount);
+            DB::table('balances')->where('user_id', $orderBook->user_id)->where('ac_id', $cId)->decrement('amount', $totalPrice);
+            DB::table('balances')->where('user_id', $orderBook->user_id)->where('ac_id', $aId)->increment('amount', $amount);
+            DB::table('balances')->where('user_id', $orderBook->user_id)->where('ac_id', $aId)->increment('available', $amount);
 
             $this->saveTransaction($order, $orderBook, $amount, $price, 'sell');
             $this->updateOrderFill($orderBook, $amount);

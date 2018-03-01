@@ -19,16 +19,17 @@ class AcTableSeeder extends Seeder
         ]);
 
         DB::table('acs')->insert([
+            'symbol' => 'btc',
+            'is_asset' => true,
+            'is_currency' => true,
+        ]);
+
+        DB::table('acs')->insert([
             'symbol' => 'irr',
             'is_asset' => false,
             'is_currency' => true,
         ]);
 
-        DB::table('acs')->insert([
-            'symbol' => 'btc',
-            'is_asset' => true,
-            'is_currency' => true,
-        ]);
 
         DB::table('acs')->insert([
             'symbol' => 'eth',

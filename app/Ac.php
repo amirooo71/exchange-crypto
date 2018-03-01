@@ -11,7 +11,7 @@ class Ac extends Model
      */
     public function assets()
     {
-        return $this->hasMany(Pair::class);
+        return $this->hasMany(Pair::class, 'asset_id');
     }
 
     /**
@@ -19,7 +19,15 @@ class Ac extends Model
      */
     public function currencies()
     {
-        return $this->hasMany(Pair::class);
+        return $this->hasMany(Pair::class, 'currency_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function balances()
+    {
+        return $this->hasMany(Balance::class);
     }
 }
     

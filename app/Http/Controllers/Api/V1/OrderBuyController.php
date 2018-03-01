@@ -38,9 +38,9 @@ class OrderBuyController extends Controller
      */
     public function store(Request $request, Buy $exchanger, StoreOrderBuy $validation)
     {
-        $currencyId = $request->currency_id;
-        if ($this->isValidOrder($currencyId)) {
-            $this->decrementUserBalance($currencyId, $this->totalPrice($request));
+        $cId = $request->currency_id;
+        if ($this->isValidOrder($cId)) {
+            $this->decrementUserBalance($cId, $this->totalPrice($request));
             $order = OrderBuy::storeOrder();
             $validOrder = OrderBuy::find($order->id);
             $exchanger->process($validOrder);
@@ -112,7 +112,7 @@ class OrderBuyController extends Controller
     {
         DB::table('balances')
             ->where('user_id', auth()->user()->id)
-            ->where('currency_id', $currencyId)
+            ->where('ac_id', $currencyId)
             ->decrement('available', $amount);
     }
 
@@ -124,7 +124,7 @@ class OrderBuyController extends Controller
     {
         DB::table('balances')
             ->where('user_id', auth()->user()->id)
-            ->where('currency_id', $currencyId)
+            ->where('ac_id', $currencyId)
             ->increment('available', $amount);
     }
 

@@ -39,10 +39,9 @@ class OrderSellController extends Controller
      */
     public function store(Request $request, StoreOrderSell $validation, Sell $exchanger)
     {
-        $assetSymbol = Asset::find($request->asset_id)->symbol;
-        $currencyId = Currency::whereSymbol($assetSymbol)->first()->id;
-        if ($this->isValidOrder($currencyId)) {
-            $this->decrementUserBalance($currencyId, $request->amount);
+        $aId = $request->asset_id;
+        if ($this->isValidOrder($aId)) {
+            $this->decrementUserBalance($aId, $request->amount);
             $order = OrderSell::storeOrder();
             $validOrder = OrderSell::find($order->id);
             $exchanger->process($validOrder);
@@ -113,7 +112,7 @@ class OrderSellController extends Controller
     {
         return DB::table('balances')
             ->where('user_id', auth()->user()->id)
-            ->where('currency_id', $currencyId)
+            ->where('ac_id', $currencyId)
             ->decrement('available', $amount);
     }
 
@@ -125,7 +124,7 @@ class OrderSellController extends Controller
     {
         DB::table('balances')
             ->where('user_id', auth()->user()->id)
-            ->where('currency_id', $currencyId)
+            ->where('ac_id', $currencyId)
             ->increment('available', $amount);
     }
 

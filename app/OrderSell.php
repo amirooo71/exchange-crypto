@@ -7,7 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class OrderSell extends Model
 {
     protected $guarded = [];
-    
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function pair()
+    {
+        return $this->belongsTo(Pair::class);
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -41,13 +49,15 @@ class OrderSell extends Model
     }
 
     /**
+     * @param $order
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function orderBook($price)
+    public function orderBook($order)
     {
         return $this
             ->whereRaw('fill < amount')
-            ->where('price', '<=', $price)
+            ->where('pair_id', '=', $order->pair_id)
+            ->where('price', '<=', $order->price)
             ->orderBy('price', 'asc')
             ->get();
     }
@@ -56,13 +66,25 @@ class OrderSell extends Model
     {
         $order = self::create([
             'user_id' => auth()->id(),
-            'asset_id' => request('asset_id'),
-            'currency_id' => \request('currency_id'),
+            'pair_id' => self::getPairId(request('asset_id'), request('currency_id')),
             'price' => \request('price'),
             'amount' => \request('amount'),
         ]);
 
         $order['type'] = 'فروش';
         return $order;
+    }
+
+    /**
+     * @param $aId
+     * @param $cId
+     * @return mixed
+     */
+    private static function getPairId($aId, $cId)
+    {
+        $pairId = \App\Pair::where('asset_id', $aId)
+            ->where('currency_id', $cId)->first()->id;
+
+        return $pairId;
     }
 }
