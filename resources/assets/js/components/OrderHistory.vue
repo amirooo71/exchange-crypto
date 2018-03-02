@@ -149,6 +149,8 @@
 
         name: "order-history",
 
+        props: ['user'],
+
         data() {
             return {
                 orders: [],
@@ -163,6 +165,9 @@
 
         created() {
             Event.$on('orderApplied', () => this.getOrderHistory());
+            window.Echo.channel('order-confirm.' + this.user.id).listen('OrderConfirm', () => {
+                this.getOrderHistory();
+            });
         },
 
         mounted() {

@@ -15,6 +15,6 @@
 
         <div id="tv_chart_container"></div>
         <order-book></order-book>
-        <order-history></order-history>
+        <order-history :user="{{auth()->user()}}"></order-history>
     </div>
 @endsection
