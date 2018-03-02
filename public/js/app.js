@@ -6601,12 +6601,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 20 */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/BTC.svg?8fbc7fffae6ab6db30f237902434e728";
-
-/***/ }),
+/* 20 */,
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -64645,7 +64640,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -64793,15 +64788,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             tickers: [],
             asset: '',
-            currency: ''
+            currency: '',
+            assetName: 'BTC'
         };
     },
     mounted: function mounted() {
         this.getTickers();
     },
     created: function created() {
+        var _this = this;
+
         Event.$on('SelectedTicker', function (data) {
-            return console.log(data);
+            _this.assetName = data.asset.symbol;
         });
     },
 
@@ -64814,10 +64812,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         getTickers: function getTickers() {
-            var _this = this;
+            var _this2 = this;
 
             axios.get('api/v1/trade/tickers').then(function (response) {
-                return _this.tickers = response.data;
+                return _this2.tickers = response.data;
             });
         },
         onPairs: function onPairs(asset, currency) {
@@ -64828,6 +64826,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 currency: currency
             };
             Event.$emit('SelectedTicker', data);
+        }
+    },
+
+    computed: {
+        assetImg: function assetImg() {
+            return 'images/logo/' + this.assetName.toUpperCase() + '.svg';
         }
     }
 
@@ -64860,10 +64864,15 @@ var render = function() {
             [
               _c("tbody", [
                 _c("tr", [
-                  _vm._m(0),
+                  _c("td", { attrs: { rowspan: "3" } }, [
+                    _c("img", {
+                      staticClass: "v-md-svg",
+                      attrs: { src: _vm.assetImg, alt: "بیتکوین" }
+                    })
+                  ]),
                   _vm._v(" "),
                   _c("td", [
-                    _c("h5", [
+                    _c("h6", [
                       _vm.asset
                         ? _c("span", [
                             _vm._v(_vm._s(_vm._f("upper")(_vm.asset.symbol)))
@@ -64880,10 +64889,10 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _vm._m(1)
+                  _vm._m(0)
                 ]),
                 _vm._v(" "),
-                _vm._m(2),
+                _vm._m(1),
                 _vm._v(" "),
                 _c("tr", { staticClass: "text-muted" }, [
                   _c("td", [
@@ -64898,7 +64907,7 @@ var render = function() {
                     _c("span", [_vm._v("حجم بازار")])
                   ]),
                   _vm._v(" "),
-                  _vm._m(3)
+                  _vm._m(2)
                 ])
               ])
             ]
@@ -64928,7 +64937,10 @@ var render = function() {
                       _c("img", {
                         staticClass: "v-tiny-svg",
                         attrs: {
-                          src: __webpack_require__(20),
+                          src:
+                            "images/logo/" +
+                            ticker.symbol.toUpperCase() +
+                            ".svg",
                           alt: "بیتکوین"
                         }
                       })
@@ -64995,21 +65007,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { attrs: { rowspan: "3" } }, [
-      _c("img", {
-        staticClass: "v-md-svg",
-        attrs: {
-          src: __webpack_require__(20),
-          alt: "بیتکوین"
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [_c("h5", [_vm._v("10,813")])])
+    return _c("td", [_c("h6", [_vm._v("10,813")])])
   },
   function() {
     var _vm = this
@@ -65135,7 +65133,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -65146,6 +65144,17 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -65230,7 +65239,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("panel", { attrs: { title: "کیف پول" } }, [
     _c("div", { attrs: { slot: "body" }, slot: "body" }, [
-      _c("div", { staticClass: "table-responsive" }, [
+      _c("div", { staticClass: "table-responsive pre-scrollable" }, [
         _c("table", { staticClass: "table table-condensed" }, [
           _c("thead", [
             _c("tr", { staticClass: "v-bg-dark" }, [
@@ -65238,9 +65247,7 @@ var render = function() {
               _vm._v(" "),
               _c("th", [_vm._v("واحد")]),
               _vm._v(" "),
-              _c("th", [_vm._v("مقدار کل")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("در گردش")])
+              _c("th", { staticClass: "text-center" }, [_vm._v("موجودی")])
             ])
           ]),
           _vm._v(" "),
@@ -65252,7 +65259,10 @@ var render = function() {
                   _c("img", {
                     staticClass: "v-tiny-svg",
                     attrs: {
-                      src: __webpack_require__(183),
+                      src:
+                        "images/logo/" +
+                        balance.ac.symbol.toUpperCase() +
+                        ".svg",
                       alt: "دلار"
                     }
                   })
@@ -65260,9 +65270,24 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(_vm._f("upper")(balance.ac.symbol)))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(balance.amount))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(balance.available))])
+                _c("td", [
+                  _c(
+                    "table",
+                    {
+                      staticClass: "table table-borderless table-condensed",
+                      staticStyle: { background: "#263238" }
+                    },
+                    [
+                      _c("tbody", [
+                        _c("tr", [_c("td", [_vm._v(_vm._s(balance.amount))])]),
+                        _vm._v(" "),
+                        _c("tr", [
+                          _c("td", [_vm._v(_vm._s(balance.available))])
+                        ])
+                      ])
+                    ]
+                  )
+                ])
               ])
             })
           )
@@ -65282,12 +65307,7 @@ if (false) {
 }
 
 /***/ }),
-/* 183 */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/dollar-logo.svg?775159186aab29cb6fd73a21e64f3650";
-
-/***/ }),
+/* 183 */,
 /* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -66144,7 +66164,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -66171,12 +66191,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+
     name: "exchange",
+
+    props: ['user'],
 
     created: function created() {
         var _this = this;
 
-        window.Echo.channel('order-confirm').listen('OrderConfirm', function (e) {
+        window.Echo.channel('order-confirm.' + this.user.id).listen('OrderConfirm', function (e) {
             notify('info', _this.getConfirmOrderMsg(e.order, e.price));
         });
     },
@@ -66311,7 +66334,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -66326,6 +66349,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+//
+//
 //
 //
 //
@@ -66605,6 +66630,8 @@ var render = function() {
                   _vm._v(" "),
                   _c("th", [_vm._v("پر شده")]),
                   _vm._v(" "),
+                  _c("th", [_vm._v("نوع معامله")]),
+                  _vm._v(" "),
                   _c("th", [_vm._v("تاریخ")]),
                   _vm._v(" "),
                   _c("th", [_vm._v("وضعیت")]),
@@ -66625,6 +66652,10 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", [
                       _vm._v(_vm._s(order.fill * 100 / order.amount) + " %")
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(_vm._s(_vm._f("uppercase")(order.pair.pair)))
                     ]),
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(order.created_at))]),
@@ -67126,7 +67157,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "col-md-6" }, [
           _c("div", { staticClass: "table-responsive pre-scrollable" }, [
-            _c("table", { staticClass: "table" }, [
+            _c("table", { staticClass: "table table-condensed" }, [
               _c("thead", [
                 _c("tr", { staticClass: "bg-danger" }, [
                   _c("th", [_vm._v("قیمت")]),

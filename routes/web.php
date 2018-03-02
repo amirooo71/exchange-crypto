@@ -16,7 +16,7 @@ Route::get('/trading', 'PagesController@trading');
 Route::get('test', function () {
 
 
-    return \App\Pair::where('asset_id',2)->where('currency_id',1)->first()->id;
+    return \App\OrderBuy::find(1);
 
 });
 

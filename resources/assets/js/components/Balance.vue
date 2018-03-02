@@ -1,24 +1,35 @@
 <template>
     <panel title="کیف پول">
         <div slot="body">
-            <div class="table-responsive">
+            <div class="table-responsive pre-scrollable">
                 <table class="table table-condensed">
                     <thead>
                     <tr class="v-bg-dark">
                         <th></th>
                         <th>واحد</th>
-                        <th>مقدار کل</th>
-                        <th>در گردش</th>
+                        <th class="text-center">موجودی</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr v-for="balance in balances">
                         <td>
-                            <img src="./../../../../public/images/logo/dollar-logo.svg" alt="دلار" class="v-tiny-svg">
+                            <img :src="'images/logo/' + balance.ac.symbol.toUpperCase() + '.svg'" alt="دلار"
+                                 class="v-tiny-svg">
                         </td>
                         <td>{{balance.ac.symbol | upper}}</td>
-                        <td>{{balance.amount}}</td>
-                        <td>{{balance.available}}</td>
+                        <td>
+                            <table class="table table-borderless table-condensed"
+                                   style="background: #263238;">
+                                <tbody>
+                                <tr>
+                                    <td>{{balance.amount}}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{balance.available}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

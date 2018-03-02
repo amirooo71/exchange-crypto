@@ -24,7 +24,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="table-responsive pre-scrollable">
-                        <table class="table">
+                        <table class="table table-condensed">
                             <thead>
                             <tr class="bg-danger">
                                 <th>قیمت</th>

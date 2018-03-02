@@ -36,6 +36,6 @@ class OrderConfirm implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('order-confirm');
+        return new Channel('order-confirm.' . $this->order->user_id);
     }
 }

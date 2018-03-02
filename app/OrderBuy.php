@@ -8,6 +8,8 @@ class OrderBuy extends Model
 {
     protected $guarded = [];
 
+    protected $with = ['pair'];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

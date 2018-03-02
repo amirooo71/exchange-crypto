@@ -36,5 +36,23 @@ class AcTableSeeder extends Seeder
             'is_asset' => true,
             'is_currency' => true,
         ]);
+
+        DB::table('acs')->insert([
+            'symbol' => 'iota',
+            'is_asset' => true,
+            'is_currency' => false,
+        ]);
+
+        DB::table('acs')->insert([
+            'symbol' => 'xrp',
+            'is_asset' => true,
+            'is_currency' => false,
+        ]);
+
+        DB::table('acs')->insert([
+            'symbol' => 'xmr',
+            'is_asset' => true,
+            'is_currency' => false,
+        ]);
     }
 }

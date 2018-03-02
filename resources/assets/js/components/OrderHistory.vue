@@ -10,6 +10,7 @@
                             <th>میزان</th>
                             <th>قیمت</th>
                             <th>پر شده</th>
+                            <th>نوع معامله</th>
                             <th>تاریخ</th>
                             <th>وضعیت</th>
                             <th>ویرایش</th>
@@ -21,6 +22,7 @@
                             <td>{{order.amount | round}}</td>
                             <td>{{order.price | currency}}</td>
                             <td>{{(order.fill * 100) / order.amount}} %</td>
+                            <td>{{order.pair.pair | uppercase}}</td>
                             <td>{{order.created_at}}</td>
                             <td v-if="order.status == 'confirmed'">
                                 <span class="label bg-success">انجام شده</span>

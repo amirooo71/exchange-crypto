@@ -14,10 +14,13 @@
 <script>
 
     export default {
+
         name: "exchange",
 
+        props: ['user'],
+
         created() {
-            window.Echo.channel('order-confirm').listen('OrderConfirm', (e) => {
+            window.Echo.channel('order-confirm.' + this.user.id).listen('OrderConfirm', (e) => {
                 notify('info', this.getConfirmOrderMsg(e.order, e.price));
             });
         },

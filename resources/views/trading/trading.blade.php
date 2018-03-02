@@ -3,14 +3,13 @@
 @section('body')
     <div class="col-md-3">
         <tickers></tickers>
-        <exchange></exchange>
+        <exchange :user="{{auth()->user()}}"></exchange>
         <balance></balance>
     </div>
     <div class="col-md-9">
         <panel title="نمودار">
             <div slot="body">
                 <div id="tv_chart_container"></div>
-                {{--<graph></graph>--}}
             </div>
         </panel>
 

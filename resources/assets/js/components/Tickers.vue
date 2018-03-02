@@ -5,20 +5,20 @@
                 <tbody>
                 <tr>
                     <td rowspan="3">
-                        <img src="./../../../../public/images/logo/BTC.svg" alt="بیتکوین"
+                        <img :src="assetImg" alt="بیتکوین"
                              class="v-md-svg">
                     </td>
                     <td>
-                        <h5>
+                        <h6>
                             <span v-if="asset">{{asset.symbol | upper}}</span>
                             <span v-else>BTC</span>
                             <span>/</span>
                             <span v-if="currency">{{currency.symbol | upper}}</span>
                             <span v-else>USD</span>
-                        </h5>
+                        </h6>
                     </td>
                     <td>
-                        <h5>10,813</h5>
+                        <h6>10,813</h6>
                     </td>
                 </tr>
                 <tr class="text-muted">
@@ -63,7 +63,7 @@
                         <tbody>
                         <tr v-for="ticker in tickers">
                             <td>
-                                <img src="./../../../../public/images/logo/BTC.svg" alt="بیتکوین"
+                                <img :src="'images/logo/'+ ticker.symbol.toUpperCase() + '.svg'" alt="بیتکوین"
                                      class="v-tiny-svg">
                             </td>
                             <td>{{ticker.symbol | upper }}</td>
@@ -94,7 +94,7 @@
 <script>
 
     export default {
-        
+
         name: "tickers",
 
         data() {
@@ -103,6 +103,7 @@
                 tickers: [],
                 asset: '',
                 currency: '',
+                assetName: 'BTC',
             }
 
         },
@@ -112,7 +113,9 @@
         },
 
         created() {
-            Event.$on('SelectedTicker', data => console.log(data));
+            Event.$on('SelectedTicker', data => {
+                this.assetName = data.asset.symbol;
+            });
         },
 
         filters: {
@@ -136,6 +139,14 @@
                 Event.$emit('SelectedTicker', data);
             },
         },
+
+        computed: {
+
+            assetImg() {
+                return 'images/logo/' + this.assetName.toUpperCase() + '.svg';
+            }
+
+        }
 
     }
 </script>
