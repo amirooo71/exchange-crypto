@@ -4,7 +4,7 @@
     <div class="col-md-3">
         <tickers></tickers>
         <exchange :user="{{auth()->user()}}"></exchange>
-        <balance></balance>
+        <balance :user="{{auth()->user()}}"></balance>
     </div>
     <div class="col-md-9">
         <panel title="نمودار">
@@ -15,6 +15,6 @@
 
         <div id="tv_chart_container"></div>
         <order-book></order-book>
-        <order-history :user="{{auth()->user()}}"></order-history>
+        <order-history></order-history>
     </div>
 @endsection

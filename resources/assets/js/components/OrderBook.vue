@@ -9,6 +9,7 @@
                             <tr class="bg-success">
                                 <th>قیمت</th>
                                 <th>مقدار</th>
+                                <th>نوع معامله</th>
                                 <th>تاریخ</th>
                             </tr>
                             </thead>
@@ -16,6 +17,7 @@
                             <tr v-for="orderBuy in orderBuys">
                                 <td>{{orderBuy.price}}</td>
                                 <td>{{orderBuy.amount}}</td>
+                                <td>{{orderBuy.pair.pair | uppercase}}</td>
                                 <td>{{orderBuy.created_at}}</td>
                             </tr>
                             </tbody>
@@ -29,6 +31,7 @@
                             <tr class="bg-danger">
                                 <th>قیمت</th>
                                 <th>مقدار</th>
+                                <th>نوع معامله</th>
                                 <th>تاریخ</th>
                             </tr>
                             </thead>
@@ -36,6 +39,7 @@
                             <tr v-for="orderSell in orderSells">
                                 <td>{{orderSell.price}}</td>
                                 <td>{{orderSell.amount}}</td>
+                                <td>{{orderSell.pair.pair | uppercase}}</td>
                                 <td>{{orderSell.created_at}}</td>
                             </tr>
                             </tbody>

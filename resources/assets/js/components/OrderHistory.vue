@@ -149,8 +149,6 @@
 
         name: "order-history",
 
-        props: ['user'],
-
         data() {
             return {
                 orders: [],

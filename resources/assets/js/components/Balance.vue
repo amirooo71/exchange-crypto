@@ -42,6 +42,8 @@
     export default {
         name: "balance",
 
+        props: ['user'],
+
         data() {
             return {
                 balances: '',
@@ -57,6 +59,9 @@
         created() {
             Event.$on('orderApplied', () => this.getUserBalance());
             Event.$on('orderDeleted', () => this.getUserBalance());
+            window.Echo.channel('order-confirm.' + this.user.id).listen('OrderConfirm', () => {
+                this.getUserBalance();
+            });
         },
 
         mounted() {
