@@ -94,16 +94,15 @@
 <script>
 
     export default {
+        
         name: "tickers",
 
         data() {
 
             return {
-
                 tickers: [],
                 asset: '',
                 currency: '',
-
             }
 
         },

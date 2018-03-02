@@ -188,6 +188,11 @@ return [
          */
         Spatie\Fractal\FractalServiceProvider::class,
 
+        /**
+         * Laravel Cors Service Provider
+         */
+        Barryvdh\Cors\ServiceProvider::class,
+
     ],
 
     /*

@@ -64645,7 +64645,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -64785,16 +64785,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+
     name: "tickers",
 
     data: function data() {
 
         return {
-
             tickers: [],
             asset: '',
             currency: ''
-
         };
     },
     mounted: function mounted() {
@@ -65374,7 +65373,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -65389,6 +65388,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+//
 //
 //
 //
@@ -65478,7 +65478,8 @@ var Errors = function () {
             currency_id: 1,
             asset_id: 2,
             errors: new Errors(),
-            asset: 'USD'
+            asset: 'BTC',
+            currency: 'USD'
         };
     },
     created: function created() {
@@ -65488,6 +65489,7 @@ var Errors = function () {
             _this.currency_id = data.currency.id;
             _this.asset_id = data.asset.id;
             _this.asset = data.asset.symbol;
+            _this.currency = data.currency.symbol;
         });
     },
 
@@ -65518,6 +65520,10 @@ var Errors = function () {
     computed: {
         assetName: function assetName() {
             return this.asset.toUpperCase();
+        },
+
+        currencyName: function currencyName() {
+            return this.currency.toUpperCase();
         }
     }
 });
@@ -65533,7 +65539,6 @@ var render = function() {
   return _c(
     "form",
     {
-      staticClass: "form-horizontal",
       on: {
         submit: function($event) {
           $event.preventDefault()
@@ -65551,6 +65556,8 @@ var render = function() {
         _c("div", { staticClass: "panel-body" }, [
           _c("div", { staticClass: "form-group" }, [
             _c("div", [
+              _c("label", [_vm._v(_vm._s("قیمت " + _vm.currencyName))]),
+              _vm._v(" "),
               _c("input", {
                 directives: [
                   {
@@ -65561,11 +65568,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: {
-                  type: "text",
-                  name: "price",
-                  placeholder: "قیمت " + _vm.assetName
-                },
+                attrs: { type: "text", name: "price" },
                 domProps: { value: _vm.price },
                 on: {
                   input: function($event) {
@@ -65588,6 +65591,8 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
             _c("div", [
+              _c("label", [_vm._v(_vm._s("مقدار " + _vm.assetName))]),
+              _vm._v(" "),
               _c("input", {
                 directives: [
                   {
@@ -65598,11 +65603,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: {
-                  type: "text",
-                  name: "amount",
-                  placeholder: "مقدار " + _vm.assetName
-                },
+                attrs: { type: "text", name: "amount" },
                 domProps: { value: _vm.amount },
                 on: {
                   input: function($event) {
@@ -65625,9 +65626,11 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
             _c("div", [
+              _c("label", [_vm._v("جمع کل")]),
+              _vm._v(" "),
               _c("input", {
                 staticClass: "form-control",
-                attrs: { type: "text", placeholder: "جمع کل" },
+                attrs: { type: "text" },
                 domProps: { value: _vm.price * _vm.amount }
               })
             ])
@@ -65755,7 +65758,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -65770,6 +65773,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+//
 //
 //
 //
@@ -65860,7 +65864,8 @@ var Errors = function () {
             currency_id: 1,
             asset_id: 2,
             errors: new Errors(),
-            asset: 'USD'
+            asset: 'BTC',
+            currency: 'USD'
         };
     },
     created: function created() {
@@ -65870,6 +65875,7 @@ var Errors = function () {
             _this.currency_id = data.currency.id;
             _this.asset_id = data.asset.id;
             _this.asset = data.asset.symbol;
+            _this.currency = data.currency.symbol;
         });
     },
 
@@ -65900,6 +65906,9 @@ var Errors = function () {
     computed: {
         assetName: function assetName() {
             return this.asset.toUpperCase();
+        },
+        currencyName: function currencyName() {
+            return this.currency.toUpperCase();
         }
     }
 });
@@ -65933,6 +65942,8 @@ var render = function() {
         _c("div", { staticClass: "panel-body" }, [
           _c("div", { staticClass: "form-group" }, [
             _c("div", [
+              _c("label", [_vm._v(_vm._s("قیمت " + _vm.currencyName))]),
+              _vm._v(" "),
               _c("input", {
                 directives: [
                   {
@@ -65943,11 +65954,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: {
-                  type: "text",
-                  name: "price",
-                  placeholder: "قیمت " + _vm.assetName
-                },
+                attrs: { type: "text", name: "price" },
                 domProps: { value: _vm.price },
                 on: {
                   input: function($event) {
@@ -65970,6 +65977,8 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
             _c("div", [
+              _c("label", [_vm._v(_vm._s("مقدار " + _vm.assetName))]),
+              _vm._v(" "),
               _c("input", {
                 directives: [
                   {
@@ -65980,11 +65989,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: {
-                  type: "text",
-                  name: "amount",
-                  placeholder: "مقدار " + _vm.assetName
-                },
+                attrs: { type: "text", name: "amount" },
                 domProps: { value: _vm.amount },
                 on: {
                   input: function($event) {
@@ -66007,9 +66012,11 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
             _c("div", [
+              _c("label", [_vm._v("جمع کل")]),
+              _vm._v(" "),
               _c("input", {
                 staticClass: "form-control",
-                attrs: { type: "text", placeholder: "جمع کل" },
+                attrs: { type: "text" },
                 domProps: { value: _vm.price * _vm.amount }
               })
             ])

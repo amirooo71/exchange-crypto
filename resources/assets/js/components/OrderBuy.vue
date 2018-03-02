@@ -1,5 +1,5 @@
 <template>
-    <form class="form-horizontal" @submit.prevent="onSubmit" @keydown="errors.clear($event.target.name)">
+    <form @submit.prevent="onSubmit" @keydown="errors.clear($event.target.name)">
         <div class="panel ng-bg-dark">
             <div class="panel-heading">
                 <h5 class="panel-title text-center">خرید</h5>
@@ -7,23 +7,24 @@
             <div class="panel-body">
                 <div class="form-group">
                     <div>
-                        <input type="text" class="form-control" name="price" v-model="price"
-                               :placeholder="'قیمت '+assetName">
+                        <label>{{'قیمت '+currencyName}}</label>
+                        <input type="text" class="form-control" name="price" v-model="price">
                         <span class="text-danger help-block" v-if="errors.has('price')"
                               v-text="errors.get('price')"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <div>
-                        <input type="text" class="form-control" name="amount" v-model="amount"
-                               :placeholder="'مقدار '+assetName">
+                        <label>{{'مقدار '+assetName}}</label>
+                        <input type="text" class="form-control" name="amount" v-model="amount">
                         <span class="text-danger help-block" v-if="errors.has('amount')"
                               v-text="errors.get('amount')"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <div>
-                        <input type="text" class="form-control" :value="price * amount" placeholder="جمع کل">
+                        <label>جمع کل</label>
+                        <input type="text" class="form-control" :value="price * amount">
                     </div>
                 </div>
                 <div class="form-group">
@@ -78,7 +79,8 @@
                 currency_id: 1,
                 asset_id: 2,
                 errors: new Errors(),
-                asset: 'USD',
+                asset: 'BTC',
+                currency: 'USD'
             }
         },
 
@@ -87,6 +89,7 @@
                 this.currency_id = data.currency.id;
                 this.asset_id = data.asset.id;
                 this.asset = data.asset.symbol;
+                this.currency = data.currency.symbol;
             });
         },
 
@@ -121,6 +124,10 @@
         computed: {
             assetName: function () {
                 return this.asset.toUpperCase();
+            },
+
+            currencyName: function () {
+                return this.currency.toUpperCase();
             }
         },
     }
