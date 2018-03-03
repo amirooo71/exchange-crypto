@@ -81,11 +81,11 @@
         var widget = window.tvWidget = new TradingView.widget({
             // debug: true, // uncomment this line to see Library errors and warnings in the console
             fullscreen: false,
-            symbol: 'AAPL',
+            symbol: 'BTCUSD',
             interval: 'D',
             container_id: "tv_chart_container",
             //	BEWARE: no trailing slash is expected in feed URL
-            datafeed: new Datafeeds.UDFCompatibleDatafeed("http://localhost:8000/api/v1/udf"),
+            datafeed: new Datafeeds.UDFCompatibleDatafeed("http://localhost:8888"),
             library_path: "chart/charting_library/",
             locale: getParameterByName('lang') || "fa",
             //	Regression Trend-related functionality is not implemented yet, so it's hidden for a while
@@ -100,7 +100,7 @@
             width: '100%',
             height: 600,
             custom_css_url: "{{asset('css/custom.css')}}",
-            disabled_features: ["header_widget"],
+            // disabled_features: ["header_widget"],
             overrides: {
                 "paneProperties.background": "#263238",
                 "paneProperties.vertGridProperties.color": "#454545",
