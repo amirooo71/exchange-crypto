@@ -15,13 +15,14 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('seller_id');
-            $table->integer('buyer_id');
-            $table->integer('order_buy_id');
-            $table->integer('order_sale_id');
+            $table->integer('seller_id')->nullable();
+            $table->integer('buyer_id')->nullable();
+            $table->integer('order_buy_id')->nullable();
+            $table->integer('order_sale_id')->nullable();
             $table->decimal('price', 16, 8);
             $table->decimal('amount', 16, 8);
-            $table->string('status');
+            $table->string('type');
+            $table->bigInteger('timestamp');
             $table->timestamps();
         });
     }

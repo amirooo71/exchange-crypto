@@ -82,7 +82,8 @@ class Exchange
             'order_buy_id' => $order->id,
             'amount' => $amount,
             'price' => $price,
-            'status' => $type,
+            'type' => $type,
+            'timestamp' => time(),
         ]);
     }
 
