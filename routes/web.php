@@ -16,10 +16,9 @@ Route::get('/trading', 'PagesController@trading');
 Route::get('test', function () {
 
 
-    return \App\OrderBuy::find(1);
 
+    return \App\Transaction::orderBy('created_at','desc')->first();
 });
-
 
 
 

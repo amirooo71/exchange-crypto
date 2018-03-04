@@ -40,13 +40,10 @@ class BitfinexCrawler extends Command
     public function handle()
     {
         $symbol = $this->anticipate('What is your symbol?', ['Trades']);
-
         $client = new Client(['base_uri' => 'https://api.bitfinex.com/v1/trades/']);
         $response = $client->request('GET', $symbol . '/?limit_trades=999');
         $responsesAsArray = \GuzzleHttp\json_decode($response->getBody());
-
         $bar = $this->output->createProgressBar(count($responsesAsArray));
-
 
         foreach ($responsesAsArray as $response) {
             Transaction::create([
