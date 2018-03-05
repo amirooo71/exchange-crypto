@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\UDF;
 
+use App\TvSymbol;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -10,93 +11,161 @@ use \Illuminate\Support\Facades\DB;
 class RequestProcessorController extends Controller
 {
 
-
-    public function history(Request $request)
+    /**
+     * @return array
+     */
+    public function sendConfig()
     {
-//        $inputs = $request->only(['symbol', 'from', 'to', 'resolution']);
-//
-//        dd($inputs);
+        return [
+            "supports_search" => true,
+            "supports_group_request" => false,
+            "supports_marks" => false,
+            "supports_timescale_marks" => true,
+            "supports_time" => true,
+            "exchanges" => [
+                [
+                    "value" => "",
+                    "name" => "All Exchanges",
+                    "desc" => "",
+                ],
+                [
+                    "value" => "XETRA",
+                    "name" => "XETRA",
+                    "desc" => "XETRA",
+                ],
+                [
+                    "value" => "NSE",
+                    "name" => "NSE",
+                    "desc" => "NSE",
+                ],
+            ],
+            "symbolsTypes" => [
+                [
+                    "name" => "All types",
+                    "value" => "",
+                ],
+                [
+                    "name" => "Stock",
+                    "value" => "stock",
+                ],
+                [
+                    "name" => "Index",
+                    "value" => "index",
+                ],
+            ],
+            "supported_resolutions" => ["1", "5", "15", "30", "60", "1D", "1W", "1M"],
+        ];
+    }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function sendSendSymbolInfo(Request $request)
+    {
+        $input = $request->only('symbol');
 
-        $bars = $this->getBars();
+        return [
+            "name" => $input['symbol'], //Name of symbol
+            "exchange-traded" => "XETRA", //Short name of exchange
+            "exchange-listed" => "XETRA", //Short name of exchange
+            "timezone" => "Asia/Tehran", //Exchange timezone
+            "minmov" => 1, //These three keys have different meaning when using for common prices and for fractional prices.
+            "minmov2" => 0, //These three keys have different meaning when using for common prices and for fractional prices.
+            "pointvalue" => 1,
+            "session" => "0930-1630", //Trading hours for this symbol
+            "has_intraday" => false,
+            "has_no_volume" => false,
+            "description" => "Bitcoin Exchange", //Description of a symbol
+            "type" => "stock", //Optional type of the instrument.
+            "supported_resolutions" => ["1", "5", "15", "30", "60", "1D", "1W", "1M"],
+            "pricescale" => 100,
+            "ticker" => $input['symbol'], //It's an unique identifier for this symbol in your symbology,
+        ];
+    }
 
-        return $this->sendResult($bars);
+    /**
+     * @param Request $request
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function sendSymbolSearchResult(Request $request)
+    {
+        $inputs = $request->only(['query', 'type', 'exchange', 'limit']);
+        $symbols = DB::table('tv_symbols');
+
+        if (isset($inputs['query'])) {
+            $symbols = $symbols->where('symbol', $inputs['query']);
+        } elseif (isset($inputs['type'])) {
+            $symbols = $symbols->where('type', $inputs['type']);
+        } elseif (isset($inputs['exchange'])) {
+            $symbols = $symbols->where('exchange', $inputs['exchange']);
+        } elseif (isset($inputs['limit'])) {
+            $symbols = $symbols->take($inputs['limit']);
+        }
+
+        return $symbols->get();
 
     }
 
     /**
-     * @param $bar
+     * @param Request $request
      * @return array
      */
-    private function UDFSerializer($bar)
+    public function sendSymbolHistory(Request $request)
     {
-        return ["BTCUSD", Carbon::createFromTimestamp($bar->t * 60)->format('Y-m-d'), $bar->o, $bar->h, $bar->l, $bar->c, $bar->v];
+        $inputs = $request->only(['symbol', 'from', 'to', 'resolution']);
+        $histories = $this->getHistories();
+        return $this->convertHistoryDataToUDFFormat($histories);
+    }
+
+    /**
+     * @return int
+     */
+    public function sendTime()
+    {
+        return time();
     }
 
     /**
      * @return mixed
      */
-    private function getBars()
+    private function getHistories()
     {
         return DB::select('SELECT COUNT(*) as count, CAST(timestamp / 60 as INT) as t, (select price from transactions where CAST(timestamp / 60 as INT) = t ORDER by id LIMIT 1) as o ,(select price from transactions where CAST(timestamp / 60 as INT) = t ORDER by id DESC LIMIT 1) as c , min(price) as l, max(price) as h, SUM(amount) as v FROM `transactions` GROUP BY CAST(timestamp / 60 as INT) order by t');
     }
 
     /**
+     * @param $histories
      * @return array
      */
-    private function getColumns()
+    private function convertHistoryDataToUDFFormat($histories): array
     {
-        return [
-            [
-                "name" => "ticker",
-                "type" => "String"
-            ],
-            [
-                "name" => "date",
-                "type" => "Date"
-            ],
-            [
-                "name" => "open",
-                "type" => "BigDecimal(34,12)"
-            ],
-            [
-                "name" => "high",
-                "type" => "BigDecimal(34,12)"
-            ],
-            [
-                "name" => "low",
-                "type" => "BigDecimal(34,12"
-            ],
-            [
-                "name" => "close",
-                "type" => "BigDecimal(34,12)"
-            ],
-            [
-                "name" => "volume",
-                "type" => "BigDecimal(37,15)"
-            ],
-        ];
-    }
+        $t = [];
+        $o = [];
+        $c = [];
+        $l = [];
+        $h = [];
+        $v = [];
 
-    /**
-     * @param $bars
-     * @return array
-     */
-    private function sendResult($bars): array
-    {
-        $data = [];
 
-        foreach ($bars as $bar) {
-
-            $data[] = $this->UDFSerializer($bar);
+        foreach ($histories as $history) {
+            $t[] = $history->t;
+            $o[] = $history->o;
+            $c[] = $history->c;
+            $l[] = $history->l;
+            $h[] = $history->h;
+            $v[] = $history->v;
         }
+
+
         return [
-            "datatable" => [
-                "data" => $data,
-                "columns" => $this->getColumns(),
-            ]
+            "t" => $t,
+            "o" => $o,
+            "c" => $c,
+            "l" => $l,
+            "h" => $h,
+            "v" => $v,
+            "s" => "ok",
         ];
     }
-
-
 }

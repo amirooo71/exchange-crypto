@@ -39,5 +39,9 @@ Route::prefix('v1')->group(function () {
      |                UDF
      |------------------------------------
      */
-    Route::get('udf/history', 'Api\V1\UDF\RequestProcessorController@history');
+    Route::get('udf/config', 'Api\V1\UDF\RequestProcessorController@sendConfig');
+    Route::get('udf/symbols', 'Api\V1\UDF\RequestProcessorController@sendSendSymbolInfo');
+    Route::get('udf/search', 'Api\V1\UDF\RequestProcessorController@sendSymbolSearchResult');
+    Route::get('udf/history', 'Api\V1\UDF\RequestProcessorController@sendSymbolHistory');
+    Route::get('udf/time', 'Api\V1\UDF\RequestProcessorController@sendTime');
 });

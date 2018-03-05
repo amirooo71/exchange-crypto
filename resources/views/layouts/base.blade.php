@@ -85,7 +85,7 @@
             interval: 'D',
             container_id: "tv_chart_container",
             //	BEWARE: no trailing slash is expected in feed URL
-            datafeed: new Datafeeds.UDFCompatibleDatafeed("http://localhost:8888"),
+            datafeed: new Datafeeds.UDFCompatibleDatafeed("http://localhost:8000/api/v1/udf"),
             library_path: "chart/charting_library/",
             locale: getParameterByName('lang') || "fa",
             //	Regression Trend-related functionality is not implemented yet, so it's hidden for a while

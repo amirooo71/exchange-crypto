@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AcTableSeeder::class);
         $this->call(PairTableSeeder::class);
         $this->call(BalanceTableSeeder::class);
+        $this->call(TvSymbolTableSeeder::class);
     }
 }

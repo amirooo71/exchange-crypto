@@ -193,6 +193,11 @@ return [
          */
         Barryvdh\Cors\ServiceProvider::class,
 
+        /**
+         * Laravel Scout Search Provider
+         */
+        Laravel\Scout\ScoutServiceProvider::class,
+
     ],
 
     /*
