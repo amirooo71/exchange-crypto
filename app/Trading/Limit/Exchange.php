@@ -83,7 +83,11 @@ class Exchange
             'amount' => $amount,
             'price' => $price,
             'type' => $type,
-            'timestamp' => time(),
+            'timestamp' => ($t = microtime(true) * 1000),
+            't1' => $t/60000,
+            't5' => $t/(60000*5),
+            't15' => $t/(60000*15),
+
         ]);
     }
 

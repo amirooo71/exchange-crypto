@@ -20,7 +20,6 @@ class CreateTvSymbolsTable extends Migration
             $table->text('description');
             $table->string('exchange');
             $table->string('type');
-            $table->timestamps();
         });
     }
 

@@ -16,8 +16,9 @@ Route::get('/trading', 'PagesController@trading');
 Route::get('test', function () {
 
 
+    $order = \App\Transaction::orderBy('created_at', 'desc')->first()->timestamp;
+    return $order;
 
-    return \App\Transaction::orderBy('created_at','desc')->first();
 });
 
 

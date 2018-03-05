@@ -28,16 +28,16 @@ class RequestProcessorController extends Controller
                     "name" => "All Exchanges",
                     "desc" => "",
                 ],
-                [
-                    "value" => "XETRA",
-                    "name" => "XETRA",
-                    "desc" => "XETRA",
-                ],
-                [
-                    "value" => "NSE",
-                    "name" => "NSE",
-                    "desc" => "NSE",
-                ],
+//                [
+//                    "value" => "XETRA",
+//                    "name" => "XETRA",
+//                    "desc" => "XETRA",
+//                ],
+//                [
+//                    "value" => "NSE",
+//                    "name" => "NSE",
+//                    "desc" => "NSE",
+//                ],
             ],
             "symbolsTypes" => [
                 [
@@ -53,7 +53,7 @@ class RequestProcessorController extends Controller
                     "value" => "index",
                 ],
             ],
-            "supported_resolutions" => ["1", "5", "15", "30", "60", "1D", "1W", "1M"],
+            "supported_resolutions" => ["1", "5","15", "30", "60", "1D", "1W", "1M"],
         ];
     }
 
@@ -74,7 +74,7 @@ class RequestProcessorController extends Controller
             "minmov2" => 0, //These three keys have different meaning when using for common prices and for fractional prices.
             "pointvalue" => 1,
             "session" => "0930-1630", //Trading hours for this symbol
-            "has_intraday" => false,
+            "has_intraday" => true,
             "has_no_volume" => false,
             "description" => "Bitcoin Exchange", //Description of a symbol
             "type" => "stock", //Optional type of the instrument.
@@ -114,7 +114,7 @@ class RequestProcessorController extends Controller
     public function sendSymbolHistory(Request $request)
     {
         $inputs = $request->only(['symbol', 'from', 'to', 'resolution']);
-        $histories = $this->getHistories();
+        $histories = $this->getHistories($inputs['resolution'], $inputs['from'],$inputs['to']);
         return $this->convertHistoryDataToUDFFormat($histories);
     }
 
@@ -129,9 +129,21 @@ class RequestProcessorController extends Controller
     /**
      * @return mixed
      */
-    private function getHistories()
+    private function getHistories($resolution, $from, $to)
     {
-        return DB::select('SELECT COUNT(*) as count, CAST(timestamp / 60 as INT) as t, (select price from transactions where CAST(timestamp / 60 as INT) = t ORDER by id LIMIT 1) as o ,(select price from transactions where CAST(timestamp / 60 as INT) = t ORDER by id DESC LIMIT 1) as c , min(price) as l, max(price) as h, SUM(amount) as v FROM `transactions` GROUP BY CAST(timestamp / 60 as INT) order by t');
+        $from *= 1000;
+        $to *= 1000;
+
+        switch ($resolution) {
+            case 1:
+                return DB::select("SELECT COUNT(*) as count, t1 as t , (select price from transactions WHERE t1 = t ORDER by id LIMIT 1) as o ,(select price from transactions WHERE t1 = t ORDER BY id DESC LIMIT 1) as c , min(price) as l, max(price) as h, SUM(ABS(amount)) as v FROM `transactions` WHERE timestamp BETWEEN $from AND $to GROUP BY t1 order BY t");
+            case 5:
+                return DB::select("SELECT COUNT(*) as count, t5 as t , (select price from transactions WHERE t5 = t ORDER by id LIMIT 1) as o ,(select price from transactions WHERE t5 = t ORDER BY id DESC LIMIT 1) as c , min(price) as l, max(price) as h, SUM(ABS(amount)) as v FROM `transactions` WHERE timestamp BETWEEN $from AND $to GROUP BY t5 order BY t");
+            case 15:
+                return DB::select("SELECT COUNT(*) as count, t15 as t , (select price from transactions WHERE t15 = t ORDER by id LIMIT 1) as o ,(select price from transactions WHERE t15 = t ORDER BY id DESC LIMIT 1) as c , min(price) as l, max(price) as h, SUM(ABS(amount)) as v FROM `transactions` WHERE timestamp BETWEEN $from AND $to GROUP BY t15 order BY t ");
+
+        }
+//        return DB::select('SELECT COUNT(*) as count, CAST(timestamp / 60 as INT) as t, (select price from transactions where CAST(timestamp / 60 as INT) = t ORDER by id LIMIT 1) as o ,(select price from transactions where CAST(timestamp / 60 as INT) = t ORDER by id DESC LIMIT 1) as c , min(price) as l, max(price) as h, SUM(amount) as v FROM `transactions` GROUP BY CAST(timestamp / 60 as INT) order by t LIMIT 200');
     }
 
     /**
@@ -146,15 +158,17 @@ class RequestProcessorController extends Controller
         $l = [];
         $h = [];
         $v = [];
+        $counts = [];
 
 
         foreach ($histories as $history) {
-            $t[] = $history->t;
+            $t[] = $history->t * 60;
             $o[] = $history->o;
             $c[] = $history->c;
             $l[] = $history->l;
             $h[] = $history->h;
             $v[] = $history->v;
+            $counts[] = $history->count;
         }
 
 
@@ -166,6 +180,7 @@ class RequestProcessorController extends Controller
             "h" => $h,
             "v" => $v,
             "s" => "ok",
+            "count" => $counts
         ];
     }
 }

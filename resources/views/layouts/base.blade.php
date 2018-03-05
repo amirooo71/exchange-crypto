@@ -79,15 +79,15 @@
 
     TradingView.onready(function () {
         var widget = window.tvWidget = new TradingView.widget({
-            // debug: true, // uncomment this line to see Library errors and warnings in the console
+            debug: true, // uncomment this line to see Library errors and warnings in the console
             fullscreen: false,
             symbol: 'BTCUSD',
-            interval: 'D',
+            interval: '1',
             container_id: "tv_chart_container",
             //	BEWARE: no trailing slash is expected in feed URL
-            datafeed: new Datafeeds.UDFCompatibleDatafeed("http://localhost:8000/api/v1/udf"),
+            datafeed: new Datafeeds.UDFCompatibleDatafeed("/api/v1/udf"),
             library_path: "chart/charting_library/",
-            locale: getParameterByName('lang') || "fa",
+            locale: getParameterByName('lang') || "en",
             //	Regression Trend-related functionality is not implemented yet, so it's hidden for a while
             drawings_access: {type: 'black', tools: [{name: "Regression Trend"}]},
             disabled_features: ["use_localstorage_for_settings"],
