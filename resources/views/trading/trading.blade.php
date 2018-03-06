@@ -14,7 +14,7 @@
         </panel>
 
         <div id="tv_chart_container"></div>
-        <order-book :user="{{auth()->user()}}"></order-book>
+        <order-book></order-book>
         <order-history :user="{{auth()->user()}}"></order-history>
     </div>
 @endsection

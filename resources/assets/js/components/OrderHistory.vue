@@ -13,7 +13,7 @@
                             <th>نوع معامله</th>
                             <th>تاریخ</th>
                             <th>وضعیت</th>
-                            <th>ویرایش</th>
+                            <th>حذف</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -32,11 +32,11 @@
                             </td>
                             <td v-if="order.status != 'confirmed'">
                                 <ul class="icons-list" style="color: #CFD8DC;">
-                                    <li>
-                                        <a @click="update(order)">
-                                            <i class="icon-pencil7"></i>
-                                        </a>
-                                    </li>
+                                    <!--<li>-->
+                                        <!--<a @click="update(order)">-->
+                                            <!--<i class="icon-pencil7"></i>-->
+                                        <!--</a>-->
+                                    <!--</li>-->
                                     <li>
                                         <a @click="destroy(order)">
                                             <i class="icon-trash"></i>

@@ -80,7 +80,8 @@ class OrderSellController extends Controller
     public function destroy($id)
     {
         $order = OrderSell::find($id);
-        $this->incrementUserBalance(2, $order->remainAmount());
+        $aId = $order->pair->asset_id;
+        $this->incrementUserBalance($aId, $order->remainAmount());
         $order->delete();
         return response()->json([], 204);
     }

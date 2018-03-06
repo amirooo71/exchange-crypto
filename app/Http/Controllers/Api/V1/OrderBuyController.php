@@ -80,8 +80,9 @@ class OrderBuyController extends Controller
     public function destroy($id)
     {
         $order = OrderBuy::find($id);
+        $cId = $order->pair->currency_id;
         $amount = $order->remainAmount() * $order->price;
-        $this->incrementUserBalance(1, $amount);
+        $this->incrementUserBalance($cId, $amount);
         $order->delete();
         return response()->json([], 204);
     }

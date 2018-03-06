@@ -2,6 +2,7 @@
 
 namespace App\Trading\Limit;
 
+use App\Events\OrderBookConfirm;
 use App\Events\OrderConfirm;
 use Illuminate\Support\Facades\DB;
 
@@ -47,6 +48,7 @@ class Buy extends Exchange
 
             OrderConfirm::dispatch($order, $price);
             OrderConfirm::dispatch($orderBook, $price);
+            OrderBookConfirm::dispatch();
         }
     }
 }

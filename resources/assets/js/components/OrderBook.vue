@@ -53,9 +53,8 @@
 
 <script>
     export default {
-        name: "order-book",
 
-        props: ['user'],
+        name: "order-book",
 
         data() {
             return {
@@ -74,7 +73,7 @@
                 }
             });
 
-            window.Echo.channel('order-confirm.' + this.user.id).listen('OrderConfirm', (e) => {
+            window.Echo.channel('order-book-confirm').listen('OrderBookConfirm', () => {
                 this.getSellOrderBook();
                 this.getBuyOrderBook();
             });
