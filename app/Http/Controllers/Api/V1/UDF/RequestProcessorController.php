@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api\V1\UDF;
 
+use App\Candle;
+use App\Pair;
 use App\TvSymbol;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -53,7 +55,7 @@ class RequestProcessorController extends Controller
                     "value" => "index",
                 ],
             ],
-            "supported_resolutions" => ["1", "5","15", "30", "60", "1D", "1W", "1M"],
+            "supported_resolutions" => ["1", "5", "15", "30", "60", "D", "3D", "1W"],
         ];
     }
 
@@ -78,7 +80,7 @@ class RequestProcessorController extends Controller
             "has_no_volume" => false,
             "description" => "Bitcoin Exchange", //Description of a symbol
             "type" => "stock", //Optional type of the instrument.
-            "supported_resolutions" => ["1", "5", "15", "30", "60", "1D", "1W", "1M"],
+            "supported_resolutions" => ["1", "5", "15", "30", "60", "D", "3D", "1W"],
             "pricescale" => 100,
             "ticker" => $input['symbol'], //It's an unique identifier for this symbol in your symbology,
         ];
@@ -114,7 +116,8 @@ class RequestProcessorController extends Controller
     public function sendSymbolHistory(Request $request)
     {
         $inputs = $request->only(['symbol', 'from', 'to', 'resolution']);
-        $histories = $this->getHistories($inputs['resolution'], $inputs['from'],$inputs['to']);
+
+        $histories = $this->getHistories($inputs['symbol'], $inputs['resolution'], $inputs['from'], $inputs['to']);
         return $this->convertHistoryDataToUDFFormat($histories);
     }
 
@@ -129,21 +132,39 @@ class RequestProcessorController extends Controller
     /**
      * @return mixed
      */
-    private function getHistories($resolution, $from, $to)
+    private function getHistories($symbol, $resolution, $from, $to)
     {
-        $from *= 1000;
-        $to *= 1000;
 
-        switch ($resolution) {
+        $r = "";
+
+        switch (strtolower($resolution)) {
+            case "d":
+            case "1d":
+                $r = 24 * 60;
+                break;
+            case "3d":
+                $r = 24 * 60 * 3;
+                break;
+            case "1w":
+                $r = 24 * 60 * 7;
+                break;
             case 1:
-                return DB::select("SELECT COUNT(*) as count, t1 as t , (select price from transactions WHERE t1 = t ORDER by id LIMIT 1) as o ,(select price from transactions WHERE t1 = t ORDER BY id DESC LIMIT 1) as c , min(price) as l, max(price) as h, SUM(ABS(amount)) as v FROM `transactions` WHERE timestamp BETWEEN $from AND $to GROUP BY t1 order BY t");
             case 5:
-                return DB::select("SELECT COUNT(*) as count, t5 as t , (select price from transactions WHERE t5 = t ORDER by id LIMIT 1) as o ,(select price from transactions WHERE t5 = t ORDER BY id DESC LIMIT 1) as c , min(price) as l, max(price) as h, SUM(ABS(amount)) as v FROM `transactions` WHERE timestamp BETWEEN $from AND $to GROUP BY t5 order BY t");
             case 15:
-                return DB::select("SELECT COUNT(*) as count, t15 as t , (select price from transactions WHERE t15 = t ORDER by id LIMIT 1) as o ,(select price from transactions WHERE t15 = t ORDER BY id DESC LIMIT 1) as c , min(price) as l, max(price) as h, SUM(ABS(amount)) as v FROM `transactions` WHERE timestamp BETWEEN $from AND $to GROUP BY t15 order BY t ");
-
+            case 30:
+            case 60:
+                $r = $resolution;
+                break;
         }
-//        return DB::select('SELECT COUNT(*) as count, CAST(timestamp / 60 as INT) as t, (select price from transactions where CAST(timestamp / 60 as INT) = t ORDER by id LIMIT 1) as o ,(select price from transactions where CAST(timestamp / 60 as INT) = t ORDER by id DESC LIMIT 1) as c , min(price) as l, max(price) as h, SUM(amount) as v FROM `transactions` GROUP BY CAST(timestamp / 60 as INT) order by t LIMIT 200');
+
+
+        $from = $from / (60 * $r);
+        $to = $to / (60 * $r);
+
+        $pairId = Pair::where('pair', '=', $symbol)->first()->id;
+
+        return Candle::where('pair_id', $pairId)->where('time_frame', $r)->whereBetween('t', [$from, $to])->get();
+
     }
 
     /**
@@ -171,6 +192,12 @@ class RequestProcessorController extends Controller
             $counts[] = $history->count;
         }
 
+        if (count($histories) > 0) {
+            $s = "ok";
+        } else {
+            $s = "no_data";
+        }
+
 
         return [
             "t" => $t,
@@ -179,7 +206,7 @@ class RequestProcessorController extends Controller
             "l" => $l,
             "h" => $h,
             "v" => $v,
-            "s" => "ok",
+            "s" => $s,
             "count" => $counts
         ];
     }

@@ -4,10 +4,13 @@ namespace App\Trading\Limit;
 
 use App\Asset;
 use App\Balance;
+use App\Candle;
 use App\Currency;
 use App\OrderSell;
 use App\OrderBuy;
+use App\Pair;
 use App\Transaction;
+use Illuminate\Support\Facades\DB;
 
 class Exchange
 {
@@ -72,10 +75,11 @@ class Exchange
      * @param $amount
      * @param $price
      * @param $type
+     * @return $this|\Illuminate\Database\Eloquent\Model
      */
     protected function saveTransaction($order, $orderBook, $amount, $price, $type)
     {
-        Transaction::create([
+        return Transaction::create([
             'seller_id' => $orderBook->user_id,
             'buyer_id' => $order->user_id,
             'order_sale_id' => $orderBook->id,
@@ -83,12 +87,89 @@ class Exchange
             'amount' => $amount,
             'price' => $price,
             'type' => $type,
-            'timestamp' => ($t = microtime(true) * 1000),
-            't1' => $t/60000,
-            't5' => $t/(60000*5),
-            't15' => $t/(60000*15),
-
+            'timestamp' => ($t = $this->getMicroTime()),
         ]);
+    }
+
+    /**
+     * @param $aId
+     * @param $cId
+     * @return mixed
+     */
+    protected function getPairId($aId, $cId)
+    {
+        $pairId = Pair::where('asset_id', $aId)
+            ->where('currency_id', $cId)->first()->id;
+
+        return $pairId;
+    }
+
+    protected function processCandles($aId, $cId, Transaction $transaction)
+    {
+        $this->processCandle(1, $aId, $cId, $transaction);
+        $this->processCandle(5, $aId, $cId, $transaction);
+        $this->processCandle(15, $aId, $cId, $transaction);
+        $this->processCandle(30, $aId, $cId, $transaction);
+        $this->processCandle(60, $aId, $cId, $transaction);
+        $this->processCandle(60 * 4, $aId, $cId, $transaction);
+        $this->processCandle(60 * 12, $aId, $cId, $transaction);
+        $this->processCandle(60 * 24, $aId, $cId, $transaction);
+        $this->processCandle(60 * 24 * 3, $aId, $cId, $transaction);
+        $this->processCandle(60 * 24 * 7, $aId, $cId, $transaction);
+    }
+
+    /**
+     * @param int $timeframe Minutes
+     * @param $aId
+     * @param $cId
+     * @param Transaction $transaction
+     */
+    protected function processCandle($timeframe, $aId, $cId, Transaction $transaction)
+    {
+        $timestamp = (int)($transaction->timestamp / (60000 * ($timeframe)));
+
+        $candle = Candle::whereT($timestamp)->first();
+
+
+        if ($candle) {
+
+
+            DB::update("UPDATE candles SET c=$transaction->price, h=GREATEST(h, $transaction->price), l=LEAST(l, $transaction->price), count=count+1, v=v+$transaction->amount WHERE t=$timestamp");
+
+
+//            $q = "UPDATE x SET c=:price, h=GREATEST(h, :price), l=LEAST(l, :price), count=count+1, v=v+:amount WHERE t = :timestamp";
+
+        } else {
+
+            Candle::create([
+                'pair_id' => $this->getPairId($aId, $cId),
+                'time_frame' => $timeframe,
+                'o' => $transaction->price,
+                'c' => $transaction->price,
+                'h' => $transaction->price,
+                'l' => $transaction->price,
+                'v' => $transaction->amount,
+                't' => $timestamp,
+                'count' => $transaction->amount,
+            ]);
+
+        }
+    }
+
+    /**
+     * @return float|int
+     */
+    protected function getResolutionTime()
+    {
+        return $this->getMicroTime() / 60000;
+    }
+
+    /**
+     * @return float|int
+     */
+    private function getMicroTime()
+    {
+        return microtime(true) * 1000;
     }
 
 }

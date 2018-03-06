@@ -39,9 +39,11 @@ class Sell extends Exchange
             DB::table('balances')->where('user_id', $orderBook->user_id)->where('ac_id', $aId)->increment('amount', $amount);
             DB::table('balances')->where('user_id', $orderBook->user_id)->where('ac_id', $aId)->increment('available', $amount);
 
-            $this->saveTransaction($order, $orderBook, $amount, $price, 'sell');
+            $transaction = $this->saveTransaction($order, $orderBook, $amount, $price, 'sell');
             $this->updateOrderFill($orderBook, $amount);
             $this->updateOrderFill($order, $amount);
+
+            $this->processCandles($aId, $cId, $transaction);
 
             OrderConfirm::dispatch($order, $price);
             OrderConfirm::dispatch($orderBook, $price);

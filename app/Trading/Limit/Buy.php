@@ -42,9 +42,11 @@ class Buy extends Exchange
                 DB::table('balances')->where('user_id', $order->user_id)->where('ac_id', $cId)->increment('available', $remainAmount);
             }
 
-            $this->saveTransaction($order, $orderBook, $amount, $price, 'buy');
+            $transaction = $this->saveTransaction($order, $orderBook, $amount, $price, 'buy');
             $this->updateOrderFill($orderBook, $amount);
             $this->updateOrderFill($order, $amount);
+
+            $this->processCandles($aId, $cId, $transaction);
 
             OrderConfirm::dispatch($order, $price);
             OrderConfirm::dispatch($orderBook, $price);

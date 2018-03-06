@@ -79,6 +79,14 @@ class OrderBuy extends Model
     }
 
     /**
+     * @return mixed
+     */
+    public function getRemainAmountAttribute()
+    {
+        return ($this->amount - $this->fill);
+    }
+
+    /**
      * @param $aId
      * @param $cId
      * @return mixed
@@ -90,6 +98,5 @@ class OrderBuy extends Model
 
         return $pairId;
     }
-
 
 }

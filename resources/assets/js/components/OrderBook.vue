@@ -16,7 +16,7 @@
                             <tbody>
                             <tr v-for="orderBuy in orderBuys">
                                 <td>{{orderBuy.price}}</td>
-                                <td>{{orderBuy.amount}}</td>
+                                <td>{{orderBuy.amount - orderBuy.fill}}</td>
                                 <td>{{orderBuy.pair.pair | uppercase}}</td>
                                 <td>{{orderBuy.created_at}}</td>
                             </tr>
@@ -38,7 +38,7 @@
                             <tbody>
                             <tr v-for="orderSell in orderSells">
                                 <td>{{orderSell.price}}</td>
-                                <td>{{orderSell.amount}}</td>
+                                <td>{{orderSell.amount - orderSell.fill}}</td>
                                 <td>{{orderSell.pair.pair | uppercase}}</td>
                                 <td>{{orderSell.created_at}}</td>
                             </tr>

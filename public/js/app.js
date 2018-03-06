@@ -67165,7 +67165,7 @@ var render = function() {
                   return _c("tr", [
                     _c("td", [_vm._v(_vm._s(orderBuy.price))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(orderBuy.amount))]),
+                    _c("td", [_vm._v(_vm._s(orderBuy.amount - orderBuy.fill))]),
                     _vm._v(" "),
                     _c("td", [
                       _vm._v(_vm._s(_vm._f("uppercase")(orderBuy.pair.pair)))
@@ -67200,7 +67200,9 @@ var render = function() {
                   return _c("tr", [
                     _c("td", [_vm._v(_vm._s(orderSell.price))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(orderSell.amount))]),
+                    _c("td", [
+                      _vm._v(_vm._s(orderSell.amount - orderSell.fill))
+                    ]),
                     _vm._v(" "),
                     _c("td", [
                       _vm._v(_vm._s(_vm._f("uppercase")(orderSell.pair.pair)))

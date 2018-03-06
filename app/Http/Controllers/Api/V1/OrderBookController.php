@@ -22,6 +22,7 @@ class OrderBookController extends Controller
     {
 
         $orders = OrderSell::where('status', '=', 'in_progress')
+            ->orWhere('status', '=', 'partial')
             ->orderBy('price', 'desc')
             ->get();
 
@@ -34,6 +35,7 @@ class OrderBookController extends Controller
     public function buyOrderBook()
     {
         $orders = OrderBuy::where('status', '=', 'in_progress')
+            ->orWhere('status', '=', 'partial')
             ->orderBy('price', 'asc')
             ->get();
 
