@@ -31,6 +31,14 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  */
 
+@font-face {
+    font-family: IRANSans;
+    src: url(../fonts/ttf/IRANSansWeb.ttf),
+    url(../fonts/eot/IRANSansWeb.eot),
+    url(../fonts/woff/IRANSansWeb.woff),
+    url(../fonts/woff/IRANSansWeb.woff2);
+}
+
 .bootstrap-switch {
     display: inline-block;
     direction: ltr;
@@ -3101,7 +3109,7 @@ input,
 optgroup,
 select,
 textarea {
-    font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+    font-family: "IRANSans  ", "Helvetica Neue", Arial, sans-serif;
 }
 
 h1,
@@ -3289,7 +3297,7 @@ p.description {
 body {
     color: #2c2c2c;
     font-size: 14px;
-    font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+    font-family: "IRANSans", "Helvetica Neue", Arial, sans-serif;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
 }

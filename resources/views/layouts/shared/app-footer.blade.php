@@ -3,23 +3,18 @@
         <nav>
             <ul>
                 <li>
-                    <a href="https://www.creative-tim.com">
-                        Creative Tim
+                    <a href="#">
+                        درباره ما
                     </a>
                 </li>
                 <li>
-                    <a href="http://presentation.creative-tim.com">
-                        About Us
+                    <a href="#">
+                        تماس با ما
                     </a>
                 </li>
                 <li>
-                    <a href="http://blog.creative-tim.com">
-                        Blog
-                    </a>
-                </li>
-                <li>
-                    <a href="https://github.com/creativetimofficial/now-ui-kit/blob/master/LICENSE.md">
-                        MIT License
+                    <a href="#">
+                        امنیت
                     </a>
                 </li>
             </ul>
@@ -30,8 +25,8 @@
                 document.write(new Date().getFullYear())
             </script>
             , Designed by
-            <a href="http://www.invisionapp.com" target="_blank">Invision</a>. Coded by
-            <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>.
+            <a href="#">Invision</a>. Coded by
+            <a href="#">Boorak</a>.
         </div>
     </div>
 </footer>

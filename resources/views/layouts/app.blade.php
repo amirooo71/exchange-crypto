@@ -19,33 +19,19 @@
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="{{asset('app-assets/css/demo.css')}}" rel="stylesheet"/>
     <!-- Styles -->
+
 </head>
 
-<body class="index-page sidebar-collapse">
-<!-- Navbar -->
+<body class="landing-page sidebar-collapse">
+
 @include('layouts.shared.app-navbar')
-<!-- End Navbar -->
+
 <div class="wrapper">
-    <div class="page-header clear-filter" filter-color="orange">
-        <div class="page-header-image" data-parallax="true"
-             style="background-image: url({{asset('app-assets/img/header.jpg')}});">
-        </div>
-        <div class="container">
-            <div class="content-center brand">
-                <img class="n-logo" src="{{asset('app-assets/img/now-logo.png')}}" alt="">
-                <h1 class="h1-seo">Now UI Kit.</h1>
-                <h3>A beautiful Bootstrap 4 UI kit. Yours free.</h3>
-            </div>
-            <h6 class="category category-absolute">Designed by
-                <a href="http://invisionapp.com/" target="_blank">
-                    <img src="{{asset('app-assets/img/invision-white-slim.png')}}" class="invision-logo"/>
-                </a>. Coded by
-                <a href="https://www.creative-tim.com" target="_blank">
-                    <img src="{{asset('app-assets/img/creative-tim-white-slim2.png')}}" class="creative-tim-logo"/>
-                </a>.</h6>
-        </div>
-    </div>
+
+    @include('layouts.shared.app-header')
+
     <div class="main">
+
         <div class="section section-images">
             <div class="container">
                 <div class="row">
@@ -64,10 +50,14 @@
             </div>
         </div>
 
-
+        <div class="wrapper">
+            @yield('body')
+        </div>
 
     </div>
-   @include('layouts.shared.app-footer')
+
+    @include('layouts.shared.app-footer')
+
 </div>
 </body>
 <!-- Scripts -->

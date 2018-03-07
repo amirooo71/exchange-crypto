@@ -1,9 +1,8 @@
 <nav class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent " color-on-scroll="400">
     <div class="container">
         <div class="navbar-translate">
-            <a class="navbar-brand" href="http://demos.creative-tim.com/now-ui-kit/index.html" rel="tooltip"
-               title="Designed by Invision. Coded by Creative Tim" data-placement="bottom" target="_blank">
-                Now Ui Kit
+            <a class="navbar-brand btn btn-neutral" href="/trading">
+                <p>بازار ارز</p>
             </a>
             <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
                     aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,44 +12,37 @@
             </button>
         </div>
         <div class="collapse navbar-collapse justify-content-end" id="navigation"
-             data-nav-image="./assets/img/blurred-image-1.jpg">
+             data-nav-image="{{asset('app-assets/img/blurred-image-1.jpg')}}">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0)" onclick="scrollToDownload()">
-                        <i class="now-ui-icons arrows-1_cloud-download-93"></i>
-                        <p>Download</p>
+                    <a class="nav-link" href="#">
+                        <p>درباره ما</p>
+                        <i class="now-ui-icons travel_info"></i>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./documentation/tutorial-components.html" target="_blank">
-                        <i class="now-ui-icons files_paper"></i>
-                        <p>Components</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link btn btn-neutral" href="https://www.creative-tim.com/product/now-ui-kit-pro"
-                       target="_blank">
-                        <i class="now-ui-icons arrows-1_share-66"></i>
-                        <p>Upgrade to PRO</p>
+                    <a class="nav-link" href="#">
+                        <p>تماس با ما</p>
+                        <i class="now-ui-icons ui-1_email-85"></i>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" rel="tooltip" title="Follow us on Twitter" data-placement="bottom"
-                       href="https://twitter.com/CreativeTim" target="_blank">
+                       href="#">
                         <i class="fa fa-twitter"></i>
                         <p class="d-lg-none d-xl-none">Twitter</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" rel="tooltip" title="Like us on Facebook" data-placement="bottom"
-                       href="https://www.facebook.com/CreativeTim" target="_blank">
+                       href="#">
                         <i class="fa fa-facebook-square"></i>
                         <p class="d-lg-none d-xl-none">Facebook</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" rel="tooltip" title="Follow us on Instagram" data-placement="bottom"
-                       href="https://www.instagram.com/CreativeTimOfficial" target="_blank">
+                       href="#">
                         <i class="fa fa-instagram"></i>
                         <p class="d-lg-none d-xl-none">Instagram</p>
                     </a>
