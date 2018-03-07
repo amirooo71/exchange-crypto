@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent " color-on-scroll="400">
     <div class="container">
         <div class="navbar-translate">
-            <a class="navbar-brand btn btn-neutral" href="/trading">
+            <a class="navbar-brand btn btn-neutral btn-lg" href="/trading">
                 <p>بازار ارز</p>
             </a>
             <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
@@ -14,18 +14,37 @@
         <div class="collapse navbar-collapse justify-content-end" id="navigation"
              data-nav-image="{{asset('app-assets/img/blurred-image-1.jpg')}}">
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <p>درباره ما</p>
-                        <i class="now-ui-icons travel_info"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <p>تماس با ما</p>
-                        <i class="now-ui-icons ui-1_email-85"></i>
-                    </a>
-                </li>
+                @if (\Illuminate\Support\Facades\Auth::check())
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                            <p>خروج</p>
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                              style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">
+                            <p>{{\Illuminate\Support\Facades\Auth::user()->email}}</p>
+                            <i class="now-ui-icons users_single-02"></i>
+                        </a>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('register') }}">
+                            <p>ثبت نام</p>
+                            <i class="now-ui-icons ui-1_email-85"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">
+                            <p>ورود</p>
+                            <i class="now-ui-icons travel_info"></i>
+                        </a>
+                    </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link" rel="tooltip" title="Follow us on Twitter" data-placement="bottom"
                        href="#">

@@ -2,6 +2,24 @@
 
 @section('body')
 
+    <div class="section section-images">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="hero-images-container">
+                        <img src="{{asset('app-assets/img/hero-image-1.png')}}" alt="">
+                    </div>
+                    <div class="hero-images-container-1">
+                        <img src="{{asset('app-assets/img/hero-image-2.png')}}" alt="">
+                    </div>
+                    <div class="hero-images-container-2">
+                        <img src="{{asset('app-assets/img/hero-image-3.png')}}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="section section-about-us">
         <div class="container">
             <div class="row">
@@ -76,18 +94,19 @@
                 <div class="col-lg-6 text-center col-md-8 ml-auto mr-auto">
                     <div class="input-group input-lg">
                         <input type="text" class="form-control" placeholder="نام" dir="rtl">
-                            <span class="input-group-addon">
+                        <span class="input-group-addon">
                                 <i class="now-ui-icons users_circle-08"></i>
                             </span>
                     </div>
                     <div class="input-group input-lg">
                         <input type="text" class="form-control" placeholder="ایمیل" dir="rtl">
-                            <span class="input-group-addon">
+                        <span class="input-group-addon">
                                 <i class="now-ui-icons ui-1_email-85"></i>
                             </span>
                     </div>
                     <div class="textarea-container">
-                        <textarea class="form-control" name="name" rows="4" cols="80" placeholder="پیام" dir="rtl"></textarea>
+                        <textarea class="form-control" name="name" rows="4" cols="80" placeholder="پیام"
+                                  dir="rtl"></textarea>
                     </div>
                     <div class="send-button">
                         <a href="#pablo" class="btn btn-primary btn-round btn-block btn-lg">ارسال</a>
