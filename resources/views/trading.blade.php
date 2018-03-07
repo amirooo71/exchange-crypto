@@ -1,4 +1,4 @@
-@extends('layouts.base')
+@extends('layouts.trading-base')
 
 @section('body')
     <div class="col-md-3">

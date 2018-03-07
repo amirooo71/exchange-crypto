@@ -1,85 +1,106 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta charset="utf-8"/>
+    <link rel="apple-touch-icon" sizes="76x76" href="{{asset('app-assets/img/apple-icon.png')}}">
+    <link rel="icon" type="image/png" href="{{asset('app-assets/img/favicon.png')}}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>{{ config('app.name', 'Laravel') }}</title>
-
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+          name='viewport'/>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"/>
+    <!-- CSS Files -->
+    <link href="{{asset('app-assets/css/bootstrap.min.css')}}" rel="stylesheet"/>
+    <link href="{{asset('app-assets/css/now-ui-kit.css?v=1.1.0')}}" rel="stylesheet"/>
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="{{asset('app-assets/css/demo.css')}}" rel="stylesheet"/>
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
-<div id="app">
-    <nav class="navbar navbar-default navbar-static-top">
+
+<body class="index-page sidebar-collapse">
+<!-- Navbar -->
+@include('layouts.shared.app-navbar')
+<!-- End Navbar -->
+<div class="wrapper">
+    <div class="page-header clear-filter" filter-color="orange">
+        <div class="page-header-image" data-parallax="true"
+             style="background-image: url({{asset('app-assets/img/header.jpg')}});">
+        </div>
         <div class="container">
-            <div class="navbar-header">
-
-                <!-- Collapsed Hamburger -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#app-navbar-collapse">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
+            <div class="content-center brand">
+                <img class="n-logo" src="{{asset('app-assets/img/now-logo.png')}}" alt="">
+                <h1 class="h1-seo">Now UI Kit.</h1>
+                <h3>A beautiful Bootstrap 4 UI kit. Yours free.</h3>
             </div>
-
-            <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    &nbsp;
-                </ul>
-
-                <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Authentication Links -->
-                    @if (Auth::guest())
-                        <li><a href="{{ route('login') }}">Login</a></li>
-                        <li><a href="{{ route('register') }}">Register</a></li>
-                    @else
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
-
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        Logout
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                          style="display: none;">
-                                        {{ csrf_field() }}
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                    @endif
-                </ul>
+            <h6 class="category category-absolute">Designed by
+                <a href="http://invisionapp.com/" target="_blank">
+                    <img src="{{asset('app-assets/img/invision-white-slim.png')}}" class="invision-logo"/>
+                </a>. Coded by
+                <a href="https://www.creative-tim.com" target="_blank">
+                    <img src="{{asset('app-assets/img/creative-tim-white-slim2.png')}}" class="creative-tim-logo"/>
+                </a>.</h6>
+        </div>
+    </div>
+    <div class="main">
+        <div class="section section-images">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="hero-images-container">
+                            <img src="{{asset('app-assets/img/hero-image-1.png')}}" alt="">
+                        </div>
+                        <div class="hero-images-container-1">
+                            <img src="{{asset('app-assets/img/hero-image-2.png')}}" alt="">
+                        </div>
+                        <div class="hero-images-container-2">
+                            <img src="{{asset('app-assets/img/hero-image-3.png')}}" alt="">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </nav>
 
-    @yield('content')
+
+
+    </div>
+   @include('layouts.shared.app-footer')
 </div>
-
+</body>
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
 <!-- /Scripts -->
+<!--   Core JS Files   -->
+<script src="{{asset('app-assets/js/core/jquery.3.2.1.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('app-assets/js/core/popper.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('app-assets/js/core/bootstrap.min.js')}}" type="text/javascript"></script>
+<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+<script src="{{asset('app-assets/js/plugins/bootstrap-switch.js')}}"></script>
+<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+<script src="{{asset('app-assets/js/plugins/nouislider.min.js')}}" type="text/javascript"></script>
+<!--  Plugin for the DatePicker, full documentation here: https://github.com/uxsolutions/bootstrap-datepicker -->
+<script src="{{asset('app-assets/js/plugins/bootstrap-datepicker.js')}}" type="text/javascript"></script>
+<!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
+<script src="{{asset('app-assets/js/now-ui-kit.js?v=1.1.0')}}" type="text/javascript"></script>
+<script type="text/javascript">
 
-</body>
+    $(document).ready(function () {
+        // the body of this function is in assets/js/now-ui-kit.js
+        nowuiKit.initSliders();
+    });
+
+    function scrollToDownload() {
+
+        if ($('.section-download').length != 0) {
+            $("html, body").animate({
+                scrollTop: $('.section-download').offset().top
+            }, 1000);
+        }
+    }
+
+</script>
+
 </html>

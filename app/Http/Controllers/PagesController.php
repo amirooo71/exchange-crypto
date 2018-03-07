@@ -8,11 +8,11 @@ class PagesController extends Controller
 {
 
     /**
-     * PagesController constructor.
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function __construct()
+    public function landing()
     {
-        $this->middleware('auth');
+        return view('landing');
     }
 
     /**
@@ -20,6 +20,6 @@ class PagesController extends Controller
      */
     public function trading()
     {
-        return view('trading.trading');
+        return view('trading');
     }
 }

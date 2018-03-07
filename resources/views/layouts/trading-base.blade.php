@@ -18,11 +18,11 @@
     <!-- Theme Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
           type="text/css">
-    <link href="{{asset('assets/css/icons/icomoon/styles.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{asset('assets/css/bootstrap.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{asset('assets/css/core.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{asset('assets/css/components.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{asset('assets/css/colors.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('trading-assets/css/icons/icomoon/styles.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('trading-assets/css/bootstrap.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('trading-assets/css/core.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('trading-assets/css/components.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('trading-assets/css/colors.css')}}" rel="stylesheet" type="text/css">
     <!-- /Theme global stylesheets -->
 
     <!--App Custom Css -->
@@ -35,7 +35,7 @@
 <body>
 
 <!-- Main Navbar -->
-@include('layouts.shared.navbar')
+@include('layouts.shared.trading-navbar')
 <!-- /Main Navbar -->
 
 <div id="app">
@@ -82,38 +82,38 @@
     }
 
     TradingView.onready(function () {
-    var widget = window.tvWidget = new TradingView.widget({
-        debug: true, // uncomment this line to see Library errors and warnings in the console
-        fullscreen: false,
-        symbol: 'BTCUSD',
-        interval: '1',
-        container_id: "tv_chart_container",
-        //	BEWARE: no trailing slash is expected in feed URL
-        datafeed: new Datafeeds.UDFCompatibleDatafeed("/api/v1/udf"),
-        library_path: "chart/charting_library/",
-        locale: getParameterByName('lang') || "en",
-        //	Regression Trend-related functionality is not implemented yet, so it's hidden for a while
-        drawings_access: {type: 'black', tools: [{name: "Regression Trend"}]},
-        disabled_features: ["use_localstorage_for_settings"],
-        enabled_features: ["study_templates"],
-        charts_storage_url: 'http://saveload.tradingview.com',
-        charts_storage_api_version: "1.1",
-        client_id: 'tradingview.com',
-        user_id: 'public_user_id',
-        toolbar_bg: '#263238',
-        width: '100%',
-        height: 600,
-        custom_css_url: "{{asset('css/custom.css')}}",
-        // disabled_features: ["header_widget"],
-        overrides: {
-            "paneProperties.background": "#263238",
-            "paneProperties.vertGridProperties.color": "#454545",
-            "paneProperties.horzGridProperties.color": "#454545",
-            "symbolWatermarkProperties.transparency": 90,
-            "scalesProperties.textColor": "#AAA",
-        }
+        var widget = window.tvWidget = new TradingView.widget({
+            debug: true, // uncomment this line to see Library errors and warnings in the console
+            fullscreen: false,
+            symbol: 'BTCUSD',
+            interval: '1',
+            container_id: "tv_chart_container",
+            //	BEWARE: no trailing slash is expected in feed URL
+            datafeed: new Datafeeds.UDFCompatibleDatafeed("/api/v1/udf"),
+            library_path: "chart/charting_library/",
+            locale: getParameterByName('lang') || "en",
+            //	Regression Trend-related functionality is not implemented yet, so it's hidden for a while
+            drawings_access: {type: 'black', tools: [{name: "Regression Trend"}]},
+            disabled_features: ["use_localstorage_for_settings"],
+            enabled_features: ["study_templates"],
+            charts_storage_url: 'http://saveload.tradingview.com',
+            charts_storage_api_version: "1.1",
+            client_id: 'tradingview.com',
+            user_id: 'public_user_id',
+            toolbar_bg: '#263238',
+            width: '100%',
+            height: 600,
+            custom_css_url: "{{asset('css/custom.css')}}",
+            // disabled_features: ["header_widget"],
+            overrides: {
+                "paneProperties.background": "#263238",
+                "paneProperties.vertGridProperties.color": "#454545",
+                "paneProperties.horzGridProperties.color": "#454545",
+                "symbolWatermarkProperties.transparency": 90,
+                "scalesProperties.textColor": "#AAA",
+            }
 
-    });
+        });
     })
     ;
 
@@ -123,12 +123,12 @@
 <!-- /Chart -->
 
 <!-- ThemeCore JS files -->
-<script type="text/javascript" src="{{asset('assets/js/core/libraries/jquery.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('assets/js/core/libraries/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('trading-assets/js/core/libraries/jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('trading-assets/js/core/libraries/bootstrap.min.js')}}"></script>
 <!-- /Theme core JS files -->
 
 <!-- Theme JS files -->
-<script type="text/javascript" src="{{asset('assets/js/core/app.js')}}"></script>
+<script type="text/javascript" src="{{asset('trading-assets/js/core/app.js')}}"></script>
 <!-- /theme JS files -->
 
 <script src="https://cdn.jsdelivr.net/npm/vue2-filters/dist/vue2-filters.min.js"></script>

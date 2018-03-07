@@ -1,7 +1,7 @@
 <div class="navbar navbar-inverse">
     <div class="navbar-header">
         <a class="navbar-brand" href="/trading">
-            <img src="{{asset('assets/images/bitfinex.svg')}}" alt="">
+            <img src="{{asset('trading-assets/images/bitfinex.svg')}}" alt="">
         </a>
         <ul class="nav navbar-nav pull-right visible-xs-block">
             <li>
@@ -24,7 +24,7 @@
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown dropdown-user">
                 <a href="#">
-                    <img src="{{asset('assets/images/man.png')}}" alt="">
+                    <img src="{{asset('trading-assets/images/man.png')}}" alt="">
                     <span>{{auth()->user()->email}}</span>
                 </a>
             </li>
