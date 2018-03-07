@@ -2,7 +2,7 @@
     <div class="container">
         <div class="navbar-translate">
             <a class="navbar-brand btn btn-neutral btn-lg" href="/trading">
-                <p>بازار ارز</p>
+                <p style="color: #303030;">بازار ارز</p>
             </a>
             <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
                     aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,59 +13,41 @@
         </div>
         <div class="collapse navbar-collapse justify-content-end" id="navigation"
              data-nav-image="{{asset('app-assets/img/blurred-image-1.jpg')}}">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav" dir="rtl">
                 @if (\Illuminate\Support\Facades\Auth::check())
-                    <li class="nav-item">
-                        <a class="nav-link"
-                           onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                            <p>خروج</p>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <p>
+                                <i class="now-ui-icons users_single-02"></i>
+                                {{\Illuminate\Support\Facades\Auth::user()->email}}
+
+                            </p>
                         </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                              style="display: none;">
-                            {{ csrf_field() }}
-                        </form>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">
-                            <p>{{\Illuminate\Support\Facades\Auth::user()->email}}</p>
-                            <i class="now-ui-icons users_single-02"></i>
-                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item text-right"
+                               onclick="event.preventDefault();document.getElementById('logout-form').submit();"
+                               style="cursor: pointer;">
+                                <p>خروج</p>
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                  style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+                        </div>
                     </li>
                 @else
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">
-                            <p>ثبت نام</p>
-                            <i class="now-ui-icons ui-1_email-85"></i>
+                        <a class="nav-link" href="{{ route('login') }}">
+                            <p>ورود</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">
-                            <p>ورود</p>
-                            <i class="now-ui-icons travel_info"></i>
+                        <a class="nav-link" href="{{ route('register') }}">
+                            <p>ثبت نام</p>
                         </a>
                     </li>
                 @endif
-                <li class="nav-item">
-                    <a class="nav-link" rel="tooltip" title="Follow us on Twitter" data-placement="bottom"
-                       href="#">
-                        <i class="fa fa-twitter"></i>
-                        <p class="d-lg-none d-xl-none">Twitter</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" rel="tooltip" title="Like us on Facebook" data-placement="bottom"
-                       href="#">
-                        <i class="fa fa-facebook-square"></i>
-                        <p class="d-lg-none d-xl-none">Facebook</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" rel="tooltip" title="Follow us on Instagram" data-placement="bottom"
-                       href="#">
-                        <i class="fa fa-instagram"></i>
-                        <p class="d-lg-none d-xl-none">Instagram</p>
-                    </a>
-                </li>
             </ul>
         </div>
     </div>

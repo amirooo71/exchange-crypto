@@ -2385,7 +2385,7 @@ fieldset[disabled] .btn-link.active {
     content: "\ea22";
     display: inline-block;
     position: absolute;
-    right: 15px;
+    left: 15px;
     bottom: 10px;
     color: #18ce0f;
     font-size: 11px;
@@ -2651,7 +2651,7 @@ textarea.form-control:active {
     display: inline-block;
     position: relative;
     cursor: pointer;
-    padding-left: 35px;
+    padding-right: 35px;
     line-height: 26px;
     margin-bottom: 0;
 }
@@ -2667,7 +2667,7 @@ textarea.form-control:active {
     position: absolute;
     width: 26px;
     height: 26px;
-    left: 0;
+    right: 0;
     cursor: pointer;
     border-radius: 3px;
     top: 0;
@@ -2687,7 +2687,7 @@ textarea.form-control:active {
     text-align: center;
     font-size: 14px;
     opacity: 0;
-    color: #555555;
+    color: #ffffff;
     border: 0;
     background-color: inherit;
 }

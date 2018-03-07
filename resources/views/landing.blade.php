@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app-base')
 
 @section('body')
 
@@ -86,30 +86,44 @@
             </div>
         </div>
     </div>
-    <div class="section section-contact-us text-center">
+    <div class="section section-team text-center">
         <div class="container">
-            <h2 class="title">تماس با ما</h2>
-            <p class="description">پیشنهادات خود را به ما انتقال دهید</p>
-            <div class="row">
-                <div class="col-lg-6 text-center col-md-8 ml-auto mr-auto">
-                    <div class="input-group input-lg">
-                        <input type="text" class="form-control" placeholder="نام" dir="rtl">
-                        <span class="input-group-addon">
-                                <i class="now-ui-icons users_circle-08"></i>
-                            </span>
+            <h2 class="title">مزایای پودونک</h2>
+            <div class="team">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="team-player">
+                            <img src="{{asset('app-assets/img/security.svg')}}" alt="Thumbnail Image"
+                                 class="rounded-circle img-fluid">
+                            <h4 class="title">امنیت</h4>
+                            <p class="description">
+                                امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان
+                                مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی
+                                اساسا مورد استفاده قرار گیرد.
+                            </p>
+                        </div>
                     </div>
-                    <div class="input-group input-lg">
-                        <input type="text" class="form-control" placeholder="ایمیل" dir="rtl">
-                        <span class="input-group-addon">
-                                <i class="now-ui-icons ui-1_email-85"></i>
-                            </span>
+                    <div class="col-md-4">
+                        <div class="team-player">
+                            <img src="{{asset('app-assets/img/exchange.svg')}}" alt="Thumbnail Image"
+                                 class="rounded-circle img-fluid">
+                            <h4 class="title">پرداخت سریع</h4>
+                            <p class="description">امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ
+                                به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل
+                                دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</p>
+
+                        </div>
                     </div>
-                    <div class="textarea-container">
-                        <textarea class="form-control" name="name" rows="4" cols="80" placeholder="پیام"
-                                  dir="rtl"></textarea>
-                    </div>
-                    <div class="send-button">
-                        <a href="#pablo" class="btn btn-primary btn-round btn-block btn-lg">ارسال</a>
+                    <div class="col-md-4">
+                        <div class="team-player">
+                            <img src="{{asset('app-assets/img/margin.svg')}}" alt="Thumbnail Image"
+                                 class="rounded-circle img-fluid">
+                            <h4 class="title">سفارش سریع</h4>
+                            <p class="description">امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ
+                                به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل
+                                دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</p>
+
+                        </div>
                     </div>
                 </div>
             </div>

@@ -14,9 +14,9 @@
     <div class="navbar-collapse collapse" id="navbar-mobile">
         <ul class="nav navbar-nav">
             <li>
-                <a href="/home">
+                <a href="/">
                     <i class="icon-arrow-left8 position-left"></i>
-                    بازگشت به داشبورد
+                    بازگشت به خانه
                 </a>
             </li>
         </ul>
