@@ -14,7 +14,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="orderBuy in orderBuys">
+                            <tr v-for="orderBuy in orderBuys" class="bar-bids"
+                                :style="{'background-size': getRandomInt()+'px '+'100%'}">
                                 <td>{{orderBuy.price}}</td>
                                 <td>{{orderBuy.amount - orderBuy.fill}}</td>
                                 <td>{{orderBuy.pair.pair | uppercase}}</td>
@@ -36,7 +37,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="orderSell in orderSells">
+                            <tr v-for="orderSell in orderSells" class="bar-asks"
+                                :style="{'background-size': getRandomInt()+'px '+'100%'}">
                                 <td>{{orderSell.price}}</td>
                                 <td>{{orderSell.amount - orderSell.fill}}</td>
                                 <td>{{orderSell.pair.pair | uppercase}}</td>
@@ -93,10 +95,22 @@
             getBuyOrderBook() {
                 axios.get('/api/v1/trade/orderbook/buy').then(response => this.orderBuys = response.data);
             },
+
+            getRandomInt() {
+                return Math.floor(Math.random() * (100 - 10 + 1)) + 10;
+            }
         }
     }
 </script>
 
 <style scoped>
+    .bar-bids {
+        background: linear-gradient(#2E7D32);
+        background-repeat: no-repeat;
+    }
 
+    .bar-asks {
+        background: linear-gradient(#B71C1C);
+        background-repeat: no-repeat;
+    }
 </style>

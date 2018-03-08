@@ -20,7 +20,7 @@
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <p>
                                 <i class="now-ui-icons users_single-02"></i>
-                                {{\Illuminate\Support\Facades\Auth::user()->email}}
+                                {{\Illuminate\Support\Facades\Auth::user()->name}}
 
                             </p>
                         </a>

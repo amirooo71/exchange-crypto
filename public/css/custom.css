@@ -107,11 +107,25 @@ body {
     border: 0;
 }
 
-.chart-page .chart-container{
+.chart-page .chart-container {
     border-color: #263238;
 }
 
+.table-condensed > thead > tr > th,
+.table-condensed > tbody > tr > th,
+.table-condensed > tfoot > tr > th,
+.table-condensed > thead > tr > td,
+.table-condensed > tbody > tr > td,
+.table-condensed > tfoot > tr > td {
+    padding: 4px 10px;
+    font-size: 12px;
+}
 
+
+
+.v-bg-size {
+    background: linear-gradient(to right, #263238 50%, green 50%);
+}
 
 
 

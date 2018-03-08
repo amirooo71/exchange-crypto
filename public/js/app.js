@@ -65396,7 +65396,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -65411,6 +65411,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+//
 //
 //
 //
@@ -65562,6 +65563,7 @@ var render = function() {
   return _c(
     "form",
     {
+      staticClass: "form-horizontal",
       attrs: { autocomplete: "off" },
       on: {
         submit: function($event) {
@@ -67005,7 +67007,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n.bar-bids[data-v-2d1d1bb0] {\n    background: -webkit-gradient(linear, left top, left bottom, from(#2E7D32));\n    background: linear-gradient(#2E7D32);\n    background-repeat: no-repeat;\n}\n.bar-asks[data-v-2d1d1bb0] {\n    background: -webkit-gradient(linear, left top, left bottom, from(#B71C1C));\n    background: linear-gradient(#B71C1C);\n    background-repeat: no-repeat;\n}\n", ""]);
 
 // exports
 
@@ -67016,6 +67018,8 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -67116,6 +67120,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('/api/v1/trade/orderbook/buy').then(function (response) {
                 return _this3.orderBuys = response.data;
             });
+        },
+        getRandomInt: function getRandomInt() {
+            return Math.floor(Math.random() * (100 - 10 + 1)) + 10;
         }
     }
 });
@@ -67149,17 +67156,28 @@ var render = function() {
               _c(
                 "tbody",
                 _vm._l(_vm.orderBuys, function(orderBuy) {
-                  return _c("tr", [
-                    _c("td", [_vm._v(_vm._s(orderBuy.price))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(orderBuy.amount - orderBuy.fill))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(_vm._s(_vm._f("uppercase")(orderBuy.pair.pair)))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(orderBuy.created_at))])
-                  ])
+                  return _c(
+                    "tr",
+                    {
+                      staticClass: "bar-bids",
+                      style: {
+                        "background-size": _vm.getRandomInt() + "px " + "100%"
+                      }
+                    },
+                    [
+                      _c("td", [_vm._v(_vm._s(orderBuy.price))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(_vm._s(orderBuy.amount - orderBuy.fill))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(_vm._s(_vm._f("uppercase")(orderBuy.pair.pair)))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(orderBuy.created_at))])
+                    ]
+                  )
                 })
               )
             ])
@@ -67184,19 +67202,28 @@ var render = function() {
               _c(
                 "tbody",
                 _vm._l(_vm.orderSells, function(orderSell) {
-                  return _c("tr", [
-                    _c("td", [_vm._v(_vm._s(orderSell.price))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(_vm._s(orderSell.amount - orderSell.fill))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(_vm._s(_vm._f("uppercase")(orderSell.pair.pair)))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(orderSell.created_at))])
-                  ])
+                  return _c(
+                    "tr",
+                    {
+                      staticClass: "bar-asks",
+                      style: {
+                        "background-size": _vm.getRandomInt() + "px " + "100%"
+                      }
+                    },
+                    [
+                      _c("td", [_vm._v(_vm._s(orderSell.price))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(_vm._s(orderSell.amount - orderSell.fill))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(_vm._s(_vm._f("uppercase")(orderSell.pair.pair)))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(orderSell.created_at))])
+                    ]
+                  )
                 })
               )
             ])

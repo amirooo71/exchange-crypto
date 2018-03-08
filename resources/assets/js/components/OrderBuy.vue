@@ -1,5 +1,6 @@
 <template>
-    <form @submit.prevent="onSubmit" @keydown="errors.clear($event.target.name)" autocomplete="off">
+    <form class="form-horizontal" @submit.prevent="onSubmit" @keydown="errors.clear($event.target.name)"
+          autocomplete="off">
         <div class="panel ng-bg-dark">
             <div class="panel-heading">
                 <h5 class="panel-title text-center">خرید</h5>
