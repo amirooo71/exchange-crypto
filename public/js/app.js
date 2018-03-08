@@ -67007,7 +67007,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n.bar-bids[data-v-2d1d1bb0] {\n    background: -webkit-gradient(linear, left top, left bottom, from(#2E7D32));\n    background: linear-gradient(#2E7D32);\n    background-repeat: no-repeat;\n}\n.bar-asks[data-v-2d1d1bb0] {\n    background: -webkit-gradient(linear, left top, left bottom, from(#B71C1C));\n    background: linear-gradient(#B71C1C);\n    background-repeat: no-repeat;\n}\n", ""]);
+exports.push([module.i, "\n.bar-bids[data-v-2d1d1bb0] {\n    background: -webkit-gradient(linear, left top, left bottom, from(#1B5E20));\n    background: linear-gradient(#1B5E20);\n    background-repeat: no-repeat;\n}\n.bar-asks[data-v-2d1d1bb0] {\n    background: -webkit-gradient(linear, left top, left bottom, from(#B71C1C));\n    background: linear-gradient(#B71C1C);\n    background-repeat: no-repeat;\n}\n", ""]);
 
 // exports
 
@@ -67161,7 +67161,7 @@ var render = function() {
                     {
                       staticClass: "bar-bids",
                       style: {
-                        "background-size": _vm.getRandomInt() + "px " + "100%"
+                        "background-size": _vm.getRandomInt() + "% " + "100%"
                       }
                     },
                     [
@@ -67207,7 +67207,7 @@ var render = function() {
                     {
                       staticClass: "bar-asks",
                       style: {
-                        "background-size": _vm.getRandomInt() + "px " + "100%"
+                        "background-size": _vm.getRandomInt() + "% " + "100%"
                       }
                     },
                     [

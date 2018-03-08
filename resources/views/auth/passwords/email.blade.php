@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <div class="form-group form-group input-lg form-group-no-border">
+        <div class="form-group input-lg form-group-no-border">
             <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" dir="rtl"
                    placeholder="ایمیل خود را وارد کنید">
             @if ($errors->has('email'))

@@ -15,7 +15,7 @@
                             </thead>
                             <tbody>
                             <tr v-for="orderBuy in orderBuys" class="bar-bids"
-                                :style="{'background-size': getRandomInt()+'px '+'100%'}">
+                                :style="{'background-size': getRandomInt()+'% '+'100%'}">
                                 <td>{{orderBuy.price}}</td>
                                 <td>{{orderBuy.amount - orderBuy.fill}}</td>
                                 <td>{{orderBuy.pair.pair | uppercase}}</td>
@@ -38,7 +38,7 @@
                             </thead>
                             <tbody>
                             <tr v-for="orderSell in orderSells" class="bar-asks"
-                                :style="{'background-size': getRandomInt()+'px '+'100%'}">
+                                :style="{'background-size': getRandomInt()+'% '+'100%'}">
                                 <td>{{orderSell.price}}</td>
                                 <td>{{orderSell.amount - orderSell.fill}}</td>
                                 <td>{{orderSell.pair.pair | uppercase}}</td>
@@ -105,7 +105,7 @@
 
 <style scoped>
     .bar-bids {
-        background: linear-gradient(#2E7D32);
+        background: linear-gradient(#1B5E20);
         background-repeat: no-repeat;
     }
 

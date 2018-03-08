@@ -1,6 +1,13 @@
 @extends('layouts.auth-base')
 
 @section('body')
+
+    @if (session('warning'))
+        <div class="alert alert-danger">
+            {{ session('warning') }}
+        </div>
+    @endif
+
     <form class="form" method="POST" action="{{ route('login') }}">
         {{ csrf_field() }}
 
