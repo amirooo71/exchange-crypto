@@ -19,9 +19,9 @@ Route::prefix('v1')->group(function () {
      |              OrderSell
      |------------------------------------
      */
+    Route::post('/trade/ordersell', 'Api\V1\OrderSellController@store');
     Route::patch('/trade/ordersell/{id}/update', 'Api\V1\OrderSellController@update');
     Route::delete('/trade/ordersell/{id}/delete', 'Api\V1\OrderSellController@destroy');
-    Route::post('/trade/ordersell', 'Api\V1\OrderSellController@store');
 
     /*
      |------------------------------------
@@ -32,7 +32,14 @@ Route::prefix('v1')->group(function () {
     Route::get('/trade/user/balance', 'Api\V1\BalanceController@userBalance');
     Route::get('/trade/orderbook/buy', 'Api\V1\OrderBookController@buyOrderBook');
     Route::get('/trade/orderbook/sell', 'Api\V1\OrderBookController@sellOrderBook');
+
+    /*
+    |------------------------------------
+    |               Tickers
+    |------------------------------------
+    */
     Route::get('/trade/tickers', 'Api\V1\TickersController@getTickers');
+    Route::get('/trade/default/ticker', 'Api\V1\TickersController@getDefaultTicker');
 
     /*
      |------------------------------------

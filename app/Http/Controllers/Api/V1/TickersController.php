@@ -16,7 +16,16 @@ class TickersController extends Controller
      */
     public function __construct()
     {
-//        $this->middleware('auth:api');
+        $this->middleware('auth:api');
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getDefaultTicker()
+    {
+        $ticker = $this->getTicker(1);
+        return response()->json($ticker, 200);
     }
 
     /**
@@ -90,8 +99,8 @@ class TickersController extends Controller
                 $pColor = $ticker->percent_color;
             } else {
                 $price = rand(1000, 7000);
-                $pChange = rand(1,99);
-                $pColor = 'green';
+                $pChange = rand(1, 99);
+                $pColor = '#7a9c4a';
             }
             $currenciesArr[] = $this->serializer($curr, $price, $pChange, $pColor);
         }

@@ -184,7 +184,7 @@ class Exchange
 
         } else {
 
-            Ticker::create([
+            return Ticker::create([
                 'pair_id' => $pairId,
                 'price' => $transaction->price,
                 'max' => 1,
@@ -213,7 +213,7 @@ class Exchange
     {
         $diff = $newPrice - $oldPrice;
         $percentChange = ($diff / $oldPrice) * 100;
-        $percentColor = $diff > 0 ? "green" : "red";
+        $percentColor = $diff > 0 ? "#7a9c4a" : "#aa6064";
         return [
             "change" => $percentChange,
             "color" => $percentColor,

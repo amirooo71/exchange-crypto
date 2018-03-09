@@ -64639,7 +64639,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -64789,11 +64789,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             asset: '',
             currency: '',
             assetName: 'BTC',
-            price: 19550
+            price: ''
         };
     },
     mounted: function mounted() {
         this.getTickers();
+        this.getDefaultTicker();
     },
     created: function created() {
         var _this = this;
@@ -64810,9 +64811,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     filters: {
-        upper: function upper(str) {
-            return str.toUpperCase();
-        },
         round: function round(num) {
             return Math.round(num);
         }
@@ -64824,6 +64822,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             axios.get('api/v1/trade/tickers').then(function (response) {
                 return _this2.tickers = response.data;
+            });
+        },
+        getDefaultTicker: function getDefaultTicker() {
+            var _this3 = this;
+
+            axios.get('api/v1/trade/default/ticker').then(function (response) {
+                return _this3.price = response.data.price;
             });
         },
         onPairs: function onPairs(asset, currency) {
@@ -64857,74 +64862,58 @@ var render = function() {
   return _c(
     "div",
     [
-      _c(
-        "div",
-        {
-          staticClass: "well ng-bg-dark",
-          staticStyle: { "margin-bottom": "15px" }
-        },
-        [
-          _c(
-            "table",
-            {
-              staticClass: "table table-borderless table-condensed",
-              staticStyle: { display: "table" }
-            },
-            [
-              _c("tbody", [
-                _c("tr", [
-                  _c("td", { attrs: { rowspan: "3" } }, [
-                    _c("img", {
-                      staticClass: "v-md-svg",
-                      attrs: { src: _vm.assetImg, alt: "بیتکوین" }
-                    })
-                  ]),
+      _c("div", { staticClass: "well ng-bg-dark v-mg-t-15" }, [
+        _c("table", { staticClass: "table table-borderless table-condensed" }, [
+          _c("tbody", [
+            _c("tr", [
+              _c("td", { attrs: { rowspan: "3" } }, [
+                _c("img", {
+                  staticClass: "v-md-svg",
+                  attrs: { src: _vm.assetImg, alt: "بیتکوین" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c("h6", [
+                  _vm.asset
+                    ? _c("span", [
+                        _vm._v(_vm._s(_vm._f("uppercase")(_vm.asset.symbol)))
+                      ])
+                    : _c("span", [_vm._v("BTC")]),
                   _vm._v(" "),
-                  _c("td", [
-                    _c("h6", [
-                      _vm.asset
-                        ? _c("span", [
-                            _vm._v(_vm._s(_vm._f("upper")(_vm.asset.symbol)))
-                          ])
-                        : _c("span", [_vm._v("BTC")]),
-                      _vm._v(" "),
-                      _c("span", [_vm._v("/")]),
-                      _vm._v(" "),
-                      _vm.currency
-                        ? _c("span", [
-                            _vm._v(_vm._s(_vm._f("upper")(_vm.currency.symbol)))
-                          ])
-                        : _c("span", [_vm._v("USD")])
-                    ])
-                  ]),
+                  _c("span", [_vm._v("/")]),
                   _vm._v(" "),
-                  _c("td", [
-                    _c("h6", [_vm._v(_vm._s(_vm._f("round")(_vm.price)))])
-                  ])
-                ]),
-                _vm._v(" "),
-                _vm._m(0),
-                _vm._v(" "),
-                _c("tr", { staticClass: "text-muted" }, [
-                  _c("td", [
-                    _c("span", [_vm._v("45,872")]),
-                    _vm._v(" "),
-                    _vm.asset
-                      ? _c("span", [
-                          _vm._v(_vm._s(_vm._f("upper")(_vm.asset.symbol)))
-                        ])
-                      : _c("span", [_vm._v("BTC")]),
-                    _vm._v(" "),
-                    _c("span", [_vm._v("حجم بازار")])
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(1)
+                  _vm.currency
+                    ? _c("span", [
+                        _vm._v(_vm._s(_vm._f("uppercase")(_vm.currency.symbol)))
+                      ])
+                    : _c("span", [_vm._v("USD")])
                 ])
-              ])
-            ]
-          )
-        ]
-      ),
+              ]),
+              _vm._v(" "),
+              _c("td", [_c("h6", [_vm._v(_vm._s(_vm._f("round")(_vm.price)))])])
+            ]),
+            _vm._v(" "),
+            _vm._m(0),
+            _vm._v(" "),
+            _c("tr", { staticClass: "text-muted" }, [
+              _c("td", [
+                _c("span", [_vm._v("45,872")]),
+                _vm._v(" "),
+                _vm.asset
+                  ? _c("span", [
+                      _vm._v(_vm._s(_vm._f("uppercase")(_vm.asset.symbol)))
+                    ])
+                  : _c("span", [_vm._v("BTC")]),
+                _vm._v(" "),
+                _c("span", [_vm._v("حجم بازار")])
+              ]),
+              _vm._v(" "),
+              _vm._m(1)
+            ])
+          ])
+        ])
+      ]),
       _vm._v(" "),
       _c("panel", { attrs: { title: "نرخ ارزها" } }, [
         _c("div", { attrs: { slot: "body" }, slot: "body" }, [
@@ -64957,7 +64946,9 @@ var render = function() {
                       })
                     ]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(_vm._f("upper")(ticker.symbol)))]),
+                    _c("td", [
+                      _vm._v(_vm._s(_vm._f("uppercase")(ticker.symbol)))
+                    ]),
                     _vm._v(" "),
                     _c("td", [
                       _c(
@@ -64986,7 +64977,7 @@ var render = function() {
                                     _vm._v(
                                       "\n                                        " +
                                         _vm._s(
-                                          _vm._f("upper")(currency.symbol)
+                                          _vm._f("uppercase")(currency.symbol)
                                         ) +
                                         "\n                                    "
                                     )

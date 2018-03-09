@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="well ng-bg-dark" style="margin-bottom: 15px;">
-            <table class="table table-borderless table-condensed" style="display: table;">
+        <div class="well ng-bg-dark v-mg-t-15">
+            <table class="table table-borderless table-condensed">
                 <tbody>
                 <tr>
                     <td rowspan="3">
@@ -10,10 +10,10 @@
                     </td>
                     <td>
                         <h6>
-                            <span v-if="asset">{{asset.symbol | upper}}</span>
+                            <span v-if="asset">{{asset.symbol | uppercase }}</span>
                             <span v-else>BTC</span>
                             <span>/</span>
-                            <span v-if="currency">{{currency.symbol | upper}}</span>
+                            <span v-if="currency">{{currency.symbol | uppercase }}</span>
                             <span v-else>USD</span>
                         </h6>
                     </td>
@@ -34,7 +34,7 @@
                 <tr class="text-muted">
                     <td>
                         <span>45,872</span>
-                        <span v-if="asset">{{asset.symbol | upper}}</span>
+                        <span v-if="asset">{{asset.symbol | uppercase }}</span>
                         <span v-else>BTC</span>
                         <span>حجم بازار</span>
                     </td>
@@ -66,7 +66,7 @@
                                 <img :src="'images/logo/'+ ticker.symbol.toUpperCase() + '.svg'" alt="بیتکوین"
                                      class="v-tiny-svg">
                             </td>
-                            <td>{{ticker.symbol | upper }}</td>
+                            <td>{{ticker.symbol | uppercase }}</td>
                             <td>
                                 <table class="table table-borderless table-condensed table-hover"
                                        style="background: #263238;">
@@ -74,7 +74,7 @@
                                     <tr v-for="currency in ticker.currencies" @click="onPairs(ticker,currency)"
                                         style="cursor: pointer;">
                                         <td>
-                                            {{currency.symbol | upper }}
+                                            {{currency.symbol | uppercase }}
                                         </td>
                                         <td>{{currency.price | round | currency}}</td>
                                         <td :style="{color: currency.pColor}">%{{currency.pChange}}</td>
@@ -104,13 +104,14 @@
                 asset: '',
                 currency: '',
                 assetName: 'BTC',
-                price: 19550,
+                price: '',
             }
 
         },
 
         mounted() {
             this.getTickers();
+            this.getDefaultTicker();
         },
 
         created() {
@@ -125,19 +126,21 @@
         },
 
         filters: {
-            upper(str) {
-                return str.toUpperCase();
-            },
 
             round(num) {
                 return Math.round(num);
             }
+
         },
 
         methods: {
 
             getTickers() {
                 axios.get('api/v1/trade/tickers').then(response => this.tickers = response.data);
+            },
+
+            getDefaultTicker() {
+                axios.get('api/v1/trade/default/ticker').then(response => this.price = response.data.price);
             },
 
             onPairs(asset, currency) {

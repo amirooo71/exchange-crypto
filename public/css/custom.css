@@ -121,12 +121,13 @@ body {
     font-size: 12px;
 }
 
-
-
 .v-bg-size {
     background: linear-gradient(to right, #263238 50%, green 50%);
 }
 
+.v-mg-t-15 {
+    margin-bottom: 15px;
+}
 
 
 
