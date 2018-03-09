@@ -18,7 +18,7 @@
                         </h6>
                     </td>
                     <td>
-                        <h6>10,813</h6>
+                        <h6>{{price | round }}</h6>
                     </td>
                 </tr>
                 <tr class="text-muted">
@@ -76,8 +76,8 @@
                                         <td>
                                             {{currency.symbol | upper }}
                                         </td>
-                                        <td>19500</td>
-                                        <td>24%</td>
+                                        <td>{{currency.price | round | currency}}</td>
+                                        <td :style="{color: currency.pColor}">%{{currency.pChange}}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -104,6 +104,7 @@
                 asset: '',
                 currency: '',
                 assetName: 'BTC',
+                price: 19550,
             }
 
         },
@@ -116,15 +117,25 @@
             Event.$on('SelectedTicker', data => {
                 this.assetName = data.asset.symbol;
             });
+
+            window.Echo.channel('ticker').listen('Ticker', (e) => {
+                this.price = e.ticker.price;
+                this.getTickers();
+            });
         },
 
         filters: {
             upper(str) {
                 return str.toUpperCase();
+            },
+
+            round(num) {
+                return Math.round(num);
             }
         },
 
         methods: {
+
             getTickers() {
                 axios.get('api/v1/trade/tickers').then(response => this.tickers = response.data);
             },
@@ -132,6 +143,7 @@
             onPairs(asset, currency) {
                 this.asset = asset;
                 this.currency = currency;
+                this.price = currency.price;
                 var data = {
                     asset: asset,
                     currency: currency,

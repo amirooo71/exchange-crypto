@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Ac;
 use App\Asset;
 use App\Pair;
+use App\Ticker;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -15,7 +16,7 @@ class TickersController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api');
+//        $this->middleware('auth:api');
     }
 
     /**
@@ -43,14 +44,18 @@ class TickersController extends Controller
 
     /**
      * @param $data
+     * @param $price
      * @return array
      */
-    private function serializer($data)
+    private function serializer($data, $price, $pChange, $pColor)
     {
 
         return [
             'id' => $data->id,
             'symbol' => $data->symbol,
+            'price' => $price,
+            'pChange' => $pChange,
+            'pColor' => $pColor,
         ];
 
     }
@@ -75,13 +80,32 @@ class TickersController extends Controller
     private function currencySerializer($id)
     {
         $currenciesArr = [];
-        $currencies = Pair::where('asset_id', '=', $id)->get();
-        foreach ($currencies as $currency) {
-            $curr = Ac::find($currency->currency_id);
-            $currenciesArr[] = $this->serializer($curr);
+        $pairs = Pair::where('asset_id', '=', $id)->get();
+        foreach ($pairs as $pair) {
+            $curr = Ac::find($pair->currency_id);
+            $ticker = $this->getTicker($pair->id);
+            if ($ticker) {
+                $price = $ticker->price;
+                $pChange = $ticker->percent_change;
+                $pColor = $ticker->percent_color;
+            } else {
+                $price = rand(1000, 7000);
+                $pChange = rand(1,99);
+                $pColor = 'green';
+            }
+            $currenciesArr[] = $this->serializer($curr, $price, $pChange, $pColor);
         }
 
         return $currenciesArr;
+    }
+
+    /**
+     * @param $pairId
+     * @return \Illuminate\Database\Eloquent\Model|null|static
+     */
+    private function getTicker($pairId)
+    {
+        return Ticker::where('pair_id', $pairId)->first();
     }
 
 }

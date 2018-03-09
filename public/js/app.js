@@ -64639,7 +64639,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -64788,7 +64788,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             tickers: [],
             asset: '',
             currency: '',
-            assetName: 'BTC'
+            assetName: 'BTC',
+            price: 19550
         };
     },
     mounted: function mounted() {
@@ -64800,12 +64801,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         Event.$on('SelectedTicker', function (data) {
             _this.assetName = data.asset.symbol;
         });
+
+        window.Echo.channel('ticker').listen('Ticker', function (e) {
+            _this.price = e.ticker.price;
+            _this.getTickers();
+        });
     },
 
 
     filters: {
         upper: function upper(str) {
             return str.toUpperCase();
+        },
+        round: function round(num) {
+            return Math.round(num);
         }
     },
 
@@ -64820,6 +64829,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         onPairs: function onPairs(asset, currency) {
             this.asset = asset;
             this.currency = currency;
+            this.price = currency.price;
             var data = {
                 asset: asset,
                 currency: currency
@@ -64888,10 +64898,12 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _vm._m(0)
+                  _c("td", [
+                    _c("h6", [_vm._v(_vm._s(_vm._f("round")(_vm.price)))])
+                  ])
                 ]),
                 _vm._v(" "),
-                _vm._m(1),
+                _vm._m(0),
                 _vm._v(" "),
                 _c("tr", { staticClass: "text-muted" }, [
                   _c("td", [
@@ -64906,7 +64918,7 @@ var render = function() {
                     _c("span", [_vm._v("حجم بازار")])
                   ]),
                   _vm._v(" "),
-                  _vm._m(2)
+                  _vm._m(1)
                 ])
               ])
             ]
@@ -64980,9 +64992,21 @@ var render = function() {
                                     )
                                   ]),
                                   _vm._v(" "),
-                                  _c("td", [_vm._v("19500")]),
+                                  _c("td", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("currency")(
+                                          _vm._f("round")(currency.price)
+                                        )
+                                      )
+                                    )
+                                  ]),
                                   _vm._v(" "),
-                                  _c("td", [_vm._v("24%")])
+                                  _c(
+                                    "td",
+                                    { style: { color: currency.pColor } },
+                                    [_vm._v("%" + _vm._s(currency.pChange))]
+                                  )
                                 ]
                               )
                             })
@@ -65002,12 +65026,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [_c("h6", [_vm._v("10,813")])])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -65396,7 +65414,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -65493,14 +65511,15 @@ var Errors = function () {
 }();
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+
     name: "order-buy",
 
     data: function data() {
         return {
             price: '',
             amount: '',
-            currency_id: 1,
-            asset_id: 2,
+            currency_id: 1, // Default USD
+            asset_id: 2, // Default BTC
             errors: new Errors(),
             asset: 'BTC',
             currency: 'USD'
@@ -65888,8 +65907,8 @@ var Errors = function () {
         return {
             price: '',
             amount: '',
-            currency_id: 1,
-            asset_id: 2,
+            currency_id: 1, //Default USD
+            asset_id: 2, //Default BTC
             errors: new Errors(),
             asset: 'BTC',
             currency: 'USD'

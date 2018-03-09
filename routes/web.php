@@ -17,6 +17,20 @@ Route::get('/home', 'PagesController@home');
 Route::get('/verifyEmail/{token}', 'Auth\RegisterController@verify');
 
 
+Route::get('t',function (){
+
+
+
+    $original= 80;
+    $current = 70;
+    $diff = $current - $original;
+    $more_less = $diff > 0 ? "More" : "Less";
+    $percentChange = ($diff/$original)*100;
+    echo "$percentChange% $more_less agaist $original";
+
+});
+
+
 Route::get('/test', function () {
 
 

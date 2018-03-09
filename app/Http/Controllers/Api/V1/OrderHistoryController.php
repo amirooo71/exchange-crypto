@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\User;
 use App\Http\Controllers\Controller;
 
-class UserController extends Controller
+class OrderHistoryController extends Controller
 {
     /**
      * UserController constructor.

@@ -4,6 +4,7 @@ namespace App\Trading\Limit;
 
 use App\Events\OrderBookConfirm;
 use App\Events\OrderConfirm;
+use App\Events\Ticker;
 use Illuminate\Support\Facades\DB;
 
 class Sell extends Exchange
@@ -44,10 +45,12 @@ class Sell extends Exchange
             $this->updateOrderFill($order, $amount);
 
             $this->processCandles($aId, $cId, $transaction);
+            $ticker = $this->processTicker($aId, $cId, $transaction);
 
             OrderConfirm::dispatch($order, $price);
             OrderConfirm::dispatch($orderBook, $price);
             OrderBookConfirm::dispatch();
+            Ticker::dispatch($ticker);
 
         }
     }

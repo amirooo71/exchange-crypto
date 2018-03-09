@@ -78,8 +78,8 @@
             return {
                 price: '',
                 amount: '',
-                currency_id: 1,
-                asset_id: 2,
+                currency_id: 1, //Default USD
+                asset_id: 2, //Default BTC
                 errors: new Errors(),
                 asset: 'BTC',
                 currency: 'USD',

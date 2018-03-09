@@ -9,6 +9,7 @@ use App\Currency;
 use App\OrderSell;
 use App\OrderBuy;
 use App\Pair;
+use App\Ticker;
 use App\Transaction;
 use Illuminate\Support\Facades\DB;
 
@@ -104,6 +105,11 @@ class Exchange
         return $pairId;
     }
 
+    /**
+     * @param $aId
+     * @param $cId
+     * @param Transaction $transaction
+     */
     protected function processCandles($aId, $cId, Transaction $transaction)
     {
         $this->processCandle(1, $aId, $cId, $transaction);
@@ -130,14 +136,9 @@ class Exchange
 
         $candle = Candle::whereT($timestamp)->first();
 
-
         if ($candle) {
 
-
             DB::update("UPDATE candles SET c=$transaction->price, h=GREATEST(h, $transaction->price), l=LEAST(l, $transaction->price), count=count+1, v=v+$transaction->amount WHERE t=$timestamp");
-
-
-//            $q = "UPDATE x SET c=:price, h=GREATEST(h, :price), l=LEAST(l, :price), count=count+1, v=v+:amount WHERE t = :timestamp";
 
         } else {
 
@@ -157,12 +158,48 @@ class Exchange
     }
 
     /**
-     * @return float|int
+     * @param $aId
+     * @param $cId
+     * @param Transaction $transaction
+     * @return \Illuminate\Database\Eloquent\Model|null|static
      */
-    protected function getResolutionTime()
+    protected function processTicker($aId, $cId, Transaction $transaction)
     {
-        return $this->getMicroTime() / 60000;
+
+        $pairId = $this->getPairId($aId, $cId);
+        $ticker = Ticker::where('pair_id', $pairId)->first();
+
+        if ($ticker) {
+
+            $percentChange = $this->calculatePercentChange($ticker->price, $transaction->price);
+
+            $ticker->update([
+                'price' => $transaction->price,
+                'max' => 1,
+                'min' => 1,
+                'volume' => $ticker->volume + $transaction->amount,
+                'percent_change' => $percentChange['change'],
+                'percent_color' => $percentChange['color'],
+            ]);
+
+        } else {
+
+            Ticker::create([
+                'pair_id' => $pairId,
+                'price' => $transaction->price,
+                'max' => 1,
+                'min' => 1,
+                'volume' => $transaction->amount,
+                'percent_change' => 0,
+                'percent_color' => 'green',
+            ]);
+
+        }
+
+        return $ticker;
+
     }
+
 
     /**
      * @return float|int
@@ -170,6 +207,17 @@ class Exchange
     private function getMicroTime()
     {
         return microtime(true) * 1000;
+    }
+
+    private function calculatePercentChange($oldPrice, $newPrice)
+    {
+        $diff = $newPrice - $oldPrice;
+        $percentChange = ($diff / $oldPrice) * 100;
+        $percentColor = $diff > 0 ? "green" : "red";
+        return [
+            "change" => $percentChange,
+            "color" => $percentColor,
+        ];
     }
 
 }
