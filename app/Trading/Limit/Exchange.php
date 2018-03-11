@@ -11,6 +11,7 @@ use App\OrderBuy;
 use App\Pair;
 use App\Ticker;
 use App\Transaction;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class Exchange
@@ -161,7 +162,7 @@ class Exchange
      * @param $aId
      * @param $cId
      * @param Transaction $transaction
-     * @return \Illuminate\Database\Eloquent\Model|null|static
+     * @return $this|\Illuminate\Database\Eloquent\Model|null|static
      */
     protected function processTicker($aId, $cId, Transaction $transaction)
     {
@@ -171,12 +172,12 @@ class Exchange
 
         if ($ticker) {
 
-            $percentChange = $this->calculatePercentChange($ticker->price, $transaction->price);
+            $percentChange = $this->calculatePercentChange($oldPrice = $ticker->price);
 
             $ticker->update([
                 'price' => $transaction->price,
-                'max' => 1,
-                'min' => 1,
+                'max' => $this->get24Hr()->max('price'),
+                'min' => $this->get24Hr()->min('price'),
                 'volume' => $ticker->volume + $transaction->amount,
                 'percent_change' => $percentChange['change'],
                 'percent_color' => $percentChange['color'],
@@ -187,8 +188,8 @@ class Exchange
             return Ticker::create([
                 'pair_id' => $pairId,
                 'price' => $transaction->price,
-                'max' => 1,
-                'min' => 1,
+                'max' => $this->get24Hr()->max('price'),
+                'min' => $this->get24Hr()->min('price'),
                 'volume' => $transaction->amount,
                 'percent_change' => 0,
                 'percent_color' => 'green',
@@ -200,7 +201,6 @@ class Exchange
 
     }
 
-
     /**
      * @return float|int
      */
@@ -209,15 +209,29 @@ class Exchange
         return microtime(true) * 1000;
     }
 
-    private function calculatePercentChange($oldPrice, $newPrice)
+    /**
+     * @param $oldPrice
+     * @return array
+     */
+    private function calculatePercentChange($oldPrice)
     {
+
+        $newPrice = Transaction::where('created_at', '>=', Carbon::now()->subDay())->orderBy('created_at', 'desc')->first()->price;
         $diff = $newPrice - $oldPrice;
         $percentChange = ($diff / $oldPrice) * 100;
         $percentColor = $diff > 0 ? "#7a9c4a" : "#aa6064";
         return [
-            "change" => $percentChange,
+            "change" => abs($percentChange),
             "color" => $percentColor,
         ];
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    private function get24Hr()
+    {
+        return Transaction::where('created_at', '>=', Carbon::now()->subDay())->get();
     }
 
 }

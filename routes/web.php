@@ -17,16 +17,14 @@ Route::get('/home', 'PagesController@home');
 Route::get('/verifyEmail/{token}', 'Auth\RegisterController@verify');
 
 
-Route::get('t',function (){
+Route::get('t', function () {
 
 
+    $tr = \App\Transaction::where('created_at', '>=', \Carbon\Carbon::now()->subDay())->orderBy('created_at', 'desc')->first()->price;
 
-    $original= 80;
-    $current = 70;
-    $diff = $current - $original;
-    $more_less = $diff > 0 ? "More" : "Less";
-    $percentChange = ($diff/$original)*100;
-    echo "$percentChange% $more_less agaist $original";
+
+    dd($tr);
+
 
 });
 

@@ -6,7 +6,6 @@ use App\Ac;
 use App\Asset;
 use App\Pair;
 use App\Ticker;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class TickersController extends Controller

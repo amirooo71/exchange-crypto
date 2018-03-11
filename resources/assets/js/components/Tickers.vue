@@ -18,31 +18,31 @@
                         </h6>
                     </td>
                     <td>
-                        <h6>{{price | round }}</h6>
+                        <h6>{{price | currency }}</h6>
                     </td>
                 </tr>
                 <tr class="text-muted">
                     <td>
-                        10,270
+                        {{min | round }}
                         <span>کم ترین</span>
                     </td>
                     <td>
-                        11,065
+                        {{max | round}}
                         <span>بیش ترین</span>
                     </td>
                 </tr>
                 <tr class="text-muted">
                     <td>
-                        <span>45,872</span>
+                        <span>{{volume | round}}</span>
                         <span v-if="asset">{{asset.symbol | uppercase }}</span>
                         <span v-else>BTC</span>
                         <span>حجم بازار</span>
                     </td>
                     <td class="text-success">
-                        <span>
-                            523.00
-                            <i></i>
-                            (5.08%)
+                        <span :style="{color: pColor}">
+                            <!--523.00-->
+                            <!--<i></i>-->
+                            (%{{pChange}})
                         </span>
                     </td>
                 </tr>
@@ -105,6 +105,11 @@
                 currency: '',
                 assetName: 'BTC',
                 price: '',
+                min: '',
+                max: '',
+                volume: '',
+                pChange: '',
+                pColor: '',
             }
 
         },
@@ -121,6 +126,11 @@
 
             window.Echo.channel('ticker').listen('Ticker', (e) => {
                 this.price = e.ticker.price;
+                this.max = e.ticker.max;
+                this.min = e.ticker.min;
+                this.volume = e.ticker.volume;
+                this.pChange = e.ticker.percent_change;
+                this.pColor = e.ticker.percent_color;
                 this.getTickers();
             });
         },
@@ -140,7 +150,14 @@
             },
 
             getDefaultTicker() {
-                axios.get('api/v1/trade/default/ticker').then(response => this.price = response.data.price);
+                axios.get('api/v1/trade/default/ticker').then(response => {
+                    this.price = response.data.price;
+                    this.max = response.data.max;
+                    this.min = response.data.min;
+                    this.volume = response.data.volume;
+                    this.pChange = response.data.percent_change;
+                    this.pColor = response.data.percent_color;
+                });
             },
 
             onPairs(asset, currency) {
