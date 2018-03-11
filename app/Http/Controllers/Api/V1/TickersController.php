@@ -15,7 +15,7 @@ class TickersController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api');
+//        $this->middleware('auth:api');
     }
 
     /**
@@ -53,9 +53,14 @@ class TickersController extends Controller
     /**
      * @param $data
      * @param $price
+     * @param $pChange
+     * @param $pColor
+     * @param $min
+     * @param $max
+     * @param $volume
      * @return array
      */
-    private function serializer($data, $price, $pChange, $pColor)
+    private function serializer($data, $price, $pChange, $pColor, $min, $max, $volume)
     {
 
         return [
@@ -64,6 +69,9 @@ class TickersController extends Controller
             'price' => $price,
             'pChange' => $pChange,
             'pColor' => $pColor,
+            'min' => $min,
+            'max' => $max,
+            'volume' => $volume,
         ];
 
     }
@@ -96,12 +104,18 @@ class TickersController extends Controller
                 $price = $ticker->price;
                 $pChange = $ticker->percent_change;
                 $pColor = $ticker->percent_color;
+                $min = $ticker->min;
+                $max = $ticker->max;
+                $volume = $ticker->volume;
             } else {
                 $price = rand(1000, 7000);
                 $pChange = rand(1, 99);
                 $pColor = '#7a9c4a';
+                $min = rand(1000, 7000);
+                $max = rand(1000, 7000);
+                $volume = rand(1, 100);
             }
-            $currenciesArr[] = $this->serializer($curr, $price, $pChange, $pColor);
+            $currenciesArr[] = $this->serializer($curr, $price, $pChange, $pColor, $min, $max, $volume);
         }
 
         return $currenciesArr;

@@ -20,7 +20,7 @@ Route::get('/verifyEmail/{token}', 'Auth\RegisterController@verify');
 Route::get('t', function () {
 
 
-    $tr = \App\Transaction::where('created_at', '>=', \Carbon\Carbon::now()->subDay())->orderBy('created_at', 'desc')->first()->price;
+    $tr = \App\Transaction::where('created_at', '>=', \Carbon\Carbon::now()->subDay())->where('pair_id',1)->first();
 
 
     dd($tr);

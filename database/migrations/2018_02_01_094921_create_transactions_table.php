@@ -15,10 +15,11 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('seller_id');
-            $table->integer('buyer_id');
-            $table->integer('order_buy_id');
-            $table->integer('order_sale_id');
+            $table->unsignedInteger('seller_id');
+            $table->unsignedInteger('buyer_id');
+            $table->unsignedInteger('order_buy_id');
+            $table->unsignedInteger('order_sale_id');
+            $table->unsignedInteger('pair_id');
             $table->decimal('price', 16, 8);
             $table->decimal('amount', 16, 8);
             $table->string('type');

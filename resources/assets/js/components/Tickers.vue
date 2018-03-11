@@ -120,6 +120,7 @@
         },
 
         created() {
+            
             Event.$on('SelectedTicker', data => {
                 this.assetName = data.asset.symbol;
             });
@@ -161,9 +162,15 @@
             },
 
             onPairs(asset, currency) {
+                console.log(currency);
                 this.asset = asset;
                 this.currency = currency;
                 this.price = currency.price;
+                this.max = currency.max;
+                this.min = currency.min;
+                this.volume = currency.volume;
+                this.pChange = currency.pChange;
+                this.pColor = currency.pColor;
                 var data = {
                     asset: asset,
                     currency: currency,

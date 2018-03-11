@@ -77,15 +77,17 @@ class Exchange
      * @param $amount
      * @param $price
      * @param $type
+     * @param $pairId
      * @return $this|\Illuminate\Database\Eloquent\Model
      */
-    protected function saveTransaction($order, $orderBook, $amount, $price, $type)
+    protected function saveTransaction($order, $orderBook, $amount, $price, $type, $pairId)
     {
         return Transaction::create([
             'seller_id' => $orderBook->user_id,
             'buyer_id' => $order->user_id,
             'order_sale_id' => $orderBook->id,
             'order_buy_id' => $order->id,
+            'pair_id' => $pairId,
             'amount' => $amount,
             'price' => $price,
             'type' => $type,
@@ -172,12 +174,12 @@ class Exchange
 
         if ($ticker) {
 
-            $percentChange = $this->calculatePercentChange($oldPrice = $ticker->price);
+            $percentChange = $this->calculatePercentChange($oldPrice = $ticker->price, $pairId);
 
             $ticker->update([
                 'price' => $transaction->price,
-                'max' => $this->get24Hr()->max('price'),
-                'min' => $this->get24Hr()->min('price'),
+                'max' => $this->get24Hr($pairId)->max('price'),
+                'min' => $this->get24Hr($pairId)->min('price'),
                 'volume' => $ticker->volume + $transaction->amount,
                 'percent_change' => $percentChange['change'],
                 'percent_color' => $percentChange['color'],
@@ -188,8 +190,8 @@ class Exchange
             return Ticker::create([
                 'pair_id' => $pairId,
                 'price' => $transaction->price,
-                'max' => $this->get24Hr()->max('price'),
-                'min' => $this->get24Hr()->min('price'),
+                'max' => $this->get24Hr($pairId)->max('price'),
+                'min' => $this->get24Hr($pairId)->min('price'),
                 'volume' => $transaction->amount,
                 'percent_change' => 0,
                 'percent_color' => 'green',
@@ -211,12 +213,16 @@ class Exchange
 
     /**
      * @param $oldPrice
+     * @param $pairId
      * @return array
      */
-    private function calculatePercentChange($oldPrice)
+    private function calculatePercentChange($oldPrice, $pairId)
     {
 
-        $newPrice = Transaction::where('created_at', '>=', Carbon::now()->subDay())->orderBy('created_at', 'desc')->first()->price;
+        $newPrice = Transaction::where('created_at', '>=', Carbon::now()->subDay())
+            ->where('pair_id', $pairId)
+            ->orderBy('created_at', 'desc')
+            ->first()->price;
         $diff = $newPrice - $oldPrice;
         $percentChange = ($diff / $oldPrice) * 100;
         $percentColor = $diff > 0 ? "#7a9c4a" : "#aa6064";
@@ -227,11 +233,14 @@ class Exchange
     }
 
     /**
+     * @param $pairId
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    private function get24Hr()
+    private function get24Hr($pairId)
     {
-        return Transaction::where('created_at', '>=', Carbon::now()->subDay())->get();
+        return Transaction::where('created_at', '>=', Carbon::now()->subDay())
+            ->where('pair_id', $pairId)
+            ->get();
     }
 
 }
