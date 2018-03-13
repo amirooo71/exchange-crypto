@@ -28,8 +28,12 @@
                                         <td>
                                             {{currency.symbol | uppercase }}
                                         </td>
-                                        <td>{{currency.price | currency }}</td>
-                                        <td :style="{color: currency.pColor}">%{{currency.pChange}}</td>
+                                        <td>
+                                            {{currency.price | currency }}
+                                        </td>
+                                        <td :style="{color: currency.pColor}">
+                                            %{{currency.pChange}}
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
