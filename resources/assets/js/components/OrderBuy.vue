@@ -87,7 +87,7 @@
         },
 
         created() {
-            Event.$on('SelectedTicker', data => {
+            Event.$on('onSelectedPair', data => {
                 this.currency_id = data.currency.id;
                 this.asset_id = data.asset.id;
                 this.asset = data.asset.symbol;
@@ -109,7 +109,7 @@
                 ;
             },
 
-            onSuccess(response) {
+            onSuccess() {
                 notify('success', 'سفارش خرید با موفقیت ثبت شد.');
                 this.price = '';
                 this.amount = '';

@@ -21,7 +21,7 @@
     window.notify = function (type, msg) {
         new Noty({
             type: type,
-            layout: 'bottomRight',
+            layout: 'bottomLeft',
             theme: 'mint',
             text: msg,
             timeout: 3000,

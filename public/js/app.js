@@ -47329,7 +47329,7 @@ window.Event = new Vue();
 window.notify = function (type, msg) {
     new Noty({
         type: type,
-        layout: 'bottomRight',
+        layout: 'bottomLeft',
         theme: 'mint',
         text: msg,
         timeout: 3000
@@ -47471,7 +47471,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -47587,7 +47587,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         this.getTickers();
         window.Echo.channel('ticker').listen('Ticker', function (e) {
-            _this.defaultTicker = e.ticker;
             _this.getTickers();
         });
     },
@@ -47704,7 +47703,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -47717,6 +47716,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue2_filters__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue2_filters___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue2_filters__);
+//
 //
 //
 //
@@ -47778,7 +47778,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             defaultTicker: '',
             assetName: 'BTC',
-            currencyName: 'USD'
+            currencyName: 'USD',
+            currencyFilterAlignment: { symbolOnLeft: false },
+            currencyFilterSymbol: '$'
         };
     },
     created: function created() {
@@ -47786,9 +47788,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         this.getDefaultTicker();
         Event.$on('onSelectedPair', function (data) {
-            _this.defaultTicker = data.currency;
-            _this.assetName = data.asset.symbol;
-            _this.currencyName = data.currency.symbol;
+            _this.setAcData(data);
+            _this.setCurrencyFilterAttr(data);
+        });
+        window.Echo.channel('ticker').listen('Ticker', function (e) {
+            _this.defaultTicker = e.ticker;
         });
     },
 
@@ -47800,6 +47804,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('api/v1/trading/default/ticker').then(function (response) {
                 _this2.defaultTicker = response.data;
             });
+        },
+        setAcData: function setAcData(data) {
+            this.defaultTicker = data.currency;
+            this.assetName = data.asset.symbol;
+            this.currencyName = data.currency.symbol;
+        },
+        setCurrencyFilterAttr: function setCurrencyFilterAttr(data) {
+
+            switch (data.currency.symbol) {
+
+                case "usd":
+                    this.currencyFilterAlignment = { symbolOnLeft: true };
+                    this.currencyFilterSymbol = '$';
+                    break;
+                case "btc":
+                    this.currencyFilterAlignment = { symbolOnLeft: false };
+                    this.currencyFilterSymbol = 'BTC ';
+                    break;
+                case "irr":
+                    this.currencyFilterAlignment = { symbolOnLeft: false };
+                    this.currencyFilterSymbol = 'IRR ';
+                    break;
+
+            }
         }
     },
 
@@ -47852,7 +47880,15 @@ var render = function() {
           _vm._v(" "),
           _c("td", [
             _c("h6", [
-              _vm._v(_vm._s(_vm._f("currency")(_vm.defaultTicker.price)))
+              _vm._v(
+                _vm._s(
+                  _vm._f("currency")(
+                    _vm.defaultTicker.price ? _vm.defaultTicker.price : 0,
+                    this.currencyFilterSymbol,
+                    this.currencyFilterAlignment
+                  )
+                )
+              )
             ])
           ])
         ]),
@@ -47861,7 +47897,11 @@ var render = function() {
           _c("td", [
             _vm._v(
               "\n                " +
-                _vm._s(_vm._f("currency")(_vm.defaultTicker.min)) +
+                _vm._s(
+                  _vm._f("currency")(
+                    _vm.defaultTicker.min ? _vm.defaultTicker.min : 0
+                  )
+                ) +
                 "\n                "
             ),
             _c("span", [_vm._v("کم ترین")])
@@ -47870,7 +47910,11 @@ var render = function() {
           _c("td", [
             _vm._v(
               "\n                " +
-                _vm._s(_vm._f("currency")(_vm.defaultTicker.max)) +
+                _vm._s(
+                  _vm._f("currency")(
+                    _vm.defaultTicker.max ? _vm.defaultTicker.max : 0
+                  )
+                ) +
                 "\n                "
             ),
             _c("span", [_vm._v("بیش ترین")])
@@ -47880,7 +47924,13 @@ var render = function() {
         _c("tr", { staticClass: "text-muted" }, [
           _c("td", [
             _c("span", [
-              _vm._v(_vm._s(_vm._f("round")(_vm.defaultTicker.volume)))
+              _vm._v(
+                _vm._s(
+                  _vm._f("round")(
+                    _vm.defaultTicker.volume ? _vm.defaultTicker.volume : 0
+                  )
+                )
+              )
             ]),
             _vm._v(" "),
             _c("span", [_vm._v(_vm._s(_vm.assetName))]),
@@ -47889,10 +47939,14 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("td", { staticClass: "text-success" }, [
-            _c("span", { style: { color: _vm.defaultTicker.pColor } }, [
+            _c("span", { style: { color: _vm.defaultTicker.percent_color } }, [
               _vm._v(
                 "\n                        (%" +
-                  _vm._s(_vm.defaultTicker.pChange) +
+                  _vm._s(
+                    _vm.defaultTicker.percent_change
+                      ? _vm.defaultTicker.percent_change
+                      : 0
+                  ) +
                   ")\n                    "
               )
             ])
@@ -47998,7 +48052,7 @@ var render = function() {
                                     _vm._v(
                                       "\n                                        " +
                                         _vm._s(
-                                          _vm._f("currency")(currency.price)
+                                          _vm._f("currency")(currency.price, "")
                                         ) +
                                         "\n                                    "
                                     )
@@ -48006,11 +48060,13 @@ var render = function() {
                                   _vm._v(" "),
                                   _c(
                                     "td",
-                                    { style: { color: currency.pColor } },
+                                    {
+                                      style: { color: currency.percent_color }
+                                    },
                                     [
                                       _vm._v(
                                         "\n                                        %" +
-                                          _vm._s(currency.pChange) +
+                                          _vm._s(currency.percent_change) +
                                           "\n                                    "
                                       )
                                     ]
@@ -48507,7 +48563,7 @@ var Errors = function () {
     created: function created() {
         var _this = this;
 
-        Event.$on('SelectedTicker', function (data) {
+        Event.$on('onSelectedPair', function (data) {
             _this.currency_id = data.currency.id;
             _this.asset_id = data.asset.id;
             _this.asset = data.asset.symbol;
@@ -48527,7 +48583,7 @@ var Errors = function () {
                 }
             });
         },
-        onSuccess: function onSuccess(response) {
+        onSuccess: function onSuccess() {
             notify('success', 'سفارش خرید با موفقیت ثبت شد.');
             this.price = '';
             this.amount = '';
@@ -48782,7 +48838,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -48896,7 +48952,7 @@ var Errors = function () {
     created: function created() {
         var _this = this;
 
-        Event.$on('SelectedTicker', function (data) {
+        Event.$on('onSelectedPair', function (data) {
             _this.currency_id = data.currency.id;
             _this.asset_id = data.asset.id;
             _this.asset = data.asset.symbol;
@@ -48916,7 +48972,7 @@ var Errors = function () {
                 }
             });
         },
-        onSuccess: function onSuccess(response) {
+        onSuccess: function onSuccess() {
             notify('success', 'سفارش خرید با موفقیت ثبت شد.');
             this.price = '';
             this.amount = '';
@@ -48929,12 +48985,14 @@ var Errors = function () {
     },
 
     computed: {
+
         assetName: function assetName() {
             return this.asset.toUpperCase();
         },
         currencyName: function currencyName() {
             return this.currency.toUpperCase();
         }
+
     }
 });
 

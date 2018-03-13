@@ -29,10 +29,10 @@
                                             {{currency.symbol | uppercase }}
                                         </td>
                                         <td>
-                                            {{currency.price | currency }}
+                                            {{currency.price | currency('') }}
                                         </td>
-                                        <td :style="{color: currency.pColor}">
-                                            %{{currency.pChange}}
+                                        <td :style="{color: currency.percent_color}">
+                                            %{{currency.percent_change}}
                                         </td>
                                     </tr>
                                     </tbody>
@@ -68,7 +68,6 @@
         created() {
             this.getTickers();
             window.Echo.channel('ticker').listen('Ticker', (e) => {
-                this.defaultTicker = e.ticker;
                 this.getTickers();
             });
         },
