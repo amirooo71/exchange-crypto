@@ -47329,7 +47329,7 @@ window.Event = new Vue();
 window.notify = function (type, msg) {
     new Noty({
         type: type,
-        layout: 'bottomLeft',
+        layout: 'bottomRight',
         theme: 'mint',
         text: msg,
         timeout: 3000
@@ -48164,7 +48164,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -48175,6 +48175,10 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+var _name$props$data$crea;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -48216,7 +48220,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-/* harmony default export */ __webpack_exports__["default"] = ({
+/* harmony default export */ __webpack_exports__["default"] = (_name$props$data$crea = {
+
     name: "balance",
 
     props: ['user'],
@@ -48226,14 +48231,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             balances: ''
         };
     },
-
-
-    filters: {
-        upper: function upper(str) {
-            return str.toUpperCase();
-        }
-    },
-
     created: function created() {
         var _this = this;
 
@@ -48246,24 +48243,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         window.Echo.channel('order-confirm.' + this.user.id).listen('OrderConfirm', function () {
             _this.getUserBalance();
         });
-    },
-    mounted: function mounted() {
-        this.getUserBalance();
-    },
-
-
-    methods: {
-        getUserBalance: function getUserBalance() {
-            var _this2 = this;
-
-            axios.get('api/v1/trade/user/balance').then(function (response) {
-                return _this2.balances = response.data;
-            }).catch(function (error) {
-                return console.log(error.response.data);
-            });
-        }
     }
-});
+}, _defineProperty(_name$props$data$crea, 'created', function created() {
+    this.getUserBalance();
+}), _defineProperty(_name$props$data$crea, 'methods', {
+    getUserBalance: function getUserBalance() {
+        var _this2 = this;
+
+        axios.get('api/v1/trade/user/balance').then(function (response) {
+            return _this2.balances = response.data;
+        });
+    }
+}), _name$props$data$crea);
 
 /***/ }),
 /* 62 */
@@ -48304,7 +48295,9 @@ var render = function() {
                   })
                 ]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(_vm._f("upper")(balance.ac.symbol)))]),
+                _c("td", [
+                  _vm._v(_vm._s(_vm._f("uppercase")(balance.ac.symbol)))
+                ]),
                 _vm._v(" "),
                 _c("td", [
                   _c(
@@ -48428,7 +48421,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -48532,11 +48525,11 @@ var Errors = function () {
         return {
             price: '',
             amount: '',
-            currency_id: 1, // Default USD
-            asset_id: 2, // Default BTC
+            currency_id: 1, // Default ID
+            asset_id: 2, // Default ID
             errors: new Errors(),
-            asset: 'BTC',
-            currency: 'USD'
+            asset: 'BTC', // Default Symbol
+            currency: 'USD' // Default Symbol
         };
     },
     created: function created() {
@@ -48570,6 +48563,7 @@ var Errors = function () {
         },
         onError: function onError() {
             notify('error', 'موجودی کافی نیست.');
+            this.price = '';
             this.amount = '';
         }
     },
@@ -48817,7 +48811,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -48921,11 +48915,11 @@ var Errors = function () {
         return {
             price: '',
             amount: '',
-            currency_id: 1, //Default USD
-            asset_id: 2, //Default BTC
+            currency_id: 1, //Default ID
+            asset_id: 2, //Default ID
             errors: new Errors(),
-            asset: 'BTC',
-            currency: 'USD'
+            asset: 'BTC', //Default Symbol
+            currency: 'USD' //Default Symbol
         };
     },
     created: function created() {
@@ -48959,6 +48953,7 @@ var Errors = function () {
         },
         onError: function onError() {
             notify('error', 'موجودی کافی نیست.');
+            this.price = '';
             this.amount = '';
         }
     },

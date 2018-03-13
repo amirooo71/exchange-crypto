@@ -78,11 +78,11 @@
             return {
                 price: '',
                 amount: '',
-                currency_id: 1, //Default USD
-                asset_id: 2, //Default BTC
+                currency_id: 1, //Default ID
+                asset_id: 2, //Default ID
                 errors: new Errors(),
-                asset: 'BTC',
-                currency: 'USD',
+                asset: 'BTC', //Default Symbol
+                currency: 'USD', //Default Symbol
             }
         },
 
@@ -118,6 +118,7 @@
 
             onError() {
                 notify('error', 'موجودی کافی نیست.');
+                this.price = '';
                 this.amount = '';
             }
         },

@@ -15,7 +15,7 @@ class TickersController extends Controller
      */
     public function __construct()
     {
-//        $this->middleware('auth:api');
+        $this->middleware('auth:api');
     }
 
     /**
@@ -54,7 +54,7 @@ class TickersController extends Controller
      * @param $ticker
      * @return array
      */
-    private function tickerSerializer($currency, $ticker)
+    private function serializerFormat($currency, $ticker)
     {
         if ($ticker) {
 
@@ -111,7 +111,7 @@ class TickersController extends Controller
         foreach ($pairs as $pair) {
             $currency = Ac::find($pair->currency_id);
             $ticker = $this->getTicker($pair->id);
-            $currenciesCollection[] = $this->tickerSerializer($currency, $ticker);
+            $currenciesCollection[] = $this->serializerFormat($currency, $ticker);
         }
         return $currenciesCollection;
     }

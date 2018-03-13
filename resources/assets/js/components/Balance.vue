@@ -16,7 +16,7 @@
                             <img :src="'images/logo/' + balance.ac.symbol.toUpperCase() + '.svg'" alt="دلار"
                                  class="v-tiny-svg">
                         </td>
-                        <td>{{balance.ac.symbol | upper}}</td>
+                        <td>{{balance.ac.symbol | uppercase}}</td>
                         <td>
                             <table class="table table-borderless table-condensed"
                                    style="background: #263238;">
@@ -40,6 +40,7 @@
 
 <script>
     export default {
+        
         name: "balance",
 
         props: ['user'],
@@ -47,12 +48,6 @@
         data() {
             return {
                 balances: '',
-            }
-        },
-
-        filters: {
-            upper(str) {
-                return str.toUpperCase();
             }
         },
 
@@ -64,7 +59,7 @@
             });
         },
 
-        mounted() {
+        created() {
             this.getUserBalance();
         },
 
@@ -73,7 +68,6 @@
             getUserBalance() {
                 axios.get('api/v1/trade/user/balance')
                     .then(response => this.balances = response.data)
-                    .catch(error => console.log(error.response.data))
                 ;
             },
         }
