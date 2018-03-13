@@ -83,7 +83,7 @@
 
     TradingView.onready(function () {
         var widget = window.tvWidget = new TradingView.widget({
-            debug: true, // uncomment this line to see Library errors and warnings in the console
+            debug: false, // uncomment this line to see Library errors and warnings in the console
             fullscreen: false,
             symbol: 'BTCUSD',
             interval: '1',

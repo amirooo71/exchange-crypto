@@ -38,8 +38,8 @@ Route::prefix('v1')->group(function () {
     |               Tickers
     |------------------------------------
     */
-    Route::get('/trade/tickers', 'Api\V1\TickersController@getTickers');
-    Route::get('/trade/default/ticker', 'Api\V1\TickersController@getDefaultTicker');
+    Route::get('/trading/tickers', 'Api\V1\TickersController@getTickers');
+    Route::get('/trading/default/ticker', 'Api\V1\TickersController@getDefaultTicker');
 
     /*
      |------------------------------------

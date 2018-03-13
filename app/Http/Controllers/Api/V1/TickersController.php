@@ -46,7 +46,6 @@ class TickersController extends Controller
         foreach ($assets as $asset) {
             $assetArr[] = $this->assetSerializer($asset);
         }
-
         return $assetArr;
     }
 

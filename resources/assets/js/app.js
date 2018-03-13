@@ -23,8 +23,11 @@ Vue.component('exchange', require('./components/Exchange.vue'));
 Vue.component('order-history', require('./components/OrderHistory.vue'));
 Vue.component('order-book', require('./components/OrderBook.vue'));
 
+/**
+ * Widgets
+ */
+
 Vue.component('panel', require('./components/widget/Panel.vue'));
-Vue.component('graph', require('./components/graph/Graph.vue'));
 
 const app = new Vue({
     el: '#app',
