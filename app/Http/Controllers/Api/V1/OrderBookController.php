@@ -9,12 +9,6 @@ use App\Http\Controllers\Controller;
 
 class OrderBookController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
-
     /**
      * @return \Illuminate\Http\JsonResponse
      */

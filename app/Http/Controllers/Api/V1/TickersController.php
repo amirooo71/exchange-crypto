@@ -11,14 +11,6 @@ use App\Http\Controllers\Controller;
 class TickersController extends Controller
 {
     /**
-     * TickersController constructor.
-     */
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
-
-    /**
      * @return \Illuminate\Http\JsonResponse
      */
     public function getDefaultTicker()

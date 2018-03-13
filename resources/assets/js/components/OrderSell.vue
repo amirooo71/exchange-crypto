@@ -32,7 +32,8 @@
                 </div>
                 <div class="form-group">
                     <div class="text-right">
-                        <button type="submit" class="btn btn-danger btn-block" :disabled="errors.any()">فروش</button>
+                        <button v-if="signedIn" type="submit" class="btn btn-danger btn-block" :disabled="errors.any()">فروش</button>
+                        <a href="/login" v-else="signedIn" class="btn btn-primary btn-block">ورود</a>
                     </div>
                 </div>
             </div>
@@ -124,6 +125,10 @@
         },
 
         computed: {
+
+            signedIn() {
+                return window.App.signedIn;
+            },
 
             assetName: function () {
                 return this.asset.toUpperCase();

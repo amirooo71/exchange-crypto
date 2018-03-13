@@ -17,12 +17,12 @@
 
         name: "exchange",
 
-        props: ['user'],
-
         created() {
-            window.Echo.channel('order-confirm.' + this.user.id).listen('OrderConfirm', (e) => {
-                notify('info', this.getConfirmOrderMsg(e.order, e.price));
-            });
+            if (window.App.signedIn) {
+                window.Echo.channel('order-confirm.' + window.App.user.id).listen('OrderConfirm', (e) => {
+                    notify('info', this.getConfirmOrderMsg(e.order, e.price));
+                });
+            }
         },
 
         methods: {

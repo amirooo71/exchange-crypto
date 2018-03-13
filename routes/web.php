@@ -10,7 +10,7 @@ Auth::routes();
  */
 
 Route::get('/', 'PagesController@landing');
-Route::get('/trading', 'PagesController@trading')->middleware('auth');
+Route::get('/trading', 'PagesController@trading');
 Route::get('/home', 'PagesController@home');
 
 

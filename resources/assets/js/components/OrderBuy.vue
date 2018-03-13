@@ -30,7 +30,10 @@
                 </div>
                 <div class="form-group">
                     <div class="text-right">
-                        <button type="submit" class="btn btn-success btn-block" :disabled="errors.any()">خرید</button>
+                        <button v-if="signedIn" type="submit" class="btn btn-success btn-block"
+                                :disabled="errors.any()">خرید
+                        </button>
+                        <a href="/register" v-else="signedIn" class="btn btn-success btn-block">ثبت نام</a>
                     </div>
                 </div>
             </div>
@@ -125,11 +128,16 @@
         },
 
         computed: {
-            assetName: function () {
+
+            signedIn() {
+                return window.App.signedIn;
+            },
+
+            assetName() {
                 return this.asset.toUpperCase();
             },
 
-            currencyName: function () {
+            currencyName() {
                 return this.currency.toUpperCase();
             }
         },

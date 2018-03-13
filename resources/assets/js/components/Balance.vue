@@ -10,7 +10,7 @@
                         <th class="text-center">موجودی</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody v-if="signedIn">
                     <tr v-for="balance in balances">
                         <td>
                             <img :src="'images/logo/' + balance.ac.symbol.toUpperCase() + '.svg'" alt="دلار"
@@ -32,6 +32,13 @@
                         </td>
                     </tr>
                     </tbody>
+                    <tbody v-else>
+                    <tr>
+                        <td>
+                            داده‌ای موجود نیست لطفا وارد شوید
+                        </td>
+                    </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -40,10 +47,8 @@
 
 <script>
     export default {
-        
-        name: "balance",
 
-        props: ['user'],
+        name: "balance",
 
         data() {
             return {
@@ -52,15 +57,14 @@
         },
 
         created() {
-            Event.$on('orderApplied', () => this.getUserBalance());
-            Event.$on('orderDeleted', () => this.getUserBalance());
-            window.Echo.channel('order-confirm.' + this.user.id).listen('OrderConfirm', () => {
+            if (window.App.signedIn) {
                 this.getUserBalance();
-            });
-        },
-
-        created() {
-            this.getUserBalance();
+                Event.$on('orderApplied', () => this.getUserBalance());
+                Event.$on('orderDeleted', () => this.getUserBalance());
+                window.Echo.channel('order-confirm.' + window.App.user.id).listen('OrderConfirm', () => {
+                    this.getUserBalance();
+                });
+            }
         },
 
         methods: {
@@ -70,7 +74,14 @@
                     .then(response => this.balances = response.data)
                 ;
             },
-        }
+        },
+
+        computed: {
+
+            signedIn() {
+                return window.App.signedIn;
+            },
+        },
     }
 </script>
 

@@ -31,6 +31,16 @@
 
     {{--WebSocket--}}
     <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
+
+    <script>
+        window.App = {!!
+         json_encode([
+                'signedIn' => \Illuminate\Support\Facades\Auth::check(),
+                'user' => \Illuminate\Support\Facades\Auth::user(),
+         ])
+         !!};
+    </script>
+
 </head>
 <body>
 
