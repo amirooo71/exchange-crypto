@@ -47703,7 +47703,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -47716,7 +47716,6 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue2_filters__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue2_filters___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue2_filters__);
-//
 //
 //
 //
@@ -47778,9 +47777,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             defaultTicker: '',
             assetName: 'BTC',
-            currencyName: 'USD',
-            currencyFilterAlignment: { symbolOnLeft: false },
-            currencyFilterSymbol: '$'
+            currencyName: 'USD'
+            // currencyFilterAlignment: {symbolOnLeft: false},
+            // currencyFilterSymbol: '$',
         };
     },
     created: function created() {
@@ -47789,7 +47788,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.getDefaultTicker();
         Event.$on('onSelectedPair', function (data) {
             _this.setAcData(data);
-            _this.setCurrencyFilterAttr(data);
+            // this.setCurrencyFilterAttr(data);
         });
         window.Echo.channel('ticker').listen('Ticker', function (e) {
             _this.defaultTicker = e.ticker;
@@ -47809,25 +47808,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.defaultTicker = data.currency;
             this.assetName = data.asset.symbol;
             this.currencyName = data.currency.symbol;
-        },
-        setCurrencyFilterAttr: function setCurrencyFilterAttr(data) {
-
-            switch (data.currency.symbol) {
-
-                case "usd":
-                    this.currencyFilterAlignment = { symbolOnLeft: true };
-                    this.currencyFilterSymbol = '$';
-                    break;
-                case "btc":
-                    this.currencyFilterAlignment = { symbolOnLeft: false };
-                    this.currencyFilterSymbol = 'BTC ';
-                    break;
-                case "irr":
-                    this.currencyFilterAlignment = { symbolOnLeft: false };
-                    this.currencyFilterSymbol = 'IRR ';
-                    break;
-
-            }
         }
     },
 
@@ -47884,8 +47864,7 @@ var render = function() {
                 _vm._s(
                   _vm._f("currency")(
                     _vm.defaultTicker.price ? _vm.defaultTicker.price : 0,
-                    this.currencyFilterSymbol,
-                    this.currencyFilterAlignment
+                    ""
                   )
                 )
               )

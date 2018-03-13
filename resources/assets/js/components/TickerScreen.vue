@@ -14,8 +14,7 @@
                     </h6>
                 </td>
                 <td>
-                    <h6>{{defaultTicker.price ? defaultTicker.price : 0 | currency(this.currencyFilterSymbol,
-                        this.currencyFilterAlignment)}}</h6>
+                    <h6>{{defaultTicker.price ? defaultTicker.price : 0 | currency('')}}</h6>
                 </td>
             </tr>
             <tr class="text-muted">
@@ -63,8 +62,8 @@
                 defaultTicker: '',
                 assetName: 'BTC',
                 currencyName: 'USD',
-                currencyFilterAlignment: {symbolOnLeft: false},
-                currencyFilterSymbol: '$',
+                // currencyFilterAlignment: {symbolOnLeft: false},
+                // currencyFilterSymbol: '$',
             }
         },
 
@@ -72,7 +71,7 @@
             this.getDefaultTicker();
             Event.$on('onSelectedPair', data => {
                 this.setAcData(data);
-                this.setCurrencyFilterAttr(data);
+                // this.setCurrencyFilterAttr(data);
             });
             window.Echo.channel('ticker').listen('Ticker', (e) => {
                 this.defaultTicker = e.ticker;
@@ -93,26 +92,26 @@
                 this.currencyName = data.currency.symbol;
             },
 
-            setCurrencyFilterAttr(data) {
-
-                switch (data.currency.symbol) {
-
-                    case "usd":
-                        this.currencyFilterAlignment = {symbolOnLeft: true};
-                        this.currencyFilterSymbol = '$';
-                        break;
-                    case "btc":
-                        this.currencyFilterAlignment = {symbolOnLeft: false};
-                        this.currencyFilterSymbol = 'BTC ';
-                        break;
-                    case "irr":
-                        this.currencyFilterAlignment = {symbolOnLeft: false};
-                        this.currencyFilterSymbol = 'IRR ';
-                        break;
-
-                }
-
-            },
+            // setCurrencyFilterAttr(data) {
+            //
+            //     switch (data.currency.symbol) {
+            //
+            //         case "usd":
+            //             this.currencyFilterAlignment = {symbolOnLeft: true};
+            //             this.currencyFilterSymbol = '$';
+            //             break;
+            //         case "btc":
+            //             this.currencyFilterAlignment = {symbolOnLeft: false};
+            //             this.currencyFilterSymbol = 'BTC ';
+            //             break;
+            //         case "irr":
+            //             this.currencyFilterAlignment = {symbolOnLeft: false};
+            //             this.currencyFilterSymbol = 'IRR ';
+            //             break;
+            //
+            //     }
+            //
+            // },
         },
 
         computed: {
