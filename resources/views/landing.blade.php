@@ -17,65 +17,19 @@
                         دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</h5>
                 </div>
             </div>
-            <div class="separator separator-primary"></div>
-            <div class="section-story-overview">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="image-container image-left"
-                             style="background-image: url({{asset('app-assets/img/Blockchain04.jpg')}})">
-                            <!-- First image on the left side -->
-                            <p class="blockquote blockquote-primary text-center">امید داشت که تمام و دشواری موجود در
-                                ارائه راهکارها
-                                و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی
-                                سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
-                                <br>
-                            </p>
-                        </div>
-                        <!-- Second image on the left side of the article -->
-                        <div class="image-container"
-                             style="background-image: url({{asset('app-assets/img/chart.jpg')}})"></div>
-                    </div>
-                    <div class="col-md-5" dir="rtl">
-                        <!-- First image on the right side, above the article -->
-                        <div class="image-container image-right"
-                             style="background-image: url({{asset('app-assets/img/Blockch.jpeg')}})"></div>
-                        <h3>چارت و ابزار های حرفه ای</h3>
-                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان است.
-                            چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                            تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در
-                            سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته
-                            سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته
-                            اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
-                        </p>
-                        <p>
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان است.
-                            چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                            تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در
-                            تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در
-                            سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته
-                            اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
-                        </p>
-                        <p>
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان است.
-                            چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                            تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در
-                            تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در
-                            سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته
-                            اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
-                        </p>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
+
+
+
     <div class="section section-team text-center">
         <div class="container">
             <h2 class="title">مزایای پودونک</h2>
             <div class="team">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="team-player">
-                            <img src="{{asset('app-assets/img/security.svg')}}" alt="Thumbnail Image"
+                            <img src="{{asset('images/landing/security.svg')}}" alt="Thumbnail Image"
                                  class="rounded-circle img-fluid">
                             <h4 class="title">امنیت</h4>
                             <p class="description">
@@ -85,9 +39,9 @@
                             </p>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="team-player">
-                            <img src="{{asset('app-assets/img/exchange.svg')}}" alt="Thumbnail Image"
+                            <img src="{{asset('images/landing/exchange.svg')}}" alt="Thumbnail Image"
                                  class="rounded-circle img-fluid">
                             <h4 class="title">پرداخت سریع</h4>
                             <p class="description">امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ
@@ -96,9 +50,20 @@
 
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="team-player">
-                            <img src="{{asset('app-assets/img/margin.svg')}}" alt="Thumbnail Image"
+                            <img src="{{asset('images/landing/margin.svg')}}" alt="Thumbnail Image"
+                                 class="rounded-circle img-fluid">
+                            <h4 class="title">سفارش سریع</h4>
+                            <p class="description">امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ
+                                به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل
+                                دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</p>
+
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="team-player">
+                            <img src="{{asset('images/landing/margin.svg')}}" alt="Thumbnail Image"
                                  class="rounded-circle img-fluid">
                             <h4 class="title">سفارش سریع</h4>
                             <p class="description">امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ

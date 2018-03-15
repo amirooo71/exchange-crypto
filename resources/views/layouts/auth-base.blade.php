@@ -47,7 +47,7 @@
 <!-- End Header -->
 
 <div class="page-header" filter-color="orange">
-    <div class="page-header-image" style="background-image:url({{asset('app-assets/img/bg.jpg')}})"></div>
+    <div class="page-header-image" style="background-image:url({{asset('images/landing/bg.jpg')}})"></div>
     <div class="container">
         <div class="col-md-4 content-center">
             <div class="card card-login card-plain">
@@ -59,9 +59,10 @@
 </body>
 
 {{--Core Js--}}
-<script src="{{asset('app-assets/js/core/jquery.3.2.1.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('app-assets/js/core/popper.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('app-assets/js/core/bootstrap.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('js/vendor/core-landing/jquery.3.2.1.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('js/vendor/core-landing/popper.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('js/vendor/core-landing/bootstrap.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('js/vendor/core-landing/now-ui-kit.js?v=1.1.0')}}" type="text/javascript"></script>
 {{--End--}}
 
 </html>
