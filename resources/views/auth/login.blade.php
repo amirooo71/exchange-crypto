@@ -11,11 +11,7 @@
     <form class="form" method="POST" action="{{ route('login') }}">
         {{ csrf_field() }}
 
-        <div class="header header-primary text-center">
-            <div class="logo-container">
-                <img src="{{asset('app-assets/img/now-logo.png')}}" alt="">
-            </div>
-        </div>
+        @include('layouts.shared.landing-logo')
 
         <div class="form-group input-lg form-group-no-border">
             <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}"
