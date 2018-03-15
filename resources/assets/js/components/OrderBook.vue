@@ -67,7 +67,7 @@
 
 
         mounted() {
-            this.getSelslOrderBook();
+            this.getSellsOrderBook();
             this.getBuysOrderBook();
         },
 

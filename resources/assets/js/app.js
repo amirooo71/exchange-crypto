@@ -14,7 +14,7 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
+Vue.component('noty', require('./components/Noty.vue'));
 Vue.component('tickers', require('./components/Tickers'));
 Vue.component('balance', require('./components/Balance.vue'));
 Vue.component('order-buy', require('./components/OrderBuy.vue'));
