@@ -18,11 +18,11 @@
     <!-- Theme Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
           type="text/css">
-    <link href="{{asset('trading-assets/css/icons/icomoon/styles.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{asset('trading-assets/css/bootstrap.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{asset('trading-assets/css/core.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{asset('trading-assets/css/components.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{asset('trading-assets/css/colors.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('css/vendor/icomoon/styles.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('css/vendor/bootstrap.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('css/vendor/core.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('css/vendor/components.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('css/vendor/colors.css')}}" rel="stylesheet" type="text/css">
     <!-- /Theme global stylesheets -->
 
     <!--App Custom Css -->
@@ -133,12 +133,12 @@
 <!-- /Chart -->
 
 <!-- ThemeCore JS files -->
-<script type="text/javascript" src="{{asset('trading-assets/js/core/libraries/jquery.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('trading-assets/js/core/libraries/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/vendor/core-trading/libraries/jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/vendor/core-trading/libraries/bootstrap.min.js')}}"></script>
 <!-- /Theme core JS files -->
 
 <!-- Theme JS files -->
-<script type="text/javascript" src="{{asset('trading-assets/js/core/app.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/vendor/core-trading/app.js')}}"></script>
 <!-- /theme JS files -->
 
 <script src="https://cdn.jsdelivr.net/npm/vue2-filters/dist/vue2-filters.min.js"></script>
