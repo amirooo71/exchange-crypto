@@ -13,12 +13,12 @@
     </div>
     <div class="navbar-collapse collapse" id="navbar-mobile">
         <ul class="nav navbar-nav">
-            {{--<li>--}}
-            {{--<a href="/">--}}
-            {{--<i class="icon-arrow-left8 position-left"></i>--}}
-            {{--بازگشت به خانه--}}
-            {{--</a>--}}
-            {{--</li>--}}
+            <li>
+            <a href="/">
+            <i class="icon-arrow-left8 position-left"></i>
+            بازگشت به خانه
+            </a>
+            </li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
