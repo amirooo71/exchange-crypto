@@ -32,7 +32,9 @@
                 </div>
                 <div class="form-group">
                     <div class="text-right">
-                        <button v-if="signedIn" type="submit" class="btn btn-danger btn-block" :disabled="errors.any()">فروش</button>
+                        <button v-if="signedIn" type="submit" class="btn btn-danger btn-block" :disabled="errors.any()">
+                            فروش
+                        </button>
                         <a href="/login" v-else="signedIn" class="btn btn-primary btn-block">ورود</a>
                     </div>
                 </div>
@@ -79,11 +81,11 @@
             return {
                 price: '',
                 amount: '',
-                currency_id: 1, //Default ID
-                asset_id: 2, //Default ID
+                currency_id: 1, //Default Currency ID
+                asset_id: 2, //Default Asset ID
+                asset: 'BTC', //Default Asset Symbol
+                currency: 'USD', //Default Currency Symbol
                 errors: new Errors(),
-                asset: 'BTC', //Default Symbol
-                currency: 'USD', //Default Symbol
             }
         },
 
@@ -126,13 +128,23 @@
 
         computed: {
 
+            /**
+             * @returns {computed.signedIn|signedIn}
+             */
             signedIn() {
                 return window.App.signedIn;
             },
 
+            /**
+             * @returns {string}
+             */
             assetName: function () {
                 return this.asset.toUpperCase();
             },
+
+            /**
+             * @returns {string}
+             */
             currencyName: function () {
                 return this.currency.toUpperCase();
             }

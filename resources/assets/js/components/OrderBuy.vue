@@ -81,11 +81,11 @@
             return {
                 price: '',
                 amount: '',
-                currency_id: 1, // Default ID
-                asset_id: 2, // Default ID
+                currency_id: 1, // Default Currency ID
+                asset_id: 2, // Default Asset ID
+                asset: 'BTC', // Default Asset Symbol
+                currency: 'USD',// Default Asset Symbol
                 errors: new Errors(),
-                asset: 'BTC', // Default Symbol
-                currency: 'USD'// Default Symbol
             }
         },
 
@@ -129,14 +129,23 @@
 
         computed: {
 
+            /**
+             * @returns {computed.signedIn|signedIn}
+             */
             signedIn() {
                 return window.App.signedIn;
             },
 
+            /**
+             * @returns {string}
+             */
             assetName() {
                 return this.asset.toUpperCase();
             },
 
+            /**
+             * @returns {string}
+             */
             currencyName() {
                 return this.currency.toUpperCase();
             }

@@ -51,6 +51,7 @@
     import Vue2Filters from 'vue2-filters'
 
     export default {
+        
         name: "ticker-screen",
 
         plugins: [
@@ -62,16 +63,14 @@
                 defaultTicker: '',
                 assetName: 'BTC',
                 currencyName: 'USD',
-                // currencyFilterAlignment: {symbolOnLeft: false},
-                // currencyFilterSymbol: '$',
             }
         },
 
         created() {
             this.getDefaultTicker();
             Event.$on('onSelectedPair', data => {
+                //Set pair data
                 this.setAcData(data);
-                // this.setCurrencyFilterAttr(data);
             });
             window.Echo.channel('ticker').listen('Ticker', (e) => {
                 this.defaultTicker = e.ticker;
@@ -92,26 +91,6 @@
                 this.currencyName = data.currency.symbol;
             },
 
-            // setCurrencyFilterAttr(data) {
-            //
-            //     switch (data.currency.symbol) {
-            //
-            //         case "usd":
-            //             this.currencyFilterAlignment = {symbolOnLeft: true};
-            //             this.currencyFilterSymbol = '$';
-            //             break;
-            //         case "btc":
-            //             this.currencyFilterAlignment = {symbolOnLeft: false};
-            //             this.currencyFilterSymbol = 'BTC ';
-            //             break;
-            //         case "irr":
-            //             this.currencyFilterAlignment = {symbolOnLeft: false};
-            //             this.currencyFilterSymbol = 'IRR ';
-            //             break;
-            //
-            //     }
-            //
-            // },
         },
 
         computed: {

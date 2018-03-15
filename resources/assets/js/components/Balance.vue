@@ -32,14 +32,12 @@
                         </td>
                     </tr>
                     </tbody>
-                    <tbody v-else>
-                    <tr>
-                        <td>
-                            داده‌ای موجود نیست لطفا وارد شوید
-                        </td>
-                    </tr>
-                    </tbody>
                 </table>
+                <div v-if="!signedIn" class="row">
+                    <p class="text-center">
+                        داده‌ای موجود نیست لطفا وارد شوید
+                    </p>
+                </div>
             </div>
         </div>
     </panel>
@@ -57,14 +55,18 @@
         },
 
         created() {
-            if (window.App.signedIn) {
+
+            if (this.signedIn) {
+
                 this.getUserBalance();
-                Event.$on('orderApplied', () => this.getUserBalance());
-                Event.$on('orderDeleted', () => this.getUserBalance());
+                this.updateUserBalanceOnEventTrigger();
+
                 window.Echo.channel('order-confirm.' + window.App.user.id).listen('OrderConfirm', () => {
                     this.getUserBalance();
                 });
+
             }
+
         },
 
         methods: {
@@ -74,10 +76,18 @@
                     .then(response => this.balances = response.data)
                 ;
             },
+
+            updateUserBalanceOnEventTrigger() {
+                Event.$on('orderApplied', () => this.getUserBalance());
+                Event.$on('orderDeleted', () => this.getUserBalance());
+            },
         },
 
         computed: {
 
+            /**
+             * @returns {computed.signedIn|signedIn}
+             */
             signedIn() {
                 return window.App.signedIn;
             },

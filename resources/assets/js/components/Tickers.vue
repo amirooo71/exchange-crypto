@@ -66,7 +66,14 @@
         },
 
         created() {
+
             this.getTickers();
+
+            /**
+             * Fetch all tickers
+             *
+             * Public Channel
+             */
             window.Echo.channel('ticker').listen('Ticker', (e) => {
                 this.getTickers();
             });

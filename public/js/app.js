@@ -47336,11 +47336,7 @@ window.notify = function (type, msg) {
     }).show();
 };
 
-/* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('Component mounted.');
-    }
-});
+/* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
 /* 45 */
@@ -47471,7 +47467,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -47586,6 +47582,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         this.getTickers();
+
+        /**
+         * Fetch all tickers
+         *
+         * Public Channel
+         */
         window.Echo.channel('ticker').listen('Ticker', function (e) {
             _this.getTickers();
         });
@@ -47703,7 +47705,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -47769,6 +47771,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+
     name: "ticker-screen",
 
     plugins: ['~/plugins/vue2-filters'],
@@ -47778,8 +47781,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             defaultTicker: '',
             assetName: 'BTC',
             currencyName: 'USD'
-            // currencyFilterAlignment: {symbolOnLeft: false},
-            // currencyFilterSymbol: '$',
         };
     },
     created: function created() {
@@ -47787,8 +47788,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         this.getDefaultTicker();
         Event.$on('onSelectedPair', function (data) {
+            //Set pair data
             _this.setAcData(data);
-            // this.setCurrencyFilterAttr(data);
         });
         window.Echo.channel('ticker').listen('Ticker', function (e) {
             _this.defaultTicker = e.ticker;
@@ -48852,7 +48853,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -48863,8 +48864,6 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
 //
 //
 //
@@ -48923,14 +48922,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        if (window.App.signedIn) {
+        if (this.signedIn) {
+
             this.getUserBalance();
-            Event.$on('orderApplied', function () {
-                return _this.getUserBalance();
-            });
-            Event.$on('orderDeleted', function () {
-                return _this.getUserBalance();
-            });
+            this.updateUserBalanceOnEventTrigger();
+
             window.Echo.channel('order-confirm.' + window.App.user.id).listen('OrderConfirm', function () {
                 _this.getUserBalance();
             });
@@ -48945,10 +48941,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('api/v1/trade/user/balance').then(function (response) {
                 return _this2.balances = response.data;
             });
+        },
+        updateUserBalanceOnEventTrigger: function updateUserBalanceOnEventTrigger() {
+            var _this3 = this;
+
+            Event.$on('orderApplied', function () {
+                return _this3.getUserBalance();
+            });
+            Event.$on('orderDeleted', function () {
+                return _this3.getUserBalance();
+            });
         }
     },
 
     computed: {
+
+        /**
+         * @returns {computed.signedIn|signedIn}
+         */
         signedIn: function signedIn() {
             return window.App.signedIn;
         }
@@ -49022,16 +49032,18 @@ var render = function() {
                   ])
                 })
               )
-            : _c("tbody", [
-                _c("tr", [
-                  _c("td", [
-                    _vm._v(
-                      "\n                        داده‌ای موجود نیست لطفا وارد شوید\n                    "
-                    )
-                  ])
-                ])
+            : _vm._e()
+        ]),
+        _vm._v(" "),
+        !_vm.signedIn
+          ? _c("div", { staticClass: "row" }, [
+              _c("p", { staticClass: "text-center" }, [
+                _vm._v(
+                  "\n                    داده‌ای موجود نیست لطفا وارد شوید\n                "
+                )
               ])
-        ])
+            ])
+          : _vm._e()
       ])
     ])
   ])
@@ -49132,7 +49144,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -49239,11 +49251,11 @@ var Errors = function () {
         return {
             price: '',
             amount: '',
-            currency_id: 1, // Default ID
-            asset_id: 2, // Default ID
-            errors: new Errors(),
-            asset: 'BTC', // Default Symbol
-            currency: 'USD' // Default Symbol
+            currency_id: 1, // Default Currency ID
+            asset_id: 2, // Default Asset ID
+            asset: 'BTC', // Default Asset Symbol
+            currency: 'USD', // Default Asset Symbol
+            errors: new Errors()
         };
     },
     created: function created() {
@@ -49283,12 +49295,26 @@ var Errors = function () {
     },
 
     computed: {
+
+        /**
+         * @returns {computed.signedIn|signedIn}
+         */
         signedIn: function signedIn() {
             return window.App.signedIn;
         },
+
+
+        /**
+         * @returns {string}
+         */
         assetName: function assetName() {
             return this.asset.toUpperCase();
         },
+
+
+        /**
+         * @returns {string}
+         */
         currencyName: function currencyName() {
             return this.currency.toUpperCase();
         }
@@ -49536,7 +49562,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -49551,6 +49577,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+//
+//
 //
 //
 //
@@ -49641,11 +49669,11 @@ var Errors = function () {
         return {
             price: '',
             amount: '',
-            currency_id: 1, //Default ID
-            asset_id: 2, //Default ID
-            errors: new Errors(),
-            asset: 'BTC', //Default Symbol
-            currency: 'USD' //Default Symbol
+            currency_id: 1, //Default Currency ID
+            asset_id: 2, //Default Asset ID
+            asset: 'BTC', //Default Asset Symbol
+            currency: 'USD', //Default Currency Symbol
+            errors: new Errors()
         };
     },
     created: function created() {
@@ -49685,14 +49713,25 @@ var Errors = function () {
     },
 
     computed: {
+
+        /**
+         * @returns {computed.signedIn|signedIn}
+         */
         signedIn: function signedIn() {
             return window.App.signedIn;
         },
 
 
+        /**
+         * @returns {string}
+         */
         assetName: function assetName() {
             return this.asset.toUpperCase();
         },
+
+        /**
+         * @returns {string}
+         */
         currencyName: function currencyName() {
             return this.currency.toUpperCase();
         }
@@ -49819,7 +49858,11 @@ var render = function() {
                       staticClass: "btn btn-danger btn-block",
                       attrs: { type: "submit", disabled: _vm.errors.any() }
                     },
-                    [_vm._v("فروش")]
+                    [
+                      _vm._v(
+                        "\n                        فروش\n                    "
+                      )
+                    ]
                   )
                 : _c(
                     "a",
@@ -49941,7 +49984,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -49974,17 +50017,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        if (window.App.signedIn) {
+        if (this.signedIn) {
             window.Echo.channel('order-confirm.' + window.App.user.id).listen('OrderConfirm', function (e) {
-                notify('info', _this.getConfirmOrderMsg(e.order, e.price));
+                notify('info', _this.sendConfirmOrderMsg(e.order, e.price));
             });
         }
     },
 
 
     methods: {
-        getConfirmOrderMsg: function getConfirmOrderMsg($order, $price) {
+
+        /**
+         * @param $order
+         * @param $price
+         * @returns {string}
+         */
+        sendConfirmOrderMsg: function sendConfirmOrderMsg($order, $price) {
             return "سفارشی با مقدار " + $order.amount + " روی قیمت " + $price + " انجام شد. ";
+        }
+    },
+
+    computed: {
+        signedIn: function signedIn() {
+            return window.App.signedIn;
         }
     }
 });
@@ -50111,7 +50166,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -50294,12 +50349,10 @@ var Errors = function () {
     name: "order-history",
 
     data: function data() {
+
         return {
             orders: [],
-            selectedOrder: {},
-            price: '',
-            amount: '',
-            currency_id: 1,
+            selectedOrder: '',
             uriAction: '',
             errors: new Errors()
         };
@@ -50307,7 +50360,8 @@ var Errors = function () {
     created: function created() {
         var _this = this;
 
-        if (window.App.signedIn) {
+        if (this.signedIn) {
+
             this.getOrderHistory();
             Event.$on('orderApplied', function () {
                 return _this.getOrderHistory();
@@ -50319,13 +50373,11 @@ var Errors = function () {
     },
 
 
-    filters: {
-        round: function round(num) {
-            return num;
-        }
-    },
-
     methods: {
+
+        /**
+         * Fetch all user orders
+         */
         getOrderHistory: function getOrderHistory() {
             var _this2 = this;
 
@@ -50335,41 +50387,16 @@ var Errors = function () {
                 return console.log(error.response.data);
             });
         },
-        update: function update(order) {
-            this.selectedOrder = order;
-            this.showModal();
-        },
         destroy: function destroy(order) {
             var _this3 = this;
 
             this.selectedOrder = order;
-            this.checkOrderType();
+            this.setOrderType();
             axios.delete('api/v1/trade/' + this.uriAction + '/' + this.selectedOrder.id + '/delete').then(function () {
-                _this3.removeOrderFromList(order);
-                notify('info', 'سفارش با موفقیت حذف شد.');
-                Event.$emit('orderDeleted');
+                _this3.onSuccessDelete(order);
             });
         },
-        onSubmit: function onSubmit() {
-            var _this4 = this;
-
-            this.checkOrderType();
-            axios.patch('api/v1/trade/' + this.uriAction + '/' + this.selectedOrder.id + '/update', this.$data).then(this.onSuccess).catch(function (error) {
-                return _this4.errors.record(error.response.data);
-            });
-        },
-        showModal: function showModal() {
-            $("#modal_default").modal('show');
-        },
-        onSuccess: function onSuccess(response) {
-            this.removeOrderFromList();
-            this.orders.push(response.data);
-            this.price = '';
-            this.amount = '';
-            $("#modal_default").modal('hide');
-            notify('info', 'سفارش با موفقیت ویرایش شد.');
-        },
-        checkOrderType: function checkOrderType() {
+        setOrderType: function setOrderType() {
             if (this.selectedOrder.type == 'خرید') {
                 this.uriAction = "orderbuy";
             } else {
@@ -50379,6 +50406,11 @@ var Errors = function () {
         removeOrderFromList: function removeOrderFromList() {
             var index = this.orders.indexOf(this.selectedOrder);
             this.orders.splice(index, 1);
+        },
+        onSuccessDelete: function onSuccessDelete(order) {
+            this.removeOrderFromList(order);
+            notify('info', 'سفارش با موفقیت حذف شد.');
+            Event.$emit('orderDeleted');
         }
     },
 
@@ -50388,6 +50420,12 @@ var Errors = function () {
         },
         sortedOrders: function sortedOrders() {
             return _.orderBy(this.orders, ['id'], ['desc']);
+        }
+    },
+
+    filters: {
+        round: function round(num) {
+            return num;
         }
     }
 });
@@ -50490,20 +50528,26 @@ var render = function() {
                                 ]
                               )
                             ])
-                          : _c("td")
+                          : _c("td", [
+                              _vm._v(
+                                "\n                            -\n                            "
+                              )
+                            ])
                       ])
                     })
                   )
-                : _c("tbody", [
-                    _c("tr", [
-                      _c("td", [
-                        _vm._v(
-                          "\n                            داده‌ای موجود نیست لطفا وارد شوید\n                        "
-                        )
-                      ])
-                    ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            !_vm.signedIn
+              ? _c("div", { staticClass: "row" }, [
+                  _c("p", { staticClass: "text-center" }, [
+                    _vm._v(
+                      "\n                        داده‌ای موجود نیست لطفا وارد شوید\n                    "
+                    )
                   ])
-            ])
+                ])
+              : _vm._e()
           ]
         )
       ])
@@ -50683,9 +50727,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             orderBuys: []
         };
     },
+    mounted: function mounted() {
+        this.getSelslOrderBook();
+        this.getBuysOrderBook();
+    },
     created: function created() {
         var _this = this;
 
+        /**
+         * Public Channel
+         */
         window.Echo.channel('order-book').listen('OrderBook', function (e) {
             if (e.order.type == 'خرید') {
                 _this.orderBuys.push(e.order);
@@ -50695,25 +50746,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
 
         window.Echo.channel('order-book-confirm').listen('OrderBookConfirm', function () {
-            _this.getSellOrderBook();
-            _this.getBuyOrderBook();
+            _this.getSellsOrderBook();
+            _this.getBuysOrderBook();
         });
-    },
-    mounted: function mounted() {
-        this.getSellOrderBook();
-        this.getBuyOrderBook();
     },
 
 
     methods: {
-        getSellOrderBook: function getSellOrderBook() {
+        getSellsOrderBook: function getSellsOrderBook() {
             var _this2 = this;
 
             axios.get('/api/v1/trade/orderbook/sell').then(function (response) {
                 return _this2.orderSells = response.data;
             });
         },
-        getBuyOrderBook: function getBuyOrderBook() {
+        getBuysOrderBook: function getBuysOrderBook() {
             var _this3 = this;
 
             axios.get('/api/v1/trade/orderbook/buy').then(function (response) {

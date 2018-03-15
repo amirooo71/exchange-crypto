@@ -65,8 +65,17 @@
             }
         },
 
+
+        mounted() {
+            this.getSelslOrderBook();
+            this.getBuysOrderBook();
+        },
+
         created() {
 
+            /**
+             * Public Channel
+             */
             window.Echo.channel('order-book').listen('OrderBook', e => {
                 if (e.order.type == 'خرید') {
                     this.orderBuys.push(e.order);
@@ -76,23 +85,18 @@
             });
 
             window.Echo.channel('order-book-confirm').listen('OrderBookConfirm', () => {
-                this.getSellOrderBook();
-                this.getBuyOrderBook();
+                this.getSellsOrderBook();
+                this.getBuysOrderBook();
             });
-        },
-
-        mounted() {
-            this.getSellOrderBook();
-            this.getBuyOrderBook();
         },
 
         methods: {
 
-            getSellOrderBook() {
+            getSellsOrderBook() {
                 axios.get('/api/v1/trade/orderbook/sell').then(response => this.orderSells = response.data);
             },
 
-            getBuyOrderBook() {
+            getBuysOrderBook() {
                 axios.get('/api/v1/trade/orderbook/buy').then(response => this.orderBuys = response.data);
             },
 

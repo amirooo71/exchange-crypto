@@ -18,19 +18,35 @@
         name: "exchange",
 
         created() {
-            if (window.App.signedIn) {
+
+            if (this.signedIn) {
                 window.Echo.channel('order-confirm.' + window.App.user.id).listen('OrderConfirm', (e) => {
-                    notify('info', this.getConfirmOrderMsg(e.order, e.price));
+                    notify('info', this.sendConfirmOrderMsg(e.order, e.price));
                 });
             }
+
         },
 
         methods: {
 
-            getConfirmOrderMsg($order, $price) {
+            /**
+             * @param $order
+             * @param $price
+             * @returns {string}
+             */
+            sendConfirmOrderMsg($order, $price) {
                 return "سفارشی با مقدار " + $order.amount + " روی قیمت " + $price + " انجام شد. ";
             },
-        }
+
+        },
+
+        computed: {
+
+            signedIn() {
+                return window.App.signedIn;
+            }
+
+        },
     }
 </script>
 

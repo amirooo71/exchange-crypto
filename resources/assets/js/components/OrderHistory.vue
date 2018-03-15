@@ -45,17 +45,17 @@
                                 </ul>
                             </td>
                             <td v-else>
-                            </td>
-                        </tr>
-                        </tbody>
-                        <tbody v-else>
-                        <tr>
-                            <td>
-                                داده‌ای موجود نیست لطفا وارد شوید
+                                -
+                                <!--Just show Empty column-->
                             </td>
                         </tr>
                         </tbody>
                     </table>
+                    <div v-if="!signedIn" class="row">
+                        <p class="text-center">
+                            داده‌ای موجود نیست لطفا وارد شوید
+                        </p>
+                    </div>
                 </div>
                 <!--<div id="modal_default" class="modal fade">-->
                 <!--<div class="modal-dialog">-->
@@ -157,35 +157,34 @@
         name: "order-history",
 
         data() {
+
             return {
                 orders: [],
-                selectedOrder: {},
-                price: '',
-                amount: '',
-                currency_id: 1,
+                selectedOrder: '',
                 uriAction: '',
                 errors: new Errors(),
             }
+
         },
 
         created() {
-            if (window.App.signedIn) {
+
+            if (this.signedIn) {
+
                 this.getOrderHistory();
                 Event.$on('orderApplied', () => this.getOrderHistory());
                 window.Echo.channel('order-confirm.' + window.App.user.id).listen('OrderConfirm', () => {
                     this.getOrderHistory();
                 });
-            }
-        },
 
-        filters: {
-            round(num) {
-                return num;
-            },
+            }
         },
 
         methods: {
 
+            /**
+             * Fetch all user orders
+             */
             getOrderHistory() {
                 axios.get('/api/v1/trade/user/orders/history')
                     .then(response => this.orders = response.data)
@@ -193,44 +192,16 @@
                 ;
             },
 
-            update(order) {
-                this.selectedOrder = order;
-                this.showModal();
-            },
-
             destroy(order) {
                 this.selectedOrder = order;
-                this.checkOrderType();
+                this.setOrderType();
                 axios.delete('api/v1/trade/' + this.uriAction + '/' + this.selectedOrder.id + '/delete')
                     .then(() => {
-                        this.removeOrderFromList(order);
-                        notify('info', 'سفارش با موفقیت حذف شد.');
-                        Event.$emit('orderDeleted');
+                        this.onSuccessDelete(order);
                     });
             },
 
-            onSubmit() {
-                this.checkOrderType();
-                axios.patch('api/v1/trade/' + this.uriAction + '/' + this.selectedOrder.id + '/update', this.$data)
-                    .then(this.onSuccess)
-                    .catch(error => this.errors.record(error.response.data))
-                ;
-            },
-
-            showModal() {
-                $("#modal_default").modal('show');
-            },
-
-            onSuccess(response) {
-                this.removeOrderFromList();
-                this.orders.push(response.data);
-                this.price = '';
-                this.amount = '';
-                $("#modal_default").modal('hide');
-                notify('info', 'سفارش با موفقیت ویرایش شد.')
-            },
-
-            checkOrderType() {
+            setOrderType() {
                 if (this.selectedOrder.type == 'خرید') {
                     this.uriAction = "orderbuy";
                 } else {
@@ -242,6 +213,41 @@
                 var index = this.orders.indexOf(this.selectedOrder);
                 this.orders.splice(index, 1);
             },
+
+            onSuccessDelete(order) {
+                this.removeOrderFromList(order);
+                notify('info', 'سفارش با موفقیت حذف شد.');
+                Event.$emit('orderDeleted');
+            },
+
+            // update(order) {
+            //     this.selectedOrder = order;
+            //     this.showModal();
+            // },
+
+
+            // onSubmit() {
+            //     this.checkOrderType();
+            //     axios.patch('api/v1/trade/' + this.uriAction + '/' + this.selectedOrder.id + '/update', this.$data)
+            //         .then(this.onSuccess)
+            //         .catch(error => this.errors.record(error.response.data))
+            //     ;
+            // },
+
+
+            // showModal() {
+            //     $("#modal_default").modal('show');
+            // },
+
+
+            // onSuccess(response) {
+            //     this.removeOrderFromList();
+            //     this.orders.push(response.data);
+            //     this.price = '';
+            //     this.amount = '';
+            //     $("#modal_default").modal('hide');
+            //     notify('info', 'سفارش با موفقیت ویرایش شد.')
+            // },
         },
 
         computed: {
@@ -253,6 +259,14 @@
             sortedOrders() {
                 return _.orderBy(this.orders, ['id'], ['desc']);
             },
+        },
+
+        filters: {
+
+            round(num) {
+                return num;
+            },
+
         },
     }
 </script>
