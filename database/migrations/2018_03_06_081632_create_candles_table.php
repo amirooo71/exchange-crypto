@@ -23,7 +23,7 @@ class CreateCandlesTable extends Migration
             $table->bigInteger('l')->index();
             $table->bigInteger('v')->index();
             $table->bigInteger('t')->index();
-            $table->bigInteger('count');
+            $table->bigInteger('count')->nullable();
             $table->timestamps();
         });
     }
