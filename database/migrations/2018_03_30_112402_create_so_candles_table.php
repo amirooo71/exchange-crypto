@@ -15,15 +15,14 @@ class CreateSoCandlesTable extends Migration
     {
         Schema::create('so_candles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('exchange');
-            $table->string('pair');
-            $table->integer('time_frame');
+            $table->unsignedInteger('pair_id');
+            $table->unsignedInteger('time_frame');
             $table->bigInteger('o');
             $table->bigInteger('c');
             $table->bigInteger('h');
             $table->bigInteger('l');
             $table->bigInteger('v');
-            $table->bigInteger('t');
+            $table->bigInteger('t')->unique();
             $table->timestamps();
         });
     }

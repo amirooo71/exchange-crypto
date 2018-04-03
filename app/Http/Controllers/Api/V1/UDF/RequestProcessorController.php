@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\UDF;
 
 use App\Candle;
 use App\Pair;
+use App\SoCandle;
 use App\TvSymbol;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -163,7 +164,9 @@ class RequestProcessorController extends Controller
 
         $pairId = Pair::where('pair', '=', $symbol)->first()->id;
 
-        return Candle::where('pair_id', $pairId)->where('time_frame', $r)->whereBetween('t', [$from, $to])->get();
+        return SoCandle::where('pair_id', $pairId)->where('time_frame', $r)->whereBetween('t', [$from, $to])->get();
+
+
 
     }
 

@@ -15,8 +15,7 @@ class CreateSoTickersTable extends Migration
     {
         Schema::create('so_tickers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('exchange');
-            $table->string('pair');
+            $table->string('pair_id');
             $table->float('bid');
             $table->float('bid_size');
             $table->float('ask');
