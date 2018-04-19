@@ -22,6 +22,7 @@ Vue.component('order-sell', require('./components/OrderSell.vue'));
 Vue.component('exchange', require('./components/Exchange.vue'));
 Vue.component('order-history', require('./components/OrderHistory.vue'));
 Vue.component('order-book', require('./components/OrderBook.vue'));
+Vue.component('deposit', require('./components/Deposit.vue'));
 
 /**
  * Widgets

@@ -44,11 +44,13 @@
 </head>
 <body>
 
-<!-- Main Navbar -->
+
+<div id="app">
+
+    <!-- Main Navbar -->
 @include('layouts.shared.trading-navbar')
 <!-- /Main Navbar -->
 
-<div id="app">
     <!-- Page container -->
     <div class="page-container">
         <!-- Page content -->
@@ -93,7 +95,7 @@
 
     TradingView.onready(function () {
         var widget = window.tvWidget = new TradingView.widget({
-            debug: true, // uncomment this line to see Library errors and warnings in the console
+            debug: false, // uncomment this line to see Library errors and warnings in the console
             fullscreen: false,
             symbol: 'BTCUSD',
             interval: '1',
